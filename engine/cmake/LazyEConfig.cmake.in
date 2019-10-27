@@ -1,0 +1,11 @@
+@PACKAGE_INIT@
+
+set_and_check(LazyE_CMAKE_DIR "@PACKAGE_INSTALL_CONFIGDIR@")
+
+if(NOT TARGET LazyE::LazyE)
+    include("${LazyE_CMAKE_DIR}/LazyETargets.cmake")
+endif()
+
+set(LazyE_LIBRARIES LazyE::LazyE)
+
+check_required_components(LazyE)
