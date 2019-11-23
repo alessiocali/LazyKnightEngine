@@ -1,0 +1,30 @@
+#pragma once
+
+#include <vector>
+#include <memory>
+
+namespace lazye
+{
+	class Component;
+
+	/**
+	 * Something that has a presence in the world.
+	 */
+	class Entity final
+	{
+		void Update(float dt);
+
+		template<class ComponentType, class... Args>
+		void AddComponent(Args&&... args)
+		{
+			m_Components.push_back(
+				std::make_unique<ComponentType>(std::forward(args))
+			);
+		}
+
+	private:
+		using ComponentPtr = std::unique_ptr<Component>;
+
+		std::vector<ComponentPtr> m_Components;
+	};
+}

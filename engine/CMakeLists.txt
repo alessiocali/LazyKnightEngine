@@ -1,33 +1,35 @@
 project(Engine)
 
+set ( EngineTargetName LazyE )
+set ( EngineTargetExports ${EngineTargetName}-Target )
+set ( EngineTargetConfig ${EngineTargetName}Config )
+
+set ( BuildRootDir ${CMAKE_CURRENT_SOURCE_DIR} )
+
 # Add all source files and includes
-add_library( 
-    LazyE
-    include/lazye/macros.h
-    include/lazye/math.h
-    src/math.cpp
-    include/lazye/logger.h
-    src/logger.cpp
-    include/lazye/graphics.h
-    src/graphics.cpp
-)
+add_library( ${EngineTargetName} )
+add_subdirectory( src )
+
+source_group( "Sources" REGULAR_EXPRESSION "/*" )
+source_group( "Sources\\Core" REGULAR_EXPRESSION "core/*" )
+source_group( "Sources\\Graphics" REGULAR_EXPRESSION "graphics/*" )
 
 target_compile_features( 
-    LazyE 
+    ${EngineTargetName}
     PUBLIC
         cxx_std_17 
 )
 
 # Set warnings as errors
 if (MSVC)
-    target_compile_options(LazyE PRIVATE /W4 /WX)
+    target_compile_options(${EngineTargetName} PRIVATE /W4 /WX)
 else()
-    target_compile_options(LazyE PRIVATE -Wall -Wextra -pedantic -Werror)
+    target_compile_options(${EngineTargetName} PRIVATE -Wall -Wextra -pedantic -Werror)
 endif()
 
 # Add Debug Postfix to differentiate artifacts
 set_target_properties( 
-    LazyE
+    ${EngineTargetName}
     PROPERTIES
     DEBUG_POSTFIX "_d"
     CXX_EXTENSIONS OFF
@@ -35,7 +37,7 @@ set_target_properties(
 
 # Link dependencies
 target_link_libraries( 
-    LazyE
+    ${EngineTargetName}
     PRIVATE
         sfml-window 
         sfml-graphics
@@ -43,10 +45,10 @@ target_link_libraries(
 
 # Setup the include directories
 target_include_directories( 
-    LazyE
+    ${EngineTargetName}
     PUBLIC
-        $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include/>
+        $<BUILD_INTERFACE:${BuildRootDir}/include/>
     PRIVATE
         src
 )
@@ -57,8 +59,8 @@ set(INSTALL_CONFIGDIR cmake/LazyE)
 
 # Install library DLL and export target
 install(
-    TARGETS LazyE 
-    EXPORT  LazyE-Targets
+    TARGETS ${EngineTargetName} 
+    EXPORT  ${EngineTargetExports}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
@@ -67,17 +69,17 @@ install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 # Install exported target
 install(
-    EXPORT      LazyE-Targets
-    FILE        LazyETargets.cmake
-    NAMESPACE   LazyE::
+    EXPORT      ${EngineTargetExports}
+    FILE        ${EngineTargetExports}.cmake
+    NAMESPACE   ${EngineTargetName}::
     DESTINATION ${INSTALL_CONFIGDIR}
 )
 
 # Create configured _Config.cmake file
 include(CMakePackageConfigHelpers)
 configure_package_config_file(
-    ${CMAKE_CURRENT_LIST_DIR}/cmake/LazyEConfig.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/LazyEConfig.cmake
+    ${CMAKE_CURRENT_LIST_DIR}/cmake/${EngineTargetConfig}.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${EngineTargetConfig}.cmake
     INSTALL_DESTINATION     ${INSTALL_CONFIGDIR}
     PATH_VARS               INSTALL_CONFIGDIR
 )
@@ -85,6 +87,9 @@ configure_package_config_file(
 # Install the _Config.cmake file
 install(
     FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/LazyEConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${EngineTargetConfig}.cmake
     DESTINATION ${INSTALL_CONFIGDIR}
 )
+
+# Include the Tests
+add_subdirectory( tests )

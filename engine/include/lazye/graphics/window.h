@@ -3,11 +3,12 @@
 #include <memory>
 #include <string>
 
+#include <lazye/graphics/renderingcontext.h>
 #include <lazye/macros.h>
 
 namespace sf
 {
-    class Window;
+    class RenderWindow;
 	class Event;
 }
 
@@ -18,6 +19,8 @@ namespace lazye
 	 */
 	class lazyedll Window
 	{
+		friend RenderingContext;
+
 	public:
 		enum class Mode
 		{
@@ -34,7 +37,7 @@ namespace lazye
 		void RenderLoop();
 
 	private:
-		std::unique_ptr<sf::Window> m_Impl;
+		std::unique_ptr<sf::RenderWindow> m_Impl;
 
 		void PollEvents();
 		void HandleSFMLEvent(const sf::Event& event);

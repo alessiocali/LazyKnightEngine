@@ -1,6 +1,6 @@
-#include <lazye/graphics.h>
+#include <lazye/graphics/window.h>
 
-#include <SFML/Window/Window.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/WindowStyle.hpp>
 
@@ -20,7 +20,7 @@ namespace lazye
 
     Window::Window(const std::string& title, std::uint16_t width, std::uint32_t height, Mode mode)
     {
-        m_Impl = std::make_unique<sf::Window>(sf::VideoMode(width, height, 32), title, GetSFMLStyleFromMode(mode));
+        m_Impl = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height, 32), title, GetSFMLStyleFromMode(mode));
     }
 
 	Window::~Window() = default;

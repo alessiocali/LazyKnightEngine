@@ -4,8 +4,21 @@
 
 namespace lazye
 {
+	template<typename T, typename U>
+	constexpr auto EpsilonEqual(const T& t, const U& u)
+	{
+		using DiffType = decltype(t - u);
+		return std::abs(t - u) < std::numeric_limits<DiffType>::epsilon();
+	}
+
+	template<typename T, typename U>
+	constexpr auto EpsilonNotEqual(const T& t, const U& u)
+	{
+		return !EpsilonEqual(t, u);
+	}
+
 	template<typename V>
-	auto GetLengthSquared(const V& v1, const V& v2)
+	constexpr auto Dot(const V& v1, const V& v2)
 	{
 		V::Type dot = 0;
 
@@ -21,9 +34,15 @@ namespace lazye
 	}
 
 	template<typename V>
+	auto GetLengthSquared(const V& v)
+	{
+		return Dot(v, v);
+	}
+
+	template<typename V>
 	auto GetLength(const V& v)
 	{
-		return std::sqrt(GetLengthSquared(v, v));
+		return std::sqrt(GetLengthSquared(v));
 	}
 
 	template<
@@ -73,7 +92,7 @@ namespace lazye
 		inline auto cbegin() const { return m_Data.cbegin(); }
 		inline auto cend() const { return m_Data.cend(); }
 
-		inline const std::size_t Dimension() const { return D; }
+		inline constexpr std::size_t Dimension() const { return D; }
 
 	private:
 		std::array<T, D> m_Data;

@@ -1,4 +1,4 @@
-#include <lazye/graphics.h>
+#include <lazye/graphics/window.h>
 
 using namespace lazye;
 
