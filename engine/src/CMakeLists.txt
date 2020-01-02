@@ -6,14 +6,10 @@ target_sources( ${EngineTargetName}
     $<INSTALL_INTERFACE:include/lazye/macros.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/macros.h>
 
-    $<INSTALL_INTERFACE:include/lazye/math.h>
-    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/math.h>
-    # PUBLIC
-
     PRIVATE
     logger.cpp
-    math.cpp
 )
 
 add_subdirectory( core )
+add_subdirectory( math )
 add_subdirectory( graphics )

@@ -1,4 +1,4 @@
-#include <lazye/math.h>
+#include <lazye/math/math.h>
 #include <lazye/logger.h>
 
 #include <iostream>

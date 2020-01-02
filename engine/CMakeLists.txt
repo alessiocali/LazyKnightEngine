@@ -13,6 +13,7 @@ add_subdirectory( src )
 source_group( "Sources" REGULAR_EXPRESSION "/*" )
 source_group( "Sources\\Core" REGULAR_EXPRESSION "core/*" )
 source_group( "Sources\\Graphics" REGULAR_EXPRESSION "graphics/*" )
+source_group( "Sources\\Math" REGULAR_EXPRESSION "math/*" )
 
 target_compile_features( 
     ${EngineTargetName}
