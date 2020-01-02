@@ -152,6 +152,13 @@ SCENARIO("Vector operators work as expected", VectorsTag)
 			REQUIRE(aVector4 == aVector4);
 		}
 
+		AND_THEN("scaling can be performed by both sides")
+		{
+			REQUIRE(EpsilonEqual(aVector2, 1 * aVector2 * 1));
+			REQUIRE(EpsilonEqual(aVector3, 1 * aVector3 * 1));
+			REQUIRE(EpsilonEqual(aVector4, 1 * aVector4 * 1));
+		}
+
 		WHEN("we negate them")
 		{
 			Vector2f nVector2 = -aVector2;
@@ -204,7 +211,7 @@ SCENARIO("Vector operators work as expected", VectorsTag)
 			{
 				REQUIRE(EpsilonEqual(aVector2, mVector2 / 2));
 				REQUIRE(EpsilonEqual(aVector3, mVector3 / 3));
-				////REQUIRE(EpsilonEqual(aVector4, mVector4 / 4));
+				REQUIRE(EpsilonEqual(aVector4, mVector4 / 4));
 			}
 		}
 
@@ -239,6 +246,26 @@ SCENARIO("Vector operators work as expected", VectorsTag)
 				REQUIRE(EpsilonEqual(aVector2, mVector2 * 2));
 				REQUIRE(EpsilonEqual(aVector3, mVector3 * 3));
 				REQUIRE(EpsilonEqual(aVector4, mVector4 * 4));
+			}
+		}
+
+		WHEN("we normalize them")
+		{
+			Vector2f nVector2 = GetNormalized(aVector2);
+			Vector3f nVector3 = GetNormalized(aVector3);
+			Vector4f nVector4 = GetNormalized(aVector4);
+
+			THEN("their length is approximatively unitary")
+			{
+				REQUIRE(EpsilonEqual(GetLength(nVector2), 1.f));
+				REQUIRE(EpsilonEqual(GetLength(nVector3), 1.f));
+				REQUIRE(EpsilonEqual(GetLength(nVector4), 1.f));
+			}
+			AND_THEN("multiplying them by the original's length restores the original vector")
+			{
+				REQUIRE(EpsilonEqual(nVector2 * GetLength(aVector2), aVector2));
+				REQUIRE(EpsilonEqual(nVector3 * GetLength(aVector3), aVector3));
+				REQUIRE(EpsilonEqual(nVector4 * GetLength(aVector4), aVector4));
 			}
 		}
 

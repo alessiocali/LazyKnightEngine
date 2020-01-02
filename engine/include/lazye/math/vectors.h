@@ -39,6 +39,12 @@ namespace lazye
 	}
 
 	template<std::size_t D, typename T>
+	constexpr Vector<D, T> GetNormalized(const Vector<D, T>& v)
+	{
+		return v / GetLength(v);
+	}
+
+	template<std::size_t D, typename T>
 	constexpr bool EpsilonEqual(const Vector<D, T>& v1, const Vector<D, T>& v2)
 	{
 		for (std::size_t i = 0 ; i < D ; i++)
@@ -49,6 +55,18 @@ namespace lazye
 			}
 		}
 		return true;
+	}
+
+	template<typename Mul, std::size_t D, typename T>
+	constexpr Vector<D, T> operator*(Mul m, const Vector<D, T>& v)
+	{
+		return v * m;
+	}
+
+	template<typename Div, std::size_t D, typename T>
+	constexpr Vector<D, T> operator/(Div d, const Vector<D, T>& v)
+	{
+		return v / d;
 	}
 
     template<
