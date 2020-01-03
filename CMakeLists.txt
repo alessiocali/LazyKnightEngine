@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16.2)
 
 project(
     GameProgrammingExcercises
@@ -10,8 +10,7 @@ project(
     LANGUAGES   CXX
 )
 
-# Until I find a damn way to copy the output dlls into the executable path
-set(BUILD_SHARED_LIBS FALSE CACHE BOOL "Only build static libs.")
+set(BUILD_LAZYE_SHARED ${BUILD_SHARED_LIBS} CACHE BOOL "Build lazye dynamically or statically" FORCE)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Add directories for dependencies, the engine and the practice part

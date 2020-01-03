@@ -10,8 +10,14 @@ namespace lazye
 	/**
 	 * Something that has a presence in the world.
 	 */
-	class Entity final
+	class lazyedll Entity final
 	{
+		Entity(const Entity& other) = delete;
+		Entity& operator=(const Entity& other) = delete;
+
+		Entity(Entity&& other) = default;
+		Entity& operator=(Entity&& other) = default;
+
 		void Update(float dt);
 
 		template<class ComponentType, class... Args>

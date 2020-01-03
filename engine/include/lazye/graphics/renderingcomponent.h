@@ -1,4 +1,5 @@
 #pragma once
+#include <lazye/lazye.h>
 
 #include <lazye/core/component.h>
 #include <lazye/graphics/irenderable.h>
@@ -8,7 +9,7 @@
 
 namespace lazye
 {
-	class RenderingComponent : public Component, public IRenderable
+	class lazyedll RenderingComponent : public Component, public IRenderable
 	{
 	public:
 		RenderingComponent(std::shared_ptr<RenderingContext> context) : m_Context(context)

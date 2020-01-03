@@ -1,10 +1,10 @@
 target_sources( ${EngineTargetName}
     PUBLIC
+    $<INSTALL_INTERFACE:include/lazye/lazye.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/lazye.h>
+
     $<INSTALL_INTERFACE:include/lazye/logger.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/logger.h>
-
-    $<INSTALL_INTERFACE:include/lazye/macros.h>
-    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/macros.h>
 
     PRIVATE
     logger.cpp

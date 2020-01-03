@@ -7,7 +7,11 @@ set ( EngineTargetConfig ${EngineTargetName}Config )
 set ( BuildRootDir ${CMAKE_CURRENT_SOURCE_DIR} )
 
 # Add all source files and includes
-add_library( ${EngineTargetName} )
+if (BUILD_LAZYE_SHARED)
+    add_library( ${EngineTargetName} SHARED )
+else()
+    add_library( ${EngineTargetName} STATIC )
+endif()
 add_subdirectory( src )
 
 source_group( "Sources" REGULAR_EXPRESSION "/*" )
@@ -21,12 +25,33 @@ target_compile_features(
         cxx_std_17 
 )
 
+target_precompile_headers(
+    ${EngineTargetName}
+    PRIVATE
+    include/lazye/lazye.h
+)
+
 # Set warnings as errors
 if (MSVC)
     target_compile_options(${EngineTargetName} PRIVATE /W4 /WX)
 else()
     target_compile_options(${EngineTargetName} PRIVATE -Wall -Wextra -pedantic -Werror)
 endif()
+
+# Set compile flags for exports
+set (PrivateCompileDefinitions "LAZYE_EXPORTS")
+set (PublicCompileDefinitions "")
+if (NOT BUILD_LAZYE_SHARED)
+    set (PublicCompileDefinitions "${PublicCompileDefinitions} LAZYE_STATIC")
+endif()
+
+target_compile_definitions(
+    ${EngineTargetName}
+    PUBLIC
+    ${PublicCompileDefinitions}
+    PRIVATE
+    ${PrivateCompileDefinitions}
+)
 
 # Add Debug Postfix to differentiate artifacts
 set_target_properties( 

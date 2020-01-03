@@ -1,6 +1,6 @@
 #pragma once
+#include <lazye/lazye.h>
 
-#include <lazye/macros.h>
 #include <string>
 
 namespace lazye

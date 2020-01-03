@@ -1,11 +1,12 @@
 #pragma once
+#include <lazye/lazye.h>
 
 namespace lazye
 {
 	/**
 	 * A part of an Entity that can be updated
 	 */
-	class Component
+	class lazyedll Component
 	{
 	public:
 		virtual ~Component() = default;

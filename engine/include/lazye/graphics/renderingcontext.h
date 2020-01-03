@@ -1,4 +1,5 @@
 #pragma once
+#include <lazye/lazye.h>
 
 #include <lazye/graphics/irenderable.h>
 
@@ -9,7 +10,7 @@ namespace lazye
 	class SpriteComponent;
 	class Window;
 
-	class RenderingContext
+	class lazyedll RenderingContext
 	{
 	public:
 		RenderingContext(std::weak_ptr<Window> window) : m_Window(window)

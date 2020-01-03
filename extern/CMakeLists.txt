@@ -15,5 +15,7 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 
 endif()
 
+set(BUILD_SHARED_LIBS FALSE CACHE BOOL "Build external dependencies statically" FORCE)
+
 add_subdirectory(SFML)
 add_subdirectory(Catch2)

@@ -1,4 +1,5 @@
 #pragma once
+#include <lazye/lazye.h>
 
 #include <lazye/graphics/renderingcomponent.h>
 
@@ -12,7 +13,7 @@ namespace sf
 
 namespace lazye
 {
-	class SpriteComponent : public RenderingComponent
+	class lazyedll SpriteComponent : public RenderingComponent
 	{
 		friend void RenderingContext::Render(SpriteComponent&);
 

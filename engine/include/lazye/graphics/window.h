@@ -1,10 +1,10 @@
 #pragma once
+#include <lazye/lazye.h>
 
 #include <memory>
 #include <string>
 
 #include <lazye/graphics/renderingcontext.h>
-#include <lazye/macros.h>
 
 namespace sf
 {
