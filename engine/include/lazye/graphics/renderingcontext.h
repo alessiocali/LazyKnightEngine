@@ -1,24 +1,17 @@
 #pragma once
 #include <lazye/lazye.h>
 
-#include <lazye/graphics/irenderable.h>
-
 #include <memory>
 
 namespace lazye
 {
-	class SpriteComponent;
-	class Window;
+	class Sprite;
 
 	class lazyedll RenderingContext
 	{
 	public:
-		RenderingContext(std::weak_ptr<Window> window) : m_Window(window)
-		{ }
+		virtual void Clear() = 0;
 
-		void Render(SpriteComponent& spriteComponent);
-
-	private:
-		std::weak_ptr<Window> m_Window;
+		virtual void Render(const Sprite& sprite) = 0;
 	};
 }

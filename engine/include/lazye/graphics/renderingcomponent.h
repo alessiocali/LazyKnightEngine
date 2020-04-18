@@ -9,15 +9,14 @@
 
 namespace lazye
 {
+	class Entity;
+
 	class lazyedll RenderingComponent : public Component, public IRenderable
 	{
 	public:
-		RenderingComponent(std::shared_ptr<RenderingContext> context) : m_Context(context)
-		{ }
-
-		void Update(float dt) override;
-
+		void Update(float dt, Entity& owner) override;
+		
 	private:
-		std::shared_ptr<RenderingContext> m_Context;
+		virtual void UpdateTransform(const Entity& owner) = 0;
 	};
 }

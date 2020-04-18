@@ -1,5 +1,8 @@
 target_sources( ${EngineTargetName}
     PUBLIC
+    $<INSTALL_INTERFACE:include/lazye/graphics/graphicsfactory.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/graphicsfactory.h>
+
     $<INSTALL_INTERFACE:include/lazye/graphics/window.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/window.h>
 
@@ -15,8 +18,12 @@ target_sources( ${EngineTargetName}
     $<INSTALL_INTERFACE:include/lazye/graphics/spritecomponent.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/spritecomponent.h>
 
+    $<INSTALL_INTERFACE:include/lazye/graphics/sprite.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/sprite.h>
+
     PRIVATE
-    window.cpp
+    graphicsfactory.cpp
+
     renderingcontext.cpp
     renderingcomponent.cpp
     spritecomponent.cpp

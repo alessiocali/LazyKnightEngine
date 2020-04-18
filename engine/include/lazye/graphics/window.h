@@ -4,23 +4,15 @@
 #include <memory>
 #include <string>
 
-#include <lazye/graphics/renderingcontext.h>
-
-namespace sf
-{
-    class RenderWindow;
-	class Event;
-}
-
 namespace lazye
 {
+	class RenderingContext;
+
 	/**
-	 * Sample Window class 
+	 * Simple Window class 
 	 */
 	class lazyedll Window
 	{
-		friend RenderingContext;
-
 	public:
 		enum class Mode
 		{
@@ -28,18 +20,31 @@ namespace lazye
 			Fullscreen
 		};
 
-		Window(const std::string& title, std::uint16_t width = 800, std::uint32_t height = 600, Mode mode = Mode::Windowed);
-		~Window();
+		struct Size
+		{
+			std::uint16_t width;
+			std::uint16_t height;
+		};
 
-		/**
-		 * Starts an infinite rendering loop which shows the window
-		 */
-		void RenderLoop();
+		Window() = default;
+		virtual ~Window() = default;
 
-	private:
-		std::unique_ptr<sf::RenderWindow> m_Impl;
+		Window(const Window& other) = delete;
+		Window& operator=(const Window& other) = delete;
 
-		void PollEvents();
-		void HandleSFMLEvent(const sf::Event& event);
+		virtual bool IsOpen() const = 0;
+
+		virtual void SetTitle(const std::string& title) = 0;
+		virtual void Resize(Size size) = 0;
+		virtual void SetMode(Mode mode) = 0;
+		virtual void Display() = 0;
+		virtual void Close() = 0;
+
+		virtual RenderingContext& GetRenderingContext() = 0;
+
+	protected:
+		static constexpr Size DEFAULT_WINDOW_SIZE = { 800, 600 };
+		static constexpr const char* DEFAULT_WINDOW_TITLE = "LazyE Window";
+		static constexpr Mode DEFAULT_WINDOW_MODE = Mode::Windowed;
 	};
 }

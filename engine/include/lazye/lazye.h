@@ -1,5 +1,10 @@
 #pragma once
 
+#include <lazye/math/math.h>
+#include <lazye/math/vectors.h>
+#include <lazye/math/physic_units.h>
+#include <lazye/asserts.h>
+
 #ifdef LAZYE_STATIC
 	#define lazyedll
 #else

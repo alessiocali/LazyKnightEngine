@@ -3,34 +3,48 @@
 #include <vector>
 #include <memory>
 
+#include <lazye/core/component.h>
+
 namespace lazye
 {
-	class Component;
-
 	/**
-	 * Something that has a presence in the world.
+	 * @brief Something that has a presence in the world.
 	 */
 	class lazyedll Entity final
 	{
+    public:
+		Entity() = default;
+
 		Entity(const Entity& other) = delete;
 		Entity& operator=(const Entity& other) = delete;
 
-		Entity(Entity&& other) = default;
-		Entity& operator=(Entity&& other) = default;
+		const Vector3f& GetPosition() const { return m_GlobalPosition; }
 
 		void Update(float dt);
 
 		template<class ComponentType, class... Args>
 		void AddComponent(Args&&... args)
 		{
-			m_Components.push_back(
-				std::make_unique<ComponentType>(std::forward(args))
+			m_Components.emplace_back(
+				std::make_unique<ComponentType>(std::forward<Args>(args)...)
 			);
 		}
 
-	private:
-		using ComponentPtr = std::unique_ptr<Component>;
+		template<class ComponentType>
+		ComponentType* GetComponentOfType() const
+		{
+			auto componentIt = std::find_if(m_Components.cbegin(), m_Components.cend(),
+			[](const std::unique_ptr<Component> component)
+			{
+				return dynamic_cast<ComponentType*>(component.get()) != nullptr;
+			});
 
-		std::vector<ComponentPtr> m_Components;
+			return componentIt != m_Components.cend() ?
+				static_cast<ComponentType*>(componentIt->get()) : nullptr;
+		}
+
+	private:
+		std::vector<std::unique_ptr<Component>> m_Components;
+		Vector3f m_GlobalPosition;
 	};
 }

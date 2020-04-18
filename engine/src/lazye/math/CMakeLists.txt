@@ -3,6 +3,9 @@ target_sources( ${EngineTargetName}
     $<INSTALL_INTERFACE:include/lazye/math/math.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/math/math.h>
 
+    $<INSTALL_INTERFACE:include/lazye/math/physic_units.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/math/physic_units.h>
+
     $<INSTALL_INTERFACE:include/lazye/math/vectors.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/math/vectors.h>
 )

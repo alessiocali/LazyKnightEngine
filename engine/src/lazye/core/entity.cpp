@@ -6,9 +6,9 @@ namespace lazye
 {
 	void Entity::Update(float dt)
 	{
-		for (ComponentPtr& component : m_Components)
+		for (auto& component : m_Components)
 		{
-			component->Update(dt);
+			component->Update(dt, *this);
 		}
 	}
 }

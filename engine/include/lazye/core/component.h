@@ -3,14 +3,16 @@
 
 namespace lazye
 {
+	class Entity;
+
 	/**
-	 * A part of an Entity that can be updated
+	 * @brief A part of an Entity that can be updated
 	 */
 	class lazyedll Component
 	{
 	public:
 		virtual ~Component() = default;
 
-		virtual void Update(float dt) = 0;
+		virtual void Update(float dt, Entity& owner) = 0;
 	};
 }

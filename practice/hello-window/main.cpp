@@ -1,10 +1,20 @@
+#include <lazye/core/world.h>
+#include <lazye/graphics/graphicsfactory.h>
 #include <lazye/graphics/window.h>
 
 using namespace lazye;
 
 int main()
 {
-    Window window("Hello Window", 1920, 1080);
-    window.RenderLoop();
+    World& world = World::GetInstance();
+    
+    auto window = GraphicsFactory::GetInstance().CreateWindow();
+    window->Resize(Window::Size{ 1280, 720 });
+    window->SetTitle("Hello LazyE!");
+    window->SetMode(Window::Mode::Windowed);
+
+    world.SetWindow(window);
+    world.Play();
+
 	return 0;
 }
