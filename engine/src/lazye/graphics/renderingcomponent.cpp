@@ -5,9 +5,9 @@
 
 namespace lazye
 {
-	void RenderingComponent::Update(float dt, Entity& owner)
+	void RenderingComponent::Update(float dt)
 	{
-		UpdateTransform(owner);
+		UpdateOwnerTransform();
 		Render(dt, World::GetInstance().GetRenderingContext());
 	}
 }

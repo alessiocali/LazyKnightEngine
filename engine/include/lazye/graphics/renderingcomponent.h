@@ -14,9 +14,9 @@ namespace lazye
 	class lazyedll RenderingComponent : public Component, public IRenderable
 	{
 	public:
-		void Update(float dt, Entity& owner) override;
+		void Update(float dt) override;
 		
 	private:
-		virtual void UpdateTransform(const Entity& owner) = 0;
+		virtual void UpdateOwnerTransform() = 0;
 	};
 }

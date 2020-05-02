@@ -13,6 +13,12 @@ namespace lazye
 	public:
 		virtual ~Component() = default;
 
-		virtual void Update(float dt, Entity& owner) = 0;
+		inline void SetOwner(Entity* owner) { m_Owner = owner; }
+		inline Entity* GetOwner() const { return m_Owner; }
+
+		virtual void Update(float dt) = 0;
+
+	private:
+		Entity* m_Owner;
 	};
 }

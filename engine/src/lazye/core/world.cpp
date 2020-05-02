@@ -22,7 +22,9 @@ namespace lazye
 
     std::weak_ptr<Entity> World::CreateEntity()
     {
-        return m_Entities.emplace_back(std::make_shared<Entity>());
+        std::shared_ptr<Entity>& newEntity = m_Entities.emplace_back(std::make_shared<Entity>());
+        newEntity->SetWorld(this);
+        return newEntity;
     }
 
     void World::Play()

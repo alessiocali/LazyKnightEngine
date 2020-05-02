@@ -19,9 +19,10 @@ namespace lazye
 		context.Render(*m_Sprite);
 	}
 
-	void SpriteComponent::UpdateTransform(const Entity& owner)
+	void SpriteComponent::UpdateOwnerTransform()
 	{
-		Vector2f spritePosition(owner.GetPosition()[0], owner.GetPosition()[1]);
+		const Vector3f& ownerPosition = GetOwner()->GetPosition();
+		Vector2f spritePosition(ownerPosition[0], ownerPosition[1]);
 		m_Sprite->SetPosition(spritePosition);
 	}
 

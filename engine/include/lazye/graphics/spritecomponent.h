@@ -19,7 +19,7 @@ namespace lazye
 		std::unique_ptr<Sprite> m_Sprite;
 
 		void Render(float dt, RenderingContext& context) override;
-		void UpdateTransform(const Entity& owner) override;
+		void UpdateOwnerTransform() override;
 
 		void LoadSprite(const std::string& spritePath);
 	};

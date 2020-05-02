@@ -8,7 +8,7 @@ namespace lazye
 	{
 		for (auto& component : m_Components)
 		{
-			component->Update(dt, *this);
+			component->Update(dt);
 		}
 	}
 }

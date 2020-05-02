@@ -7,6 +7,8 @@
 
 namespace lazye
 {
+	class World;
+
 	/**
 	 * @brief Something that has a presence in the world.
 	 */
@@ -18,6 +20,9 @@ namespace lazye
 		Entity(const Entity& other) = delete;
 		Entity& operator=(const Entity& other) = delete;
 
+		inline void SetWorld(World* world) { m_World = world; }
+		inline World* GetWorld() const { return m_World; }
+
 		const Vector3f& GetPosition() const { return m_GlobalPosition; }
 
 		void Update(float dt);
@@ -25,9 +30,11 @@ namespace lazye
 		template<class ComponentType, class... Args>
 		void AddComponent(Args&&... args)
 		{
-			m_Components.emplace_back(
+			std::unique_ptr<Component>& newComponent = m_Components.emplace_back(
 				std::make_unique<ComponentType>(std::forward<Args>(args)...)
 			);
+
+			newComponent->SetOwner(this);
 		}
 
 		template<class ComponentType>
@@ -44,6 +51,7 @@ namespace lazye
 		}
 
 	private:
+		World* m_World;
 		std::vector<std::unique_ptr<Component>> m_Components;
 		Vector3f m_GlobalPosition;
 	};
