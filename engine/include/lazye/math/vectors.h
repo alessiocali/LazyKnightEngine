@@ -26,6 +26,15 @@ namespace lazye
 		return dot;
 	}
 
+	template<typename T>
+	constexpr Vector<3, T> Cross(const Vector<3, T>& v1, const Vector<3, T>& v2)
+	{
+		T x = v1[1] * v2[2] - v1[2] * v2[1];
+		T y = v1[2] * v2[0] - v1[0] * v2[2];
+		T z = v1[0] * v2[1] - v2[0] * v1[1];
+		return Vector<3, T>(x, y, z);
+	}
+
 	template<std::size_t D, typename T>
 	constexpr auto GetLengthSquared(const Vector<D, T>& v)
 	{
@@ -42,6 +51,12 @@ namespace lazye
 	constexpr Vector<D, T> GetNormalized(const Vector<D, T>& v)
 	{
 		return v / GetLength(v);
+	}
+
+	template<std::size_t D, typename T>
+	constexpr bool IsNormalized(const Vector<D, T>& v)
+	{
+		return EpsilonEqual(GetLengthSquared(v), 1.f);
 	}
 
 	template<std::size_t D, typename T>
@@ -100,6 +115,26 @@ namespace lazye
 		constexpr Vector(T x, T y, T z, T w) : m_Data { x, y, z, w }
 		{ }
 
+		constexpr Vector<D, T>& operator=(const Vector<D, T>& other)
+		{
+			if (this != &other)
+			{
+				m_Data = other.m_Data;
+			}
+
+			return *this;
+		}
+
+		constexpr Vector<D, T>& operator=(Vector<D, T>&& other)
+		{
+			if (this != &other)
+			{
+				m_Data = std::move(other.m_Data);
+			}
+
+			return *this;
+		}
+
 		template<typename Mul>
 		inline constexpr Vector<D, T> operator*(Mul m) const
 		{
@@ -117,7 +152,7 @@ namespace lazye
 			return (*this) * (T(1) / T(d));
 		}
 
-		inline constexpr Vector<D, T> operator+(const Vector<D, T> other) const
+		inline constexpr Vector<D, T> operator+(const Vector<D, T>& other) const
 		{
 			Vector<D, T> addedVector;
 			for (std::size_t i = 0; i < D; i++)
@@ -129,12 +164,12 @@ namespace lazye
 
 		inline constexpr Vector<D, T> operator-() const
 		{
-			Vector<D, T> copy(*this);
+			Vector<D, T> negative;
 			for (std::size_t i = 0; i < D; i++)
 			{
-				copy[i] = -m_Data[i];
+				negative[i] = -m_Data[i];
 			}
-			return copy;
+			return negative;
 		}
 
 		inline constexpr bool operator==(const Vector<D, T>& other) const
@@ -149,18 +184,31 @@ namespace lazye
 			return true;
 		}
 
-		inline constexpr Vector<D, T> operator-(const Vector<D, T> other) const
+		inline constexpr Vector<D, T> operator-(const Vector<D, T>& other) const
 		{
 			return (*this) + (-other);
 		}
 
 		inline constexpr const T& operator[] (std::size_t i) const { return m_Data[i]; }
-		inline T& operator[] (std::size_t i) { return m_Data[i]; }
+		inline constexpr T& operator[] (std::size_t i) { return m_Data[i]; }
 
 		inline constexpr std::size_t Dimension() const { return D; }
 
+		static constexpr Vector<D, T> GetAxisI() { return GetAxis<0>(); }
+		static constexpr Vector<D, T> GetAxisJ() { return GetAxis<1>(); }
+		static constexpr Vector<D, T> GetAxisK() { return GetAxis<2>(); }
+		static constexpr Vector<D, T> GetAxisL() { return GetAxis<3>(); }
+
 	private:
 		std::array<T, D> m_Data;
+
+		template<std::size_t Idx, std::enable_if_t<(Idx < D), bool> = 0>
+		static constexpr Vector<D, T> GetAxis()
+		{
+			Vector<D, T> axis;
+			axis[Idx] = T(1);
+			return axis;
+		}
 	};
 
 	using Vector2i = Vector<2, std::uint32_t>;

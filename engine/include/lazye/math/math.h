@@ -1,12 +1,23 @@
 #pragma once
+#include <lazye/lazye.h>
 
 #include <algorithm>
 #include <type_traits>
 
-#include <lazye/math/vectors.h>
-
 namespace lazye
 {
+	template<typename T, std::enable_if_t<std::is_arithmetic_v<T>, bool> = 0>
+	constexpr T SquareOf(T val)
+	{
+		return val * val;
+	}
+
+	template<typename T, std::enable_if_t<std::is_arithmetic_v<T>, bool> = 0>
+	T Sqrt(T val)
+	{
+		return std::sqrt(val);
+	}
+
 	// Implementation from this thread
 	// https://stackoverflow.com/a/15012792
 	template<typename T, std::enable_if_t<std::is_arithmetic_v<T>, bool> = 0>
@@ -27,4 +38,7 @@ namespace lazye
 	{
 		return EpsilonEqual(t, T());
 	}
+
+	lazyedll float Sin(Radians angle);
+	lazyedll float Cos(Radians angle);
 }

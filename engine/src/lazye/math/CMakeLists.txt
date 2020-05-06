@@ -8,4 +8,11 @@ target_sources( ${EngineTargetName}
 
     $<INSTALL_INTERFACE:include/lazye/math/vectors.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/math/vectors.h>
+
+    $<INSTALL_INTERFACE:include/lazye/math/quaternions.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/math/quaternions.h>
+
+    PRIVATE
+    quaternions.cpp
+    math.cpp
 )

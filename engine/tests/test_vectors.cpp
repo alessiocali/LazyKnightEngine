@@ -74,6 +74,51 @@ SCENARIO("Vectors are correctly constructed and initialized", VectorsTag)
 			}
 		}
 	}
+
+	GIVEN("Vector Axises")
+	{
+		Vector2f bidimI = Vector2f::GetAxisI();
+		Vector2f bidimJ = Vector2f::GetAxisJ();
+
+		Vector3f tridimI = Vector3f::GetAxisI();
+		Vector3f tridimJ = Vector3f::GetAxisJ();
+		Vector3f tridimK = Vector3f::GetAxisK();
+
+		Vector4f quadimI = Vector4f::GetAxisI();
+		Vector4f quadimJ = Vector4f::GetAxisJ();
+		Vector4f quadimK = Vector4f::GetAxisK();
+		Vector4f quadimL = Vector4f::GetAxisL();
+
+		THEN("They are all normalized")
+		{
+			REQUIRE(IsNormalized(bidimI));
+			REQUIRE(IsNormalized(bidimJ));
+
+			REQUIRE(IsNormalized(tridimI));
+			REQUIRE(IsNormalized(tridimJ));
+			REQUIRE(IsNormalized(tridimK));
+			
+			REQUIRE(IsNormalized(quadimI));
+			REQUIRE(IsNormalized(quadimJ));
+			REQUIRE(IsNormalized(quadimK));
+			REQUIRE(IsNormalized(quadimL));
+		}
+
+		AND_THEN("Their values are correct")
+		{
+			REQUIRE(EpsilonEqual(bidimI[0], 1.f));
+			REQUIRE(EpsilonEqual(bidimJ[1], 1.f));
+
+			REQUIRE(EpsilonEqual(tridimI[0], 1.f));
+			REQUIRE(EpsilonEqual(tridimJ[1], 1.f));
+			REQUIRE(EpsilonEqual(tridimK[2], 1.f));
+
+			REQUIRE(EpsilonEqual(quadimI[0], 1.f));
+			REQUIRE(EpsilonEqual(quadimJ[1], 1.f));
+			REQUIRE(EpsilonEqual(quadimK[2], 1.f));
+			REQUIRE(EpsilonEqual(quadimL[3], 1.f));
+		}
+	}
 }
 
 SCENARIO("Mathematical operation on vectors behave as expected", VectorsTag)
@@ -130,6 +175,27 @@ SCENARIO("Mathematical operation on vectors behave as expected", VectorsTag)
 				REQUIRE(EpsilonEqual(biLength, std::sqrt(GetLengthSquared(aVector2))));
 				REQUIRE(EpsilonEqual(triLength, std::sqrt(GetLengthSquared(aVector3))));
 				REQUIRE(EpsilonEqual(quadLength, std::sqrt(GetLengthSquared(aVector4))));
+			}
+		}
+	}
+
+	GIVEN("Tri-dimensional axises")
+	{
+		constexpr Vector3f axisI = Vector3f::GetAxisI();
+		constexpr Vector3f axisJ = Vector3f::GetAxisJ();
+		constexpr Vector3f axisK = Vector3f::GetAxisK();
+
+		WHEN("We compute their cross product")
+		{
+			constexpr Vector3f IxJ = Cross(axisI, axisJ);
+			constexpr Vector3f JxK = Cross(axisJ, axisK);
+			constexpr Vector3f KxI = Cross(axisK, axisI);
+
+			THEN("Each result corresponds to an axis in a right-handed system")
+			{
+				REQUIRE(EpsilonEqual(IxJ, Vector3f::GetAxisK()));
+				REQUIRE(EpsilonEqual(JxK, Vector3f::GetAxisI()));
+				REQUIRE(EpsilonEqual(KxI, Vector3f::GetAxisJ()));
 			}
 		}
 	}
