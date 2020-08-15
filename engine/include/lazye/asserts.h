@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cassert>
+#include <iostream>
 
 namespace lazye
 {
@@ -10,8 +11,8 @@ namespace lazye
     template <typename ConditionType, typename StringType, typename... Args>
     void Assert(ConditionType condition, StringType message, Args... args)
     {
-#ifdef NDEBUG
-        std::cerr << message << ... << args << endl;
+#ifndef NDEBUG
+        ((std::cerr << message) << ... << args) << std::endl;
         assert(condition);
 #endif // NDEBUG
     }
