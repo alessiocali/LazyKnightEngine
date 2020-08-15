@@ -1,21 +1,38 @@
-# Update Git submodules - From https://cliutils.gitlab.io/modern-cmake/chapters/basics/programs.html
-find_package(Git QUIET)
+set(BUILD_SHARED_LIBS FALSE CACHE BOOL "Build external dependencies statically" FORCE)
 
-if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+include(FetchContent)
 
-    execute_process(
-        COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        RESULT_VARIABLE GIT_SUBMOD_RESULT
+macro(FetchContent_AutoPopulate ContentName Repository Tag)
+    
+    FetchContent_Declare(
+        ${ContentName}
+        GIT_REPOSITORY ${Repository}
+        GIT_TAG ${Tag}
     )
 
-    if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-        message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please check out submodules")
+    FetchContent_GetProperties(${ContentName})
+
+    # FetchContent sets the variable based on lowercased name, because reasons
+    STRING(TOLOWER ${ContentName} LcContentName)
+    
+    SET(CONTENT_POPULATED "${${LcContentName}_POPULATED}")
+
+    if ( NOT ${CONTENT_POPULATED} )
+
+        FetchContent_Populate(${ContentName})
+
+        SET(CONTENT_SOURCE_DIR "${${LcContentName}_SOURCE_DIR}")
+        SET(CONTENT_BINARY_DIR "${${LcContentName}_BINARY_DIR}")
+
+        add_subdirectory(
+            ${CONTENT_SOURCE_DIR}
+            ${CONTENT_BINARY_DIR}
+            EXCLUDE_FROM_ALL
+        )
+
     endif()
 
-endif()
-
-set(BUILD_SHARED_LIBS FALSE CACHE BOOL "Build external dependencies statically" FORCE)
+endmacro()
 
 add_subdirectory(SFML)
 add_subdirectory(Catch2)
