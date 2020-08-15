@@ -1,0 +1,11 @@
+set(GENEX_CONFIG_SUFFIX "_$<$<CONFIG:Debug>:d>$<$<CONFIG:Release>:r>")
+set(GENEX_LIBTYPE_SUFFIX "_$<IF:$<BOOL:${BUILD_LAZYE_SHARED}>,dll,lib>")
+
+set(GENEX_EXEC_OUTPUT_SUFFIX "${GENEX_LIBTYPE_SUFFIX}${GENEX_CONFIG_SUFFIX}")
+set(GENEX_LIB_OUTPUT_SUFFIX ${GENEX_CONFIG_SUFFIX})
+
+function(GetFullTargetOutputName TargetName Output)
+    
+    set( ${Output} "${TargetName}$<IF:$<STREQUAL:$<TARGET_PROPERTY:${TargetName},TYPE>,EXECUTABLE>,${GENEX_EXEC_OUTPUT_SUFFIX},${GENEX_LIB_OUTPUT_SUFFIX}>" PARENT_SCOPE)
+
+endfunction()

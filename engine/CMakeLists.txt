@@ -1,6 +1,5 @@
 project(Engine)
 
-set ( EngineTargetName LazyE )
 set ( EngineTargetExports ${EngineTargetName}-Target )
 set ( EngineTargetConfig ${EngineTargetName}Config )
 
@@ -55,11 +54,11 @@ target_compile_definitions(
     ${PrivateCompileDefinitions}
 )
 
-# Add Debug Postfix to differentiate artifacts
+set_common_properties(${EngineTargetName})
+
 set_target_properties( 
     ${EngineTargetName}
     PROPERTIES
-    DEBUG_POSTFIX "_d"
     CXX_EXTENSIONS OFF
 )
 

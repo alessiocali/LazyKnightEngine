@@ -11,7 +11,13 @@ project(
 )
 
 set(BUILD_LAZYE_SHARED ${BUILD_SHARED_LIBS} CACHE BOOL "Build lazye dynamically or statically" FORCE)
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+include(GeneratorExpressions.cmake)
+include(Helpers.cmake)
+
+set(EngineTargetName LazyE)
 
 # Add directories for dependencies, the engine and the practice part
 add_subdirectory(extern)
