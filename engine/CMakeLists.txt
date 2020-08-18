@@ -62,11 +62,13 @@ set_target_properties(
     CXX_EXTENSIONS OFF
 )
 
+# Find dependencies
+find_package(SFML COMPONENTS graphics REQUIRED)
+
 # Link dependencies
 target_link_libraries( 
     ${EngineTargetName}
     PRIVATE
-        sfml-window 
         sfml-graphics
 )
 

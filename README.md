@@ -7,7 +7,23 @@ This is a repository I use as a sandbox while studying game programming. My idea
 
 The idea is to have a practice framework in place which expands with time. It's supposed to be for self learning and improvement, so I doubt you'll find anything useful for you strictly. Also it's supposed to be filled with errors and bad practice which I try to improve over time. Still, be free to browse it.
 
-# List of dependencies (as git submodules)
+# List of dependencies
 
-* SFML
-* Catch2
+* Git
+* Python3
+
+# Usage
+
+Start by running.
+
+```
+python fetch-dependencies.py
+```
+
+It will initialize and run VCPKG to grab and install the required libraries. After that create the cmake project by running
+
+```
+cmake -B build
+```
+
+And you should have your project ready for compilation inside the build directory
