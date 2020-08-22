@@ -1,5 +1,8 @@
 #include <lazye/core/world.h>
 
+#include <chrono>
+#include <thread>
+
 #include <lazye/core/entity.h>
 
 #include <lazye/graphics/window.h>
@@ -8,15 +11,14 @@
 
 namespace lazye
 {
+    static constexpr std::uint16_t FRAMES_PER_SECOND = 60;
+    static constexpr auto TIME_PER_FRAME = std::chrono::duration<float>(1 / static_cast<float>(FRAMES_PER_SECOND));
+
     World& World::GetInstance()
     {
         static World world;
         return world;
     }
-
-    World::World()
-        : m_Window(GraphicsFactory::GetInstance().CreateWindow())
-    { }
 
     World::~World() = default;
 
@@ -32,6 +34,7 @@ namespace lazye
         while (IsAlive())
         {
             Update(0.f);
+            std::this_thread::sleep_for(TIME_PER_FRAME);
         }
     }
 
@@ -54,7 +57,11 @@ namespace lazye
 
     void World::SetWindow(std::unique_ptr<Window>& window)
     {
-        m_Window->Close();
+        if (m_Window != nullptr && m_Window->IsOpen())
+        {
+            m_Window->Close();
+        }
+
         m_Window = std::move(window); 
     }
 

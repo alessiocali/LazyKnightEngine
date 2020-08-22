@@ -18,7 +18,7 @@ source_group( "Sources\\Core" REGULAR_EXPRESSION "core/*" )
 source_group( "Sources\\Graphics" REGULAR_EXPRESSION "graphics/*" )
 source_group( "Sources\\Math" REGULAR_EXPRESSION "math/*" )
 source_group( "Backends" REGULAR_EXPRESSION "/backends/*" )
-source_group( "Backends\\SFML" REGULAR_EXPRESSION "/backends/sfml/*" )
+source_group( "Backends\\SDL" REGULAR_EXPRESSION "/backends/sdl/*" )
 
 target_compile_features( 
     ${EngineTargetName}
@@ -34,9 +34,9 @@ target_precompile_headers(
 
 # Set warnings as errors
 if (MSVC)
-    target_compile_options(${EngineTargetName} PRIVATE /W4 /WX)
+    target_compile_options(${EngineTargetName} PRIVATE /W4 /WX /wd4100)
 else()
-    target_compile_options(${EngineTargetName} PRIVATE -Wall -Wextra -pedantic -Werror)
+    target_compile_options(${EngineTargetName} PRIVATE -Wall -Wextra -pedantic -Werror -Wno-unused-parameter)
 endif()
 
 # Set compile flags for exports
@@ -63,13 +63,16 @@ set_target_properties(
 )
 
 # Find dependencies
-find_package(SFML COMPONENTS graphics REQUIRED)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
 
 # Link dependencies
 target_link_libraries( 
     ${EngineTargetName}
     PRIVATE
-        sfml-graphics
+        SDL2::SDL2
+        ${SDL2_IMAGE_LIBRARIES}
 )
 
 # Setup the include directories
@@ -80,6 +83,8 @@ target_include_directories(
         $<BUILD_INTERFACE:${BuildRootDir}/include/>
     PRIVATE
         src
+        ${SDL2_INCLUDE_DIRS}
+        ${SDL2_IMAGE_INCLUDE_DIRS}
 )
 
 # Setup installation paths

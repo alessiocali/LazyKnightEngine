@@ -2,8 +2,12 @@
     "dependencies" : 
     [
         {
-            "name" : "SFML",
-            "VCPKG-ID" : "sfml"
+            "name" : "SDL2",
+            "VCPKG-ID" : "sdl2"
+        },
+        {
+            "name" : "SDL2 Image",
+            "VCPKG-ID" : "sdl2-image"
         },
         {
             "name" : "Catch2",

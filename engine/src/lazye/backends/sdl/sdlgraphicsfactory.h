@@ -3,11 +3,9 @@
 
 #include <lazye/graphics/graphicsfactory.h>
 
-#include <memory>
-
 namespace lazye
 {
-    class SFMLGraphicsFactory : public GraphicsFactory
+    class SDLGraphicsFactory : public GraphicsFactory
     {
     public:
         std::unique_ptr<Window> CreateWindow() const override;
@@ -15,6 +13,6 @@ namespace lazye
 
     private:
         friend GraphicsFactory& GraphicsFactory::GetInstance();
-        SFMLGraphicsFactory() = default;
+        SDLGraphicsFactory() = default;
     };
 }

@@ -33,9 +33,9 @@ namespace lazye
         void Update(float dt);
 
     private:
-        World();
+        World() = default;
 
-        std::unique_ptr<Window> m_Window;
+        std::unique_ptr<Window> m_Window = nullptr;
         std::vector<std::shared_ptr<Entity>> m_Entities;
     };
 }

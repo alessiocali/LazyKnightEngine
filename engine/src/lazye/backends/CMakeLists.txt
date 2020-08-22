@@ -3,4 +3,4 @@ target_sources( ${EngineTargetName}
     backenddefines.h
 )
 
-add_subdirectory( sfml )
+add_subdirectory( sdl )
