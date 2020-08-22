@@ -14,5 +14,5 @@ add_custom_command(
     TARGET BasicScene POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${CMAKE_CURRENT_LIST_DIR}/Resources
-    $<TARGET_FILE_DIR:BasicScene>/Resources
+    ${CMAKE_CURRENT_BINARY_DIR}/Resources
 )
