@@ -19,7 +19,6 @@ int main()
     auto window = GraphicsFactory::GetInstance().CreateWindow();
     window->SetTitle("Base Scene");
     window->SetMode(Window::Mode::Windowed);
-    window->SetPosition({ 120, 120 });
 
     World& world = World::GetInstance();
     world.SetWindow(window);

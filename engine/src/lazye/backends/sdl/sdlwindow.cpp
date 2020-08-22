@@ -11,8 +11,8 @@ namespace lazye
         m_SDLWindow = SDLHelper::SDL_WindowPtr(
             SDL_CreateWindow(
                 DEFAULT_WINDOW_TITLE, 
-                0, 
-                0, 
+                SDL_WINDOWPOS_UNDEFINED, 
+                SDL_WINDOWPOS_UNDEFINED, 
                 DEFAULT_WINDOW_SIZE.width, 
                 DEFAULT_WINDOW_SIZE.height, 
                 SDL_WINDOW_SHOWN
