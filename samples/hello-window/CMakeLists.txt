@@ -6,4 +6,4 @@ target_link_libraries(
         LazyE 
 )
 
-set_practice_properties( HelloWindow )
+set_sample_properties( HelloWindow )

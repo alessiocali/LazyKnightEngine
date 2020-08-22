@@ -8,7 +8,7 @@ target_link_libraries(
         LazyE 
 )
 
-set_practice_properties( BasicScene )
+set_sample_properties( BasicScene )
 
 add_custom_command(
     TARGET BasicScene POST_BUILD

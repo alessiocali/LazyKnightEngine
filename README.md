@@ -1,9 +1,9 @@
 This is a repository I use as a sandbox while studying game programming. My idea was to develop a project structure which would contain:
 
 * An automated build environment based on CMake.
-* A lazy implementation of a game engine based mostly on existing library (currently abuses the Pimpl idiom a lot).
+* A lazy implementation of a game engine based mostly on existing libraries.
 * Automated tests based on Catch2.
-* A set of small "games" built on the above engine which try to address a certain topic of the stuff I end up studying.
+* A set of small samples built on the above engine which showase its functionalities
 
 The idea is to have a practice framework in place which expands with time. It's supposed to be for self learning and improvement, so I doubt you'll find anything useful for you strictly. Also it's supposed to be filled with errors and bad practice which I try to improve over time. Still, be free to browse it.
 

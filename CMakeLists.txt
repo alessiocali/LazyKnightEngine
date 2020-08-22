@@ -10,9 +10,10 @@ project(
     GameProgrammingExcercises
     VERSION     0.1
     DESCRIPTION 
-"An introduction to various game programming practices\
- and programming books via a series of excercises, samples\
- and a custom engine built with minimum effort in mind."
+"Yet and Yet Again Another Game Engine in C++, because why not.\
+ The name goes for 'LazyEngine' because it was supposed to reuse\
+ as many dependencies as possible, but I'm not so sure about that\
+ anymore."
     LANGUAGES   CXX
 )
 
@@ -25,6 +26,6 @@ include(Helpers.cmake)
 
 set(EngineTargetName LazyE)
 
-# Add directories for the engine and the practice part
+# Add directories for the engine and the samples
 add_subdirectory(engine)
-add_subdirectory(practice)
+add_subdirectory(samples)

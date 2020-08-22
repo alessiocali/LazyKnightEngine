@@ -1,10 +1,10 @@
-function(set_practice_properties TargetName)
+function(set_sample_properties TargetName)
     set_common_properties(${TargetName})
 
     set_target_properties(
         ${TargetName}
         PROPERTIES
-        FOLDER ${PracticeFolder}
+        FOLDER ${SampleFolder}
     )
 
     if (WIN32 AND BUILD_LAZYE_SHARED)
@@ -23,7 +23,7 @@ function(set_practice_properties TargetName)
 
 endfunction()
 
-set(PracticeFolder Practice)
+set(SampleFolder Samples)
 add_subdirectory(hello-lazye)
 add_subdirectory(hello-window)
 add_subdirectory(basic-scene)
