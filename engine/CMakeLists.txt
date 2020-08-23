@@ -11,7 +11,6 @@ if (BUILD_LAZYE_SHARED)
 else()
     add_library( ${EngineTargetName} STATIC )
 endif()
-add_subdirectory( src )
 
 source_group( "Sources" REGULAR_EXPRESSION "/*" )
 source_group( "Sources\\Core" REGULAR_EXPRESSION "core/*" )
@@ -62,18 +61,8 @@ set_target_properties(
     CXX_EXTENSIONS OFF
 )
 
-# Find dependencies
+# Add additional module finders
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-
-# Link dependencies
-target_link_libraries( 
-    ${EngineTargetName}
-    PRIVATE
-        SDL2::SDL2
-        ${SDL2_IMAGE_LIBRARIES}
-)
 
 # Setup the include directories
 target_include_directories( 
@@ -83,8 +72,6 @@ target_include_directories(
         $<BUILD_INTERFACE:${BuildRootDir}/include/>
     PRIVATE
         src
-        ${SDL2_INCLUDE_DIRS}
-        ${SDL2_IMAGE_INCLUDE_DIRS}
 )
 
 # Setup installation paths
@@ -124,6 +111,9 @@ install(
     ${CMAKE_CURRENT_BINARY_DIR}/${EngineTargetConfig}.cmake
     DESTINATION ${INSTALL_CONFIGDIR}
 )
+
+# Add the actual sources
+add_subdirectory( src )
 
 # Include the Tests
 add_subdirectory( tests )

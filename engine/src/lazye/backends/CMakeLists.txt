@@ -1,6 +1,14 @@
-target_sources( ${EngineTargetName}
+# We might support switching in the future, for the moment it will stay the default
+set ( USE_GRAPHICS_BACKEND_SDL TRUE )
+
+configure_file( cmake/BackendDefines.h.in backenddefines.h )
+
+target_sources( 
+    ${EngineTargetName}
     PRIVATE
-    backenddefines.h
+        ${CMAKE_CURRENT_BINARY_DIR}/backenddefines.h
 )
 
-add_subdirectory( sdl )
+if ( USE_GRAPHICS_BACKEND_SDL )
+    add_subdirectory( sdl )
+endif()

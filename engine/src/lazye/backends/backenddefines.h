@@ -1,1 +1,0 @@
-#define USE_GRAPHICS_BACKEND_SDL
