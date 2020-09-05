@@ -1,3 +1,4 @@
+# Find SDL packages
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
@@ -29,6 +30,9 @@ target_sources( ${EngineTargetName}
     sdlgraphicsfactory.h
     sdlgraphicsfactory.cpp
 
+    sdlwindowbase.h
+    sdlwindowbase.cpp
+
     sdlwindow.h
     sdlwindow.cpp
 
@@ -38,3 +42,7 @@ target_sources( ${EngineTargetName}
     sdlsprite.h
     sdlsprite.cpp
 )
+
+if ( USE_GRAPHICS_API_OPENGL )
+    add_subdirectory(opengl)
+endif()

@@ -10,6 +10,10 @@
             "VCPKG-ID" : "sdl2-image"
         },
         {
+            "name" : "GLAD",
+            "VCPKG-ID" : "glad"
+        },
+        {
             "name" : "Catch2",
             "VCPKG-ID" : "catch2"
         }

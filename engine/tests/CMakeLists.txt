@@ -1,4 +1,4 @@
-add_executable( LazyE-Tests 
+add_executable( ${EngineTargetTests}
     catch_main.cpp
     test_vectors.cpp
     test_matrix.cpp

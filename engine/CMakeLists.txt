@@ -2,6 +2,7 @@ project(Engine)
 
 set ( EngineTargetExports ${EngineTargetName}-Target )
 set ( EngineTargetConfig ${EngineTargetName}Config )
+set ( EngineTargetTests ${EngineTargetName}-Tests )
 
 set ( BuildRootDir ${CMAKE_CURRENT_SOURCE_DIR} )
 
@@ -18,6 +19,8 @@ source_group( "Sources\\Graphics" REGULAR_EXPRESSION "graphics/*" )
 source_group( "Sources\\Math" REGULAR_EXPRESSION "math/*" )
 source_group( "Backends" REGULAR_EXPRESSION "/backends/*" )
 source_group( "Backends\\SDL" REGULAR_EXPRESSION "/backends/sdl/*" )
+source_group( "Backends\\SDL\\OpenGL" REGULAR_EXPRESSION "backends/sdl/opengl/*" )
+source_group( "Backends\\OpenGL" REGULAR_EXPRESSION "/backends/opengl/*" )
 
 target_compile_features( 
     ${EngineTargetName}

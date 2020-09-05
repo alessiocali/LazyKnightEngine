@@ -1,1 +1,2 @@
 #cmakedefine USE_GRAPHICS_BACKEND_SDL
+#cmakedefine USE_GRAPHICS_API_OPENGL
