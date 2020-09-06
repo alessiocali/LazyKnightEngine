@@ -64,7 +64,10 @@ namespace lazye
 
     void OpenGLSprite::Draw() const
     {
-        // TODO: Actually draw a texture and not some white thingy
-        GetSpriteBaseVAO().Draw(GetShaderProgram());
+        // TODO: Actually draw a texture and not some uniform thingy
+        OpenGLProgram::Instance programInstance = GetShaderProgram().Instantiate();
+        programInstance.SetUniform("Tint", Vector4f{ 1.f, 0.5f, 0.f, 1.f });
+
+        GetSpriteBaseVAO().Draw();
     }
 }

@@ -60,6 +60,8 @@ namespace lazye
 		inline constexpr const T& operator[] (std::size_t i) const { return m_Data[i]; }
 		inline constexpr T& operator[] (std::size_t i) { return m_Data[i]; }
 
+		inline constexpr T* GetDataPtr() { return m_Data.data(); }
+
 		inline constexpr std::size_t Dimension() const { return D; }
 
 		static constexpr Vector<D, T> GetZero() { return Vector<D, T>(); }
@@ -81,9 +83,13 @@ namespace lazye
 		}
 	};
 
-	using Vector2i = Vector<2, std::uint32_t>;
-	using Vector3i = Vector<3, std::uint32_t>;
-	using Vector4i = Vector<4, std::uint32_t>;
+	using Vector2ui = Vector<2, unsigned int>;
+	using Vector3ui = Vector<3, unsigned int>;
+	using Vector4ui = Vector<4, unsigned int>;
+
+	using Vector2i = Vector<2, int>;
+	using Vector3i = Vector<3, int>;
+	using Vector4i = Vector<4, int>;
 
 	using Vector2f = Vector<2, float>;
 	using Vector3f = Vector<3, float>;

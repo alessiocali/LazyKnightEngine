@@ -114,7 +114,7 @@ namespace lazye
         /**
          *  Automatically draws this VAO using its EBO. Fails if no EBO is set.
          */
-        void Draw(const OpenGLProgram& program);
+        void Draw();
 
         class Binder
         {

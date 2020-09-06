@@ -25,14 +25,13 @@ namespace lazye
         return Bind_Internal();
     }
 
-    void OpenGLVertexArrayObject::Draw(const OpenGLProgram& program)
+    void OpenGLVertexArrayObject::Draw()
     {
         if (m_ElementBufferObject == nullptr)
         {
             return;
         }
         
-        program.Activate();
         Binder vaoBinder = Bind();
         glDrawElements(GL_TRIANGLES, m_ElementCount, GL_UNSIGNED_INT, static_cast<void*>(0));
     }

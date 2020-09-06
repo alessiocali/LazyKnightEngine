@@ -2,6 +2,8 @@
 
 namespace lazye
 {
+    bool OpenGLProgram::Instance::ms_ProgramUsageFlag { false };
+
     OpenGLProgram::OpenGLProgram(const OpenGLVertexShader::Instance& vertexShader, const OpenGLFragmentShader::Instance& fragmentShader)
     {
         m_ProgramID = glCreateProgram();
@@ -38,8 +40,29 @@ namespace lazye
         }
     }
 
-    void OpenGLProgram::Activate() const
+    OpenGLProgram::Instance OpenGLProgram::Instantiate() const
     {
-        glUseProgram(m_ProgramID);
+        return Instance(this);
+    }
+
+    OpenGLProgram::Instance::Instance(const OpenGLProgram* owner)
+        : m_OwnerProgramID(owner->m_ProgramID)
+    {
+        Assert(!ms_ProgramUsageFlag);
+        Assert(owner->m_ProgramID != 0);
+        glUseProgram(owner->m_ProgramID);
+        ms_ProgramUsageFlag = true;
+    }
+
+    OpenGLProgram::Instance::~Instance()
+    {
+        Assert(ms_ProgramUsageFlag);
+        glUseProgram(0);
+        ms_ProgramUsageFlag = false;
+    }
+
+    GLint OpenGLProgram::Instance::GetUniformLocationFromName(const std::string& name)
+    {
+        return glGetUniformLocation(m_OwnerProgramID, name.c_str());
     }
 }

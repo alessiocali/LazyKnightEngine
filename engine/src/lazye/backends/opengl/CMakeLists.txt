@@ -23,6 +23,8 @@ target_sources(
     PRIVATE
         opengltypetraits.h
 
+        opengluniformhelper.h
+
         openglapi.h
         openglapi.cpp
 
