@@ -16,9 +16,9 @@ function(ConfigureShader ShaderType ShaderFile ShaderSourceList)
 
 endfunction()
 
-function(ConfigureAllShaders ShaderDirectory ShaderType)
+function(ConfigureAllShaders ShaderDirectory ShaderType ShaderExt)
 
-    file( GLOB ShaderList ${ShaderDirectory}/*.glsl )
+    file( GLOB ShaderList ${ShaderDirectory}/*${ShaderExt} )
 
     foreach ( Shader IN LISTS ShaderList )
 
@@ -29,5 +29,5 @@ function(ConfigureAllShaders ShaderDirectory ShaderType)
 
 endfunction()
 
-ConfigureAllShaders( vertex OpenGLVertexShader )
-ConfigureAllShaders( fragment OpenGLFragmentShader )
+ConfigureAllShaders( vertex OpenGLVertexShader .vs )
+ConfigureAllShaders( fragment OpenGLFragmentShader .fs )

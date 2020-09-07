@@ -45,6 +45,9 @@ target_sources(
         openglvertexarrayobject.h
         openglvertexarrayobject.cpp
 
+        opengltexture.h
+        opengltexture.cpp
+
         openglsprite.h
         openglsprite.cpp
 )

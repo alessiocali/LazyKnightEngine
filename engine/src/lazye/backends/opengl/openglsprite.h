@@ -1,14 +1,19 @@
 #pragma once
 
+#include <memory.h>
+
 namespace lazye
 {
     class OpenGLVertexArrayObject;
     class OpenGLProgram;
+    class OpenGLTexture;
+    struct ColorSpace;
 
     class OpenGLSprite final
     {
     public:
-        OpenGLSprite();
+        OpenGLSprite(std::byte* rawData, const ColorSpace& sourceSpace, unsigned int width, unsigned int height);
+        ~OpenGLSprite();
 
         void Draw() const;
 
@@ -18,5 +23,7 @@ namespace lazye
         static bool ms_BaseInit;
 
         static void InitializeBase();
+
+        std::unique_ptr<OpenGLTexture> m_Texture;
     };
 }

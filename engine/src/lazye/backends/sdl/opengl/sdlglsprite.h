@@ -2,21 +2,22 @@
 
 #include <lazye/graphics/sprite.h>
 
-#include <lazye/backends/opengl/openglsprite.h>
-
 namespace lazye
 {
+    class OpenGLSprite;
+
     class SDLGLSprite final : public Sprite
     {
     public:
         SDLGLSprite(const std::string& path);
+        ~SDLGLSprite();
 
         void SetPosition(const Vector2f& position) override;
         void SetRotation(Radians rotation) override;
 
-        inline void Draw() const { m_GLSprite.Draw(); }
+        void Draw() const;
 
     private:
-        OpenGLSprite m_GLSprite;
+        std::unique_ptr<OpenGLSprite> m_GLSprite;
     };
 }

@@ -16,6 +16,32 @@ namespace lazye::SDLHelper
         }
     };
 
+    /**
+     *  RAII around SDL_Lock/UnlockSurface. Use with caution, the Surface lifetime must outspan this object.
+     */
+    struct SDL_SurfaceLocker
+    {
+        SDL_SurfaceLocker(SDL_Surface* surface) 
+            : m_Surface(surface)
+        {
+            if (SDL_MUSTLOCK(m_Surface))
+            {
+                SDL_LockSurface(m_Surface);
+            }
+        }
+
+        ~SDL_SurfaceLocker() 
+        { 
+            if (SDL_MUSTLOCK(m_Surface))
+            {
+                SDL_UnlockSurface(m_Surface);
+            }
+        }
+
+    private:
+        SDL_Surface* m_Surface;
+    };
+
     using SDL_WindowDeleter = SDL_Deleter<SDL_Window, SDL_DestroyWindow>;
     using SDL_RendererDeleter = SDL_Deleter<SDL_Renderer, SDL_DestroyRenderer>;
     using SDL_SurfaceDeleter = SDL_Deleter<SDL_Surface, SDL_FreeSurface>;
