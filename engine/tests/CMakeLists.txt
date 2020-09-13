@@ -1,6 +1,7 @@
 add_executable( LazyE-Tests 
     catch_main.cpp
     test_vectors.cpp
+    test_matrix.cpp
     test_quaternions.cpp
 )
 

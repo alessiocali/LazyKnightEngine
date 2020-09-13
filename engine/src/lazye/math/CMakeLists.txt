@@ -9,6 +9,9 @@ target_sources( ${EngineTargetName}
     $<INSTALL_INTERFACE:include/lazye/math/vectors.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/math/vectors.h>
 
+    $<INSTALL_INTERFACE:include/lazye/math/matrix.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/math/matrix.h>
+
     $<INSTALL_INTERFACE:include/lazye/math/quaternions.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/math/quaternions.h>
 

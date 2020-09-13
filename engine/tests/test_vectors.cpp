@@ -73,6 +73,13 @@ SCENARIO("Vectors are correctly constructed and initialized", VectorsTag)
 				REQUIRE(aVector4[3] == 10.f);
 			}
 		}
+
+		AND_THEN("Comparison with identical vectors succeeds")
+		{
+			REQUIRE(aVector2 == Vector2f({ 1.f, 2.f }));
+			REQUIRE(aVector3 == Vector3f({ 1.f, 2.f, 3.f }));
+			REQUIRE(aVector4 == Vector4f({ 1.f, 2.f, 3.f, 4.f }));
+		}
 	}
 
 	GIVEN("Vector Axises")

@@ -4,90 +4,12 @@
 #include <array>
 #include <cstdint>
 
-#include <math.h>
-
 namespace lazye
 {
-	template<
-		std::size_t D, typename T = float,
-		std::enable_if_t<std::is_arithmetic_v<T>, bool> = 0,
-		std::enable_if_t<(D > 1) && (D <= 4), bool> = 0
-	>
-	class Vector;
-
-	template<std::size_t D, typename T>
-	constexpr auto Dot(const Vector<D, T>& v1, const Vector<D, T>& v2)
-	{
-		auto dot = v1[0] * v2[0];
-		for (std::size_t i = 1; i < D; i++)
-		{
-			dot += v1[i] * v2[i];
-		}
-		return dot;
-	}
-
-	template<typename T>
-	constexpr Vector<3, T> Cross(const Vector<3, T>& v1, const Vector<3, T>& v2)
-	{
-		T x = v1[1] * v2[2] - v1[2] * v2[1];
-		T y = v1[2] * v2[0] - v1[0] * v2[2];
-		T z = v1[0] * v2[1] - v2[0] * v1[1];
-		return Vector<3, T>(x, y, z);
-	}
-
-	template<std::size_t D, typename T>
-	constexpr auto GetLengthSquared(const Vector<D, T>& v)
-	{
-		return Dot(v, v);
-	}
-
-	template<std::size_t D, typename T>
-	constexpr auto GetLength(const Vector<D, T>& v)
-	{
-		return std::sqrt(GetLengthSquared(v));
-	}
-
-	template<std::size_t D, typename T>
-	constexpr Vector<D, T> GetNormalized(const Vector<D, T>& v)
-	{
-		return v / GetLength(v);
-	}
-
-	template<std::size_t D, typename T>
-	constexpr bool IsNormalized(const Vector<D, T>& v)
-	{
-		return EpsilonEqual(GetLengthSquared(v), 1.f);
-	}
-
-	template<std::size_t D, typename T>
-	constexpr bool EpsilonEqual(const Vector<D, T>& v1, const Vector<D, T>& v2)
-	{
-		for (std::size_t i = 0 ; i < D ; i++)
-		{
-			if (EpsilonNotEqual(v1[i], v2[i]))
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-
-	template<typename Mul, std::size_t D, typename T>
-	constexpr Vector<D, T> operator*(Mul m, const Vector<D, T>& v)
-	{
-		return v * m;
-	}
-
-	template<typename Div, std::size_t D, typename T>
-	constexpr Vector<D, T> operator/(Div d, const Vector<D, T>& v)
-	{
-		return v / d;
-	}
-
     template<
         std::size_t D, typename T,
-        std::enable_if_t<std::is_arithmetic_v<T>, bool>,
-        std::enable_if_t<(D > 1) && (D <= 4), bool>
+        std::enable_if_t<std::is_arithmetic_v<T>, bool> = false,
+        std::enable_if_t<(D > 1) && (D <= 4), bool> = false
 	>
     class Vector
 	{
@@ -133,60 +55,6 @@ namespace lazye
 			}
 
 			return *this;
-		}
-
-		template<typename Mul>
-		inline constexpr Vector<D, T> operator*(Mul m) const
-		{
-			Vector<D, T> scaledVector;
-			for (std::size_t i = 0; i < D; i++)
-			{
-				scaledVector[i] = m_Data[i] * m;
-			}
-			return scaledVector;
-		}
-
-		template<typename Div>
-		inline constexpr Vector<D, T> operator/(Div d) const
-		{
-			return (*this) * (T(1) / T(d));
-		}
-
-		inline constexpr Vector<D, T> operator+(const Vector<D, T>& other) const
-		{
-			Vector<D, T> addedVector;
-			for (std::size_t i = 0; i < D; i++)
-			{
-				addedVector[i] = m_Data[i] + other[i];
-			}
-			return addedVector;
-		}
-
-		inline constexpr Vector<D, T> operator-() const
-		{
-			Vector<D, T> negative;
-			for (std::size_t i = 0; i < D; i++)
-			{
-				negative[i] = -m_Data[i];
-			}
-			return negative;
-		}
-
-		inline constexpr bool operator==(const Vector<D, T>& other) const
-		{
-			for (std::size_t i = 0; i < D; i++)
-			{
-				if (m_Data[i] != other[i])
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-
-		inline constexpr Vector<D, T> operator-(const Vector<D, T>& other) const
-		{
-			return (*this) + (-other);
 		}
 
 		inline constexpr const T& operator[] (std::size_t i) const { return m_Data[i]; }
