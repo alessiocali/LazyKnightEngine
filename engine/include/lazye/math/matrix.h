@@ -25,17 +25,29 @@ namespace lazye
         Matrix() { std::fill(m_Data, m_Data + M * N, T(0)); }
         Matrix(const T(&list)[N * M]) { std::memcpy(m_Data, list, N * M * sizeof(T)); }
 
-        static MatrixType GetZero() { return MatrixType(); }
+        static const MatrixType& GetZero() 
+        {
+            static MatrixType s_Zero;
+            return s_Zero;
+        }
         
         template<std::enable_if_t<M == N, bool> = false>
-        static MatrixType GetIdentity()
+        static const MatrixType& GetIdentity()
         {
-            MatrixType result = MatrixType::GetZero();
-            for (std::size_t i = 0; i < N; i++)
+            static bool s_Init = false;
+            static MatrixType s_Identity = MatrixType::GetZero();
+
+            if (!s_Init) 
             {
-                result(i, i) = T(1);
+                for (std::size_t i = 0; i < N; i++)
+                {
+                    s_Identity(i, i) = T(1);
+                }
+
+                s_Init = true;
             }
-            return result;
+
+            return s_Identity;
         }
 
         inline const T* GetDataPtr() const { return m_Data; }
