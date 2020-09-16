@@ -56,6 +56,11 @@ namespace lazye
          */
         Quaternion GetInverse() const;
 
+        inline float X() const { return m_Vector[0]; }
+        inline float Y() const { return m_Vector[1]; }
+        inline float Z() const { return m_Vector[2]; }
+        inline float W() const { return m_Scalar; }
+
     private:
         Vector3f m_Vector;
         float m_Scalar;

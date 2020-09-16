@@ -62,6 +62,8 @@ namespace lazye
 
 		inline constexpr std::size_t Dimension() const { return D; }
 
+		static constexpr Vector<D, T> GetZero() { return Vector<D, T>(); }
+
 		static constexpr Vector<D, T> GetAxisI() { return GetAxis<0>(); }
 		static constexpr Vector<D, T> GetAxisJ() { return GetAxis<1>(); }
 		static constexpr Vector<D, T> GetAxisK() { return GetAxis<2>(); }

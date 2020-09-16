@@ -4,6 +4,7 @@
 #include <memory>
 
 #include <lazye/core/component.h>
+#include <lazye/math/transform.h>
 
 namespace lazye
 {
@@ -23,7 +24,15 @@ namespace lazye
 		inline void SetWorld(World* world) { m_World = world; }
 		inline World* GetWorld() const { return m_World; }
 
-		const Vector3f& GetPosition() const { return m_GlobalPosition; }
+		inline const Vector3f& GetPosition() const { return GetTransform().GetPosition(); }
+		inline const Vector3f& GetScaling() const { return GetTransform().GetScaling(); }
+		inline const Quaternion& GetRotation() const { return GetTransform().GetRotation(); }
+		inline const Transform& GetTransform() const { return m_Transform; }
+
+		inline void SetPosition(const Vector3f& position) { m_Transform.SetPosition(position); }
+		inline void SetScaling(const Vector3f& scaling) { m_Transform.SetScaling(scaling); }
+		inline void SetRotation(const Quaternion& rotation) { m_Transform.SetRotation(rotation); }
+		inline void SetTransform(const Transform& transform) { m_Transform = transform; }
 
 		void Update(float dt);
 
@@ -53,6 +62,6 @@ namespace lazye
 	private:
 		World* m_World;
 		std::vector<std::unique_ptr<Component>> m_Components;
-		Vector3f m_GlobalPosition;
+		Transform m_Transform;
 	};
 }

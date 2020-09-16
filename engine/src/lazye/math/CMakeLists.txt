@@ -15,7 +15,11 @@ target_sources( ${EngineTargetName}
     $<INSTALL_INTERFACE:include/lazye/math/quaternions.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/math/quaternions.h>
 
+    $<INSTALL_INTERFACE:include/lazye/math/transform.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/math/transform.h>
+
     PRIVATE
     quaternions.cpp
+    transform.cpp
     math.cpp
 )

@@ -1,6 +1,8 @@
 #include <catch2/catch.hpp>
 
 #include <lazye/math/quaternions.h>
+#include <lazye/math/matrix.h>
+#include <lazye/math/math.h>
 
 constexpr const char* QuaternionsTag = "[quaternions]";
 
@@ -64,6 +66,68 @@ SCENARIO("Quaternions are correctly constructed and initialized", QuaternionsTag
                 REQUIRE(EpsilonEqual(quat * _270Deg, _315Deg));
                 REQUIRE(EpsilonEqual(quat * _315Deg, _0Deg));
             }
+        }
+    }
+};
+
+SCENARIO("Quaternion-to-Matrix decomposition", QuaternionsTag)
+{
+    using namespace lazye;
+
+    GIVEN("The identity quaternion")
+    {
+        Quaternion identity { Quaternion::GetIdentity() };
+
+        THEN("It decomposes into the Identity matrix")
+        {
+            Matrix44f resultMatrix;
+            QuaternionToRotationMatrix(resultMatrix, identity);
+
+            REQUIRE(EpsilonEqual(resultMatrix, Matrix44f::GetIdentity()));
+        }
+    }
+
+    GIVEN("90-degree Rotations against the different axises")
+    {
+        Quaternion aroundX{ Quaternion::FromAngleAxis({ DegToRad(90.f), Vector3f::GetAxisI() }) };
+        Quaternion aroundY{ Quaternion::FromAngleAxis({ DegToRad(90.f), Vector3f::GetAxisJ() }) };
+        Quaternion aroundZ{ Quaternion::FromAngleAxis({ DegToRad(90.f), Vector3f::GetAxisK() }) };
+    
+        THEN("The corresponding matrices are as expected")
+        {
+            Matrix44f matAroundX(
+            {
+                1.f, 0.f, 0.f, 0.f,
+                0.f, 0.f, -1.f, 0.f,
+                0.f, 1.f, 0.f, 0.f,
+                0.f, 0.f, 0.f, 1.f
+            });
+            
+            Matrix44f matAroundY(
+            {
+                0.f, 0.f, 1.f, 0.f,
+                0.f, 1.f, 0.f, 0.f,
+                -1.f, 0.f, 0.f, 0.f,
+                0.f, 0.f, 0.f, 1.f
+            });
+            
+            Matrix44f matAroundZ(
+            {
+                0.f, -1.f, 0.f, 0.f,
+                1.f, 0.f, 0.f, 0.f,
+                0.f, 0.f, 1.f, 0.f,
+                0.f, 0.f, 0.f, 1.f
+            });
+
+            Matrix44f resultX, resultY, resultZ;
+
+            QuaternionToRotationMatrix(resultX, aroundX);
+            QuaternionToRotationMatrix(resultY, aroundY);
+            QuaternionToRotationMatrix(resultZ, aroundZ);
+
+            REQUIRE(EpsilonEqual(resultX, matAroundX));
+            REQUIRE(EpsilonEqual(resultY, matAroundY));
+            REQUIRE(EpsilonEqual(resultZ, matAroundZ));
         }
     }
 }

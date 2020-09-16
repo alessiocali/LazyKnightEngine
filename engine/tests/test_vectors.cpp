@@ -10,9 +10,9 @@ SCENARIO("Vectors are correctly constructed and initialized", VectorsTag)
 
 	GIVEN("Null initialized vectors")
 	{
-		Vector2f aVector2;
-		Vector3f aVector3;
-		Vector4f aVector4;
+		Vector2f aVector2 { Vector2f::GetZero() };
+		Vector3f aVector3 { Vector3f::GetZero() };
+		Vector4f aVector4 { Vector4f::GetZero() };
 
 		THEN("They are approximately null")
 		{

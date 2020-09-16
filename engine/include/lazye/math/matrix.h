@@ -3,8 +3,6 @@
 #include <type_traits>
 #include <cstring>
 
-#include <lazye/math/vectors.h>
-
 namespace lazye
 {
     /**
@@ -24,7 +22,7 @@ namespace lazye
     public:
         using MatrixType = Matrix<T, M, N>;
 
-        Matrix() { std::memset(m_Data, T(0), M * N * sizeof(T)); }
+        Matrix() { std::fill(m_Data, m_Data + M * N, T(0)); }
         Matrix(const T(&list)[N * M]) { std::memcpy(m_Data, list, N * M * sizeof(T)); }
 
         static MatrixType GetZero() { return MatrixType(); }

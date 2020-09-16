@@ -9,6 +9,8 @@
 
 namespace lazye
 {
+    class Quaternion;
+
 	template<typename T, std::enable_if_t<std::is_arithmetic_v<T>, bool> = 0>
 	constexpr T SquareOf(T val)
 	{
@@ -422,4 +424,6 @@ namespace lazye
 
         return inverse;
     }
+
+    lazyedll void QuaternionToRotationMatrix(Matrix44f& targetMatrix, const Quaternion& quaternion);
 }
