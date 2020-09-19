@@ -21,9 +21,7 @@ namespace lazye
 
 	void SpriteComponent::UpdateOwnerTransform()
 	{
-		const Vector3f& ownerPosition = GetOwner()->GetPosition();
-		Vector2f spritePosition(ownerPosition[0], ownerPosition[1]);
-		m_Sprite->SetPosition(spritePosition);
+		m_Sprite->SetTransform(GetOwner()->GetTransform());
 	}
 
 	void SpriteComponent::LoadSprite(const std::string& spritePath)

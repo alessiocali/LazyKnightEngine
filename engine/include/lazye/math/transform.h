@@ -13,6 +13,9 @@ namespace lazye
         inline const Vector3f& GetScaling() const { return m_Scaling; }
         inline const Quaternion& GetRotation() const { return m_Rotation; }
 
+        void UpdateMatrix();
+
+        const Matrix44f& GetMatrix() const { return m_Matrix; }
         const Matrix44f& GetUpdatedMatrix();
 
         void SetPosition(const Vector3f& position);

@@ -80,13 +80,14 @@ namespace lazye
         ms_BaseInit = true;
     }
 
-    void OpenGLSprite::Draw() const
+    void OpenGLSprite::Draw(const Matrix44f& transform /* = Matrix44f::GetZero() */) const
     {
         m_Texture->Bind();
 
         OpenGLProgram::Instance programInstance = GetShaderProgram().Instantiate();
+        programInstance.SetUniform("Transform", transform);
         programInstance.SetUniform("Albedo", m_Texture->GetTextureType().m_UnitIdx);
-
+        
         GetSpriteBaseVAO().Draw();
     }
 }

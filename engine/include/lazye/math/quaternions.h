@@ -14,6 +14,13 @@ namespace lazye
         Vector3f m_Axis;
     };
 
+    struct EulerAngles
+    {
+        Radians m_Pitch;
+        Radians m_Roll;
+        Radians m_Yaw;
+    };
+
     bool IsNormalized(const Quaternion& quaternion);
     bool EpsilonEqual(const Quaternion& q1, const Quaternion& q2);
 
@@ -55,6 +62,11 @@ namespace lazye
          *  be unitary.
          */
         Quaternion GetInverse() const;
+
+        /**
+         *  @brief Decomposes this Quaternion in its Euler Angles representation
+         */
+        EulerAngles ToEulerAngles() const;
 
         inline float X() const { return m_Vector[0]; }
         inline float Y() const { return m_Vector[1]; }

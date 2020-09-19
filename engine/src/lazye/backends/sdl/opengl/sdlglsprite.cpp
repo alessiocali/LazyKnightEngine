@@ -85,18 +85,8 @@ namespace lazye
 
     SDLGLSprite::~SDLGLSprite() = default;
 
-    void SDLGLSprite::SetPosition(const Vector2f& position)
-    {
-        // TODO
-    }
-
-    void SDLGLSprite::SetRotation(Radians rotation)
-    {
-        // TODO
-    }
-
     void SDLGLSprite::Draw() const
     {
-        m_GLSprite->Draw();
+        m_GLSprite->Draw(m_Matrix);
     }
 }

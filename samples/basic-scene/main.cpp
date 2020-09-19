@@ -14,8 +14,6 @@ using namespace lazye;
 
 int main()
 {
-    system("pwd");
-
     auto window = GraphicsFactory::GetInstance().CreateWindow();
     window->SetTitle("Base Scene");
     window->SetMode(Window::Mode::Windowed);

@@ -26,16 +26,16 @@ namespace lazye
 	// Implementation from this thread
 	// https://stackoverflow.com/a/15012792
 	template<typename T, std::enable_if_t<std::is_arithmetic_v<T>, bool> = 0>
-	constexpr bool EpsilonEqual(const T& t1, const T& t2)
+	constexpr bool EpsilonEqual(const T& t1, const T& t2, T epsilon = std::numeric_limits<T>::epsilon())
 	{
 		auto scale = std::max({ T(1), std::abs(t1), std::abs(t2) });
-		return std::abs(t1 - t2) <= std::numeric_limits<T>::epsilon() * scale;
+		return std::abs(t1 - t2) <= epsilon * scale;
 	}
 
 	template<typename T>
-	constexpr bool EpsilonNotEqual(const T& t1, const T& t2)
+	constexpr bool EpsilonNotEqual(const T& t1, const T& t2, T epsilon = std::numeric_limits<T>::epsilon())
 	{
-		return !EpsilonEqual(t1, t2);
+		return !EpsilonEqual(t1, t2, epsilon);
 	}
 
 	template<typename T>
@@ -92,11 +92,11 @@ namespace lazye
     }
 
     template<std::size_t D, typename T>
-    constexpr bool EpsilonEqual(const Vector<D, T>& v1, const Vector<D, T>& v2)
+    constexpr bool EpsilonEqual(const Vector<D, T>& v1, const Vector<D, T>& v2, T epsilon = std::numeric_limits<T>::epsilon())
     {
         for (std::size_t i = 0; i < D; i++)
         {
-            if (EpsilonNotEqual(v1[i], v2[i]))
+            if (EpsilonNotEqual(v1[i], v2[i], epsilon))
             {
                 return false;
             }
@@ -105,13 +105,13 @@ namespace lazye
     }
 
     template<typename T, std::size_t M, std::size_t N>
-    constexpr bool EpsilonEqual(const Matrix<T, M, N>& m1, const Matrix<T, M, N>& m2)
+    constexpr bool EpsilonEqual(const Matrix<T, M, N>& m1, const Matrix<T, M, N>& m2, T epsilon = std::numeric_limits<T>::epsilon())
     {
         for (std::size_t i = 0; i < M; i++)
         {
             for (std::size_t j = 0; j < N; j++)
             {
-                if (EpsilonNotEqual(m1(i, j), m2(i, j)))
+                if (EpsilonNotEqual(m1(i, j), m2(i, j), epsilon))
                 {
                     return false;
                 }
@@ -425,5 +425,7 @@ namespace lazye
         return inverse;
     }
 
-    lazyedll void QuaternionToRotationMatrix(Matrix44f& targetMatrix, const Quaternion& quaternion);
+    lazyedll void SetToTranslationMatrix(Matrix44f& targetMatrix, const Vector3f translation);
+    lazyedll void SetToRotationMatrix(Matrix44f& targetMatrix, const Quaternion& quaternion);
+    lazyedll void SetToScalingMatrix(Matrix44f& targetMatrix, const Vector3f scaling);
 }

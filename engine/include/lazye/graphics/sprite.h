@@ -5,12 +5,13 @@
 
 namespace lazye
 {
+    class Transform;
+
     class lazyedll Sprite
     {
     public:
         virtual ~Sprite() = default;
 
-        virtual void SetPosition(const Vector2f& position) = 0;
-        virtual void SetRotation(Radians rotation) = 0;
+        virtual void SetTransform(const Transform& transform) = 0;
     };
 }

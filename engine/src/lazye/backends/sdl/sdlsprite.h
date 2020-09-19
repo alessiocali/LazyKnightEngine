@@ -19,16 +19,13 @@ namespace lazye
         SDL_Texture* GetTexture() const;
 
         const Vector2f& GetPosition() const;
-        Radians GetRotation() const;
 
-        void SetPosition(const Vector2f& position) override;
-        void SetRotation(Radians rotation) override;
-
+        void SetTransform(const Transform& transform) override;
+        
     private:
         SDLHelper::SDL_TexturePtr m_Texture;
         std::string m_SourceFilePath;
 
         Vector2f m_Position = { 0.f, 0.f };
-        Radians m_Rotation = 0.f;
     };
 }

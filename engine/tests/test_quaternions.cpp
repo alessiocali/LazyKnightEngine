@@ -70,7 +70,7 @@ SCENARIO("Quaternions are correctly constructed and initialized", QuaternionsTag
     }
 };
 
-SCENARIO("Quaternion-to-Matrix decomposition", QuaternionsTag)
+SCENARIO("Quaternion decomposition", QuaternionsTag)
 {
     using namespace lazye;
 
@@ -81,9 +81,18 @@ SCENARIO("Quaternion-to-Matrix decomposition", QuaternionsTag)
         THEN("It decomposes into the Identity matrix")
         {
             Matrix44f resultMatrix;
-            QuaternionToRotationMatrix(resultMatrix, identity);
+            SetToRotationMatrix(resultMatrix, identity);
 
             REQUIRE(EpsilonEqual(resultMatrix, Matrix44f::GetIdentity()));
+        }
+
+        AND_THEN("It decomposes into null angles")
+        {
+            EulerAngles eulers = identity.ToEulerAngles();
+
+            REQUIRE(EpsilonNull(eulers.m_Pitch));
+            REQUIRE(EpsilonNull(eulers.m_Roll));
+            REQUIRE(EpsilonNull(eulers.m_Yaw));
         }
     }
 
@@ -121,13 +130,33 @@ SCENARIO("Quaternion-to-Matrix decomposition", QuaternionsTag)
 
             Matrix44f resultX, resultY, resultZ;
 
-            QuaternionToRotationMatrix(resultX, aroundX);
-            QuaternionToRotationMatrix(resultY, aroundY);
-            QuaternionToRotationMatrix(resultZ, aroundZ);
+            SetToRotationMatrix(resultX, aroundX);
+            SetToRotationMatrix(resultY, aroundY);
+            SetToRotationMatrix(resultZ, aroundZ);
 
             REQUIRE(EpsilonEqual(resultX, matAroundX));
             REQUIRE(EpsilonEqual(resultY, matAroundY));
             REQUIRE(EpsilonEqual(resultZ, matAroundZ));
+        }
+
+        AND_THEN("They decompose correctly into Euler angles")
+        {
+            EulerAngles eulerX = aroundX.ToEulerAngles();
+            EulerAngles eulerY = aroundY.ToEulerAngles();
+            EulerAngles eulerZ = aroundZ.ToEulerAngles();
+
+            REQUIRE(EpsilonEqual(eulerX.m_Pitch, DegToRad(90)));
+            REQUIRE(EpsilonNull(eulerX.m_Roll));
+            REQUIRE(EpsilonNull(eulerY.m_Yaw));
+
+            // Asin is slightly inaccurate, so let's account for a larger epsilon
+            REQUIRE(EpsilonEqual(eulerY.m_Roll, DegToRad(90), 0.001f));
+            REQUIRE(EpsilonNull(eulerY.m_Yaw));
+            REQUIRE(EpsilonNull(eulerY.m_Pitch));
+
+            REQUIRE(EpsilonEqual(eulerZ.m_Yaw, DegToRad(90)));
+            REQUIRE(EpsilonNull(eulerZ.m_Roll));
+            REQUIRE(EpsilonNull(eulerZ.m_Pitch));
         }
     }
 }

@@ -22,6 +22,14 @@ namespace lazye
         Invalidate();
     }
 
+    void Transform::UpdateMatrix()
+    {
+        if (m_Dirty)
+        {
+            RecomputeMatrix();
+        }
+    }
+
     const Matrix44f& Transform::GetUpdatedMatrix()
     {
         if (m_Dirty)
@@ -39,15 +47,13 @@ namespace lazye
 
     void Transform::RecomputeMatrix()
     {
-        QuaternionToRotationMatrix(m_Matrix, m_Rotation);
+        Matrix44f scale, rotation, translation;
 
-        m_Matrix(0, 0) *= m_Scaling[0];
-        m_Matrix(1, 1) *= m_Scaling[1];
-        m_Matrix(2, 2) *= m_Scaling[2];
+        SetToScalingMatrix(scale, m_Scaling);
+        SetToRotationMatrix(rotation, m_Rotation);
+        SetToTranslationMatrix(translation, m_Position);
 
-        m_Matrix(0, 3) = m_Position[0];
-        m_Matrix(1, 3) = m_Position[1];
-        m_Matrix(2, 3) = m_Position[2];
+        m_Matrix = translation * rotation * scale;
 
         m_Dirty = false;
     }

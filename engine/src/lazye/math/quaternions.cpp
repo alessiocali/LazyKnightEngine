@@ -50,4 +50,20 @@ namespace lazye
         Assert(IsNormalized(*this));
         return Quaternion(-m_Vector, m_Scalar);
     }
+
+    EulerAngles Quaternion::ToEulerAngles() const
+    {
+        EulerAngles result;
+
+        const float x = X();
+        const float y = Y();
+        const float z = Z();
+        const float w = W();
+        
+        result.m_Pitch  = std::atan2(2 * (w * x + y * z), 1 - 2 * (x * x + y * y));
+        result.m_Roll   = std::asin(2 * (w * y - z * x));
+        result.m_Yaw    = std::atan2(2 * (w * z + x * y), 1 - 2 * (y * y + z * z));
+
+        return result;
+    }
 }

@@ -60,7 +60,7 @@ namespace lazye
 		inline constexpr const T& operator[] (std::size_t i) const { return m_Data[i]; }
 		inline constexpr T& operator[] (std::size_t i) { return m_Data[i]; }
 
-		inline constexpr T* GetDataPtr() { return m_Data.data(); }
+		inline constexpr const T* GetDataPtr() const { return m_Data.data(); }
 
 		inline constexpr std::size_t Dimension() const { return D; }
 

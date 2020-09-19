@@ -1,5 +1,7 @@
 #pragma once
 
+#include <lazye/math/transform.h>
+
 #include <lazye/graphics/sprite.h>
 
 namespace lazye
@@ -12,12 +14,16 @@ namespace lazye
         SDLGLSprite(const std::string& path);
         ~SDLGLSprite();
 
-        void SetPosition(const Vector2f& position) override;
-        void SetRotation(Radians rotation) override;
-
+        // Yes I'm aware this is a sort of unnecessary copy...
+        // But I'm kinda limited by the interface, I should probably
+        // change it
+        inline void SetTransform(const Transform& transform) override { m_Matrix = transform.GetMatrix(); };
+        
         void Draw() const;
 
     private:
         std::unique_ptr<OpenGLSprite> m_GLSprite;
+
+        Matrix44f m_Matrix;
     };
 }

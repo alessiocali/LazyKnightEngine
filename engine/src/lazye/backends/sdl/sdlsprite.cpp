@@ -1,5 +1,7 @@
 #include <lazye/backends/sdl/sdlsprite.h>
 
+#include <lazye/math/transform.h>
+
 #include <SDL_image.h>
 
 namespace lazye
@@ -19,18 +21,8 @@ namespace lazye
         return m_Position;
     }
 
-    Radians SDLSprite::GetRotation() const
+    void SDLSprite::SetTransform(const Transform& transform)
     {
-        return m_Rotation;
-    }
-
-    void SDLSprite::SetPosition(const Vector2f& position)
-    {
-        m_Position = position;
-    }
-
-    void SDLSprite::SetRotation(Radians rotation)
-    {
-        m_Rotation = rotation;
+        m_Position = Vector2f(transform.GetPosition()[0], transform.GetPosition()[1]);
     }
 }

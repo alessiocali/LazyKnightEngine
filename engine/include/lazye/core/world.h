@@ -1,6 +1,7 @@
 #pragma once
 #include <lazye/lazye.h>
 
+#include <chrono>
 #include <vector>
 #include <memory>
 
@@ -37,5 +38,7 @@ namespace lazye
 
         std::unique_ptr<Window> m_Window = nullptr;
         std::vector<std::shared_ptr<Entity>> m_Entities;
+        std::chrono::time_point<std::chrono::steady_clock> m_LastFrameIstant;
+        std::chrono::duration<float> m_CurrentDt;
     };
 }

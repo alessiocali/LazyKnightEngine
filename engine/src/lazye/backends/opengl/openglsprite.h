@@ -2,6 +2,8 @@
 
 #include <memory.h>
 
+#include <lazye/math/math.h>
+
 namespace lazye
 {
     class OpenGLVertexArrayObject;
@@ -15,7 +17,7 @@ namespace lazye
         OpenGLSprite(std::byte* rawData, const ColorSpace& sourceSpace, unsigned int width, unsigned int height);
         ~OpenGLSprite();
 
-        void Draw() const;
+        void Draw(const Matrix44f& transform = Matrix44f::GetZero()) const;
 
     private:
         static OpenGLVertexArrayObject& GetSpriteBaseVAO();

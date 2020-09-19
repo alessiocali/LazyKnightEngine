@@ -33,8 +33,12 @@ namespace lazye
     {
         while (IsAlive())
         {
-            Update(0.f);
+            m_LastFrameIstant = std::chrono::steady_clock::now();
+
+            Update(m_CurrentDt.count());
             std::this_thread::sleep_for(TIME_PER_FRAME);
+            
+            m_CurrentDt = std::chrono::steady_clock::now() - m_LastFrameIstant;
         }
     }
 
