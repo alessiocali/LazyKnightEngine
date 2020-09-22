@@ -6,7 +6,7 @@
 
 namespace lazye
 {
-    lazyedll class Transform
+    class lazyedll Transform
     {
     public:
         inline const Vector3f& GetPosition() const { return m_Position; }

@@ -7,6 +7,9 @@
 #include <lazye/backends/opengl/openglsprite.h>
 #include <lazye/backends/opengl/opengltexture.h>
 
+#include <lazye/graphics/camera.h>
+#include <lazye/math/transform.h>
+
 namespace lazye
 {
     const ColorSpace& GetColorSpaceFromSDLFormat(Uint32 format)
@@ -85,8 +88,8 @@ namespace lazye
 
     SDLGLSprite::~SDLGLSprite() = default;
 
-    void SDLGLSprite::Draw() const
+    void SDLGLSprite::Draw(const Matrix44f& view, const Matrix44f& projection) const
     {
-        m_GLSprite->Draw(m_Matrix);
+        m_GLSprite->Draw(m_Matrix, view, projection);
     }
 }

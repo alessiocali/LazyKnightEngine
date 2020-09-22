@@ -19,7 +19,7 @@ namespace lazye
         // change it
         inline void SetTransform(const Transform& transform) override { m_Matrix = transform.GetMatrix(); };
         
-        void Draw() const;
+        void Draw(const Matrix44f& view, const Matrix44f& projection) const;
 
     private:
         std::unique_ptr<OpenGLSprite> m_GLSprite;

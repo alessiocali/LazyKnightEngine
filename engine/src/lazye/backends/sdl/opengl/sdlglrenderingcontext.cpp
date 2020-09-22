@@ -8,12 +8,14 @@ namespace lazye
 {
     void SDLGLRenderingContext::Clear()
     {
-        glClearColor(0.0f, 0.0f, 0.0f, 1.f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], 1.f);
+        glClear(GL_COLOR_BUFFER_BIT  | GL_DEPTH_BUFFER_BIT);
     }
 
     void SDLGLRenderingContext::Render(const Sprite& sprite)
     {
-        static_cast<const SDLGLSprite&>(sprite).Draw();
+        const Matrix44f& view = Matrix44f::GetIdentity();
+        const Matrix44f& projection = m_Camera ? m_Camera->GetProjectionMatrix() : Matrix44f::GetIdentity();
+        static_cast<const SDLGLSprite&>(sprite).Draw(view, projection);
     }
 }

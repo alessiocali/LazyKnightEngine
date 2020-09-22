@@ -6,7 +6,8 @@
 namespace lazye
 {
     /**
-     *  A bidimensional Matrix implementation.
+     *  A bidimensional Matrix implementation. Values are accessed in row-major
+     *  order (operator() accepts (row, col)).
      *
      *  @param <T>:     The underlying type of the Matrix
      *  @param <M>:     The number of rows of the Matrix

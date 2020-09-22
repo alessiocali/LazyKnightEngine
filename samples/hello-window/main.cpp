@@ -13,7 +13,7 @@ int main()
     window->SetTitle("Hello LazyE!");
     window->SetMode(Window::Mode::Windowed);
 
-    world.SetWindow(window);
+    world.SetWindow(std::move(window));
     world.Play();
 
 	return 0;

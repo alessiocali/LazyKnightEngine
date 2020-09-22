@@ -7,10 +7,11 @@
 
 namespace lazye
 {
-    class SDLRenderingContext : public RenderingContext
+    class SDLRenderingContext final : public RenderingContext
     {
     public:
         void Init(SDL_Window* sdlWindow);
+        void SetClearColor(const Vector3f& color) override;
         void Clear() override;
         void Render(const Sprite& sprite) override;
         void Present();

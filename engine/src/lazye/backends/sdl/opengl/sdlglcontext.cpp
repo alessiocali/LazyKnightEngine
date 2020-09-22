@@ -25,6 +25,8 @@ namespace lazye
         int width, height;
         SDL_GetWindowSize(sdlWindow, &width, &height);
         Resize(width, height);
+
+        glEnable(GL_DEPTH_TEST);
     }
 
     void SDLGLContext::Resize(int width, int height)

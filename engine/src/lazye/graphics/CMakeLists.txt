@@ -6,6 +6,9 @@ target_sources( ${EngineTargetName}
     $<INSTALL_INTERFACE:include/lazye/graphics/window.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/window.h>
 
+    $<INSTALL_INTERFACE:include/lazye/graphics/camera.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/camera.h>
+
     $<INSTALL_INTERFACE:include/lazye/graphics/irenderable.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/irenderable.h>
 
@@ -22,6 +25,7 @@ target_sources( ${EngineTargetName}
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/sprite.h>
 
     PRIVATE
+    camera.cpp
     graphicsfactory.cpp
 
     renderingcontext.cpp

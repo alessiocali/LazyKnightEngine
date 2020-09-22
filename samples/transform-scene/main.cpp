@@ -49,11 +49,11 @@ private:
 int main()
 {
     auto window = GraphicsFactory::GetInstance().CreateWindow();
-    window->SetTitle("Base Scene");
+    window->SetTitle("Transform Scene");
     window->SetMode(Window::Mode::Windowed);
 
     World& world = World::GetInstance();
-    world.SetWindow(window);
+    world.SetWindow(std::move(window));
     
     {
         shared_ptr<Entity> sampleEntity = world.CreateEntity().lock();
