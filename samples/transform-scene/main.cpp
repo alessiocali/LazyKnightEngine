@@ -2,6 +2,7 @@
 #include <lazye/core/entity.h>
 #include <lazye/graphics/graphicsfactory.h>
 #include <lazye/graphics/window.h>
+#include <lazye/graphics/camera.h>
 #include <lazye/graphics/spritecomponent.h>
 
 #include <iostream>
@@ -29,11 +30,11 @@ public:
     {
         m_InternalClock += dt;
 
-        GetOwner()->SetPosition(Vector3f{ Sin(m_TranslationFrequency * m_InternalClock), Cos(m_TranslationFrequency * m_InternalClock), 0.f });
+        GetOwner()->SetPosition(Vector3f{ Sin(m_TranslationFrequency * m_InternalClock), 0.f, Cos(m_TranslationFrequency * m_InternalClock) });
         GetOwner()->SetRotation(
-            Quaternion::FromAngleAxis({ m_HorizontalRotationFrequency * dt, Vector3f::GetAxisK() }) * 
+            Quaternion::FromAngleAxis({ m_HorizontalRotationFrequency * dt, Vector3f::GetAxisJ() }) * 
             GetOwner()->GetRotation() * 
-            Quaternion::FromAngleAxis({ m_VerticalRotationFrequency * dt, Vector3f::GetAxisJ() })
+            Quaternion::FromAngleAxis({ m_VerticalRotationFrequency * dt, Vector3f::GetAxisK() })
         );
         GetOwner()->SetScaling(Vector3f{ 1.5f + Sin(m_ScalingFrequency * m_InternalClock), 1.5f + Sin(m_ScalingFrequency * m_InternalClock), 1.f });
     }
@@ -51,6 +52,8 @@ int main()
     auto window = GraphicsFactory::GetInstance().CreateWindow();
     window->SetTitle("Transform Scene");
     window->SetMode(Window::Mode::Windowed);
+    window->Resize({ 1280, 720 });
+    window->GetRenderingContext().SetCamera(std::make_unique<Camera>(Camera::FrustumParameters({ DegToRad(75.f), 16.f / 9.f, 0.1f, 100.f }), Camera::Type::Perspective));
 
     World& world = World::GetInstance();
     world.SetWindow(std::move(window));

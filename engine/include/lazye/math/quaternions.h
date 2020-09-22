@@ -42,6 +42,7 @@ namespace lazye
             : m_Vector(vector), m_Scalar(scalar)
         { }
 
+        static Quaternion FromLookAt(const Vector3f& lookAt);
         static Quaternion GetIdentity() { return Quaternion(0, 0, 0, 1.f); }
         static Quaternion FromAngleAxis(const AngleAxis& angleAxis);
         

@@ -68,6 +68,31 @@ SCENARIO("Quaternions are correctly constructed and initialized", QuaternionsTag
             }
         }
     }
+
+    GIVEN("Some directions")
+    {
+        Vector3f test1 = GetNormalized(Vector3f { 1.f, 1.f, 1.f });
+        Vector3f test2 = GetNormalized(Vector3f { 1.f, 0.f, 1.f });
+        Vector3f test3 = GetNormalized(Vector3f { 0.f, 1.f, 1.f });
+        Vector3f test4 = GetNormalized(Vector3f { 1.f, 1.f, 0.f });
+
+        WHEN("We construct LookAt Quaternions from them")
+        {
+            Quaternion lookAt1 = Quaternion::FromLookAt(test1);
+            Quaternion lookAt2 = Quaternion::FromLookAt(test2);
+            Quaternion lookAt3 = Quaternion::FromLookAt(test3);
+            Quaternion lookAt4 = Quaternion::FromLookAt(test4);
+
+            THEN("Rotation the Y axis with them yields the original LookAt vector")
+            {
+                // ...Save some floating point errors
+                REQUIRE(EpsilonEqual(lookAt1 * Vector3f::GetAxisJ(), test1, 0.00001f));
+                REQUIRE(EpsilonEqual(lookAt2 * Vector3f::GetAxisJ(), test2, 0.00001f));
+                REQUIRE(EpsilonEqual(lookAt3 * Vector3f::GetAxisJ(), test3, 0.00001f));
+                REQUIRE(EpsilonEqual(lookAt4 * Vector3f::GetAxisJ(), test4, 0.00001f));
+            }
+        }
+    }
 };
 
 SCENARIO("Quaternion decomposition", QuaternionsTag)

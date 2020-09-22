@@ -16,6 +16,25 @@ namespace lazye
         return EpsilonEqual(q1.m_Vector, q2.m_Vector) && EpsilonEqual(q1.m_Scalar, q2.m_Scalar);
     }
 
+    Quaternion Quaternion::FromLookAt(const Vector3f& lookAt)
+    {
+        // Adapted from https://gamedev.stackexchange.com/questions/15070/orienting-a-model-to-face-a-target
+
+        const Vector3f normalizedLookAt = GetNormalized(lookAt);
+
+        const float cosToY = Dot(Vector3f::GetAxisJ(), normalizedLookAt);
+        if (EpsilonEqual(cosToY, 1.f))
+        {
+            return Quaternion::GetIdentity();
+        }
+        else if (EpsilonEqual(cosToY, -1.f))
+        {
+            return Quaternion::FromAngleAxis({ DegToRad(180.f), Vector3f::GetAxisK() });
+        }
+
+        return Quaternion::FromAngleAxis({ std::acos(cosToY), GetNormalized(Cross(Vector3f::GetAxisJ(), normalizedLookAt)) });
+    }
+
     Quaternion Quaternion::FromAngleAxis(const AngleAxis& angleAxis)
     {
         Assert(IsNormalized(angleAxis.m_Axis));

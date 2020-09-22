@@ -14,7 +14,9 @@ namespace lazye
 
     void SDLGLRenderingContext::Render(const Sprite& sprite)
     {
-        const Matrix44f& view = Matrix44f::GetIdentity();
+        if (m_Camera) { m_Camera->UpdateViewMatrix(); }
+
+        const Matrix44f& view = m_Camera ? m_Camera->GetViewMatrix() : Matrix44f::GetIdentity();
         const Matrix44f& projection = m_Camera ? m_Camera->GetProjectionMatrix() : Matrix44f::GetIdentity();
         static_cast<const SDLGLSprite&>(sprite).Draw(view, projection);
     }

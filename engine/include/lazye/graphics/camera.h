@@ -1,6 +1,8 @@
 #pragma once
 #include <lazye/lazye.h>
 
+#include <lazye/math/vectors.h>
+#include <lazye/math/quaternions.h>
 #include <lazye/math/matrix.h>
 
 namespace lazye
@@ -33,13 +35,28 @@ namespace lazye
 
         Camera(const FrustumParameters& params, const Type type);
 
-        inline const Matrix44f& GetProjectionMatrix() const { return m_Matrix; }
+        void UpdateViewMatrix();
+
+        inline void SetLookAt(const Vector3f& lookAt) { SetRotation(Quaternion::FromLookAt(lookAt)); }
+
+        void SetRotation(const Quaternion& rotation);
+        void SetPosition(const Vector3f& position);
+
+        inline const Matrix44f& GetProjectionMatrix() const { return m_ProjectionMatrix; }
+        inline const Matrix44f& GetViewMatrix() const { return m_ViewMatrix; }
 
     private:
 
         static void SetToOrthogonalProjectionMatrix(Matrix44f& matrix, const FrustumParameters& params);
         static void SetToPerspectiveProjectionMatrix(Matrix44f& matrix, const FrustumParameters& params);
 
-        Matrix44f m_Matrix;
+        void Invalidate();
+
+        bool m_Dirty { true };
+        Vector3f m_Position { Vector3f::GetZero() };
+        Quaternion m_Rotation { Quaternion::GetIdentity() };
+
+        Matrix44f m_ProjectionMatrix { Matrix44f::GetIdentity() };
+        Matrix44f m_ViewMatrix { Matrix44f::GetIdentity() };
     };
 }

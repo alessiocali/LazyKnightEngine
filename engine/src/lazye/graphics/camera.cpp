@@ -1,21 +1,54 @@
 #include <lazye/graphics/camera.h>
 
+#include <lazye/graphics/graphicsfactory.h>
+#include <lazye/math/transform.h>
+
 namespace lazye
 {
     Camera::Camera(const FrustumParameters& params, const Type type)
+        : m_ViewMatrix(Matrix44f::GetIdentity())
     {
         switch (type)
         {
         case Type::Orthogonal:
-            SetToOrthogonalProjectionMatrix(m_Matrix, params);
+            SetToOrthogonalProjectionMatrix(m_ProjectionMatrix, params);
             break;
         case Type::Perspective:
-            SetToPerspectiveProjectionMatrix(m_Matrix, params);
+            SetToPerspectiveProjectionMatrix(m_ProjectionMatrix, params);
             break;
         default:
             Assert(false, "Unknown Camera Type");
             break;
         }
+    }
+
+    void Camera::UpdateViewMatrix()
+    {
+        if (!m_Dirty)
+        {
+            return;
+        }
+
+        Matrix44f rotationMatrix;
+        SetToRotationMatrix(rotationMatrix, m_Rotation);
+
+        Matrix44f translationMatrix;
+        SetToTranslationMatrix(translationMatrix, m_Position);
+
+        m_ViewMatrix = GetInverse(translationMatrix * rotationMatrix * GraphicsFactory::GetInstance().GetCameraCorrectionMatrix());
+        m_Dirty = false;
+    }
+
+    void Camera::SetPosition(const Vector3f& position)
+    {
+        m_Position = position;
+        Invalidate();
+    }
+
+    void Camera::SetRotation(const Quaternion& rotation)
+    {
+        m_Rotation = rotation;
+        Invalidate();
     }
 
     /*static*/ void Camera::SetToOrthogonalProjectionMatrix(Matrix44f& matrix, const FrustumParameters& params)
@@ -78,5 +111,10 @@ namespace lazye
         matrix(3, 1) = 0.f;
         matrix(3, 2) = -1.f;
         matrix(3, 3) = 0.f;
+    }
+
+    void Camera::Invalidate()
+    {
+        m_Dirty = true;
     }
 }

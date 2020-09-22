@@ -71,26 +71,26 @@ private:
             m_LastTimeFlipped = m_InternalClock;
         }
 
-        GetOwner()->SetRotation(Quaternion::FromAngleAxis({ m_FlipCounter, Vector3f::GetAxisJ() }));
+        GetOwner()->SetRotation(Quaternion::FromAngleAxis({ m_FlipCounter, Vector3f::GetAxisK() }));
     }
 
     void UpdateMarching(Seconds dt)
     {
-        constexpr float Z_LIMIT = -20.f;
+        constexpr float Y_LIMIT = 20.f;
 
         const Vector3f& pos = GetOwner()->GetPosition();
-        if (pos[2] < Z_LIMIT)
+        if (pos[1] > Y_LIMIT)
         {
-            GetOwner()->SetPosition(Vector3f{ pos[0], pos[1], 0.f });
+            GetOwner()->SetPosition(Vector3f{ pos[0], 0.f, pos[2] });
         }
 
-        GetOwner()->SetPosition(GetOwner()->GetPosition() - m_MarchSpeed * dt * Vector3f::GetAxisK());
+        GetOwner()->SetPosition(GetOwner()->GetPosition() + m_MarchSpeed * dt * Vector3f::GetAxisJ());
     }
 
     void UpdateHorizontal()
     {
         const Vector3f pos = GetOwner()->GetPosition();
-        GetOwner()->SetPosition(Vector3f{ m_StartingX + 0.5f * Sin(m_InternalClock * m_HorizontalFrequency), 0.f, pos[2] });
+        GetOwner()->SetPosition(Vector3f{ m_StartingX + 0.5f * Sin(m_InternalClock * m_HorizontalFrequency), pos[1], 0.f });
     }
 };
 
@@ -109,25 +109,26 @@ int main()
         if (!sampleEntity)
         {
             cerr << "Could not initialize Entity" << endl;
-            return 1;
+            return;
         }
 
         sampleEntity->SetPosition(startingPos);
         sampleEntity->AddComponent<SpriteComponent>("Resources/Knight.png");
-        sampleEntity->AddComponent<MarchComponent>(1.f, 5.f, DegToRad(180.f), startingPos[2]);
+        sampleEntity->AddComponent<MarchComponent>(1.f, 5.f, DegToRad(180.f), startingPos[0]);
     };
 
-    createKnight({ -0.75f, 0.f, -3.f });
+    createKnight({ -0.75f, 3.f, 0.f });
     createKnight({ -0.25f, 0.f, 0.f });
-    createKnight({ +0.25f, 0.f, 3.f });
-    createKnight({ +0.75f, 0.f, 6.f });
+    createKnight({ +0.25f, -3.f, 0.f });
+    createKnight({ +0.75f, -6.f, 0.f });
 
     Window::Size targetSize = { 1280, 720 };
     const float ratio = float(targetSize.width) / float(targetSize.height);
 
     auto camera = std::make_unique<Camera>(Camera::FrustumParameters{ DegToRad(75.f), ratio, 0.1f, 100.f }, Camera::Type::Perspective);
+    camera->SetPosition({ 0.f, -0.5f, 3.f });
+    camera->SetLookAt({ 0.f, 0.5, -0.25f });
     window->GetRenderingContext().SetCamera(std::move(camera));
-    window->GetRenderingContext().SetClearColor({ 0.25f, 0.25f, 0.25f });
     window->Resize(targetSize);
     world.SetWindow(std::move(window));
 

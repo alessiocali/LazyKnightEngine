@@ -7,6 +7,8 @@ namespace lazye
     class SDLGLGraphicsFactory : public GraphicsFactory
     {
     public:
+        const Matrix44f& GetCameraCorrectionMatrix() const override;
+
         std::unique_ptr<Window> CreateWindow() const override;
         std::unique_ptr<Sprite> CreateSprite(const std::string& spritePath) const override;
 

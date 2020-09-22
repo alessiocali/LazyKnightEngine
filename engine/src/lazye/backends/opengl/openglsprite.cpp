@@ -41,10 +41,10 @@ namespace lazye
 
         const std::vector<float> vertices =
         {
-            -0.5f, 0.5f, 0.f,
-            -0.5f, -0.5f, 0.f,
-            0.5f, -0.5f, 0.f,
-            0.5f, 0.5f, 0.f
+            -0.5f, 0.f, 0.5f,
+            -0.5f, 0.f, -0.5f,
+            0.5f, 0.f, -0.5f,
+            0.5f, 0.f, 0.5f
         };
         static constexpr std::size_t POS_ATTR_SIZE = 3;
         GetSpriteBaseVAO().CreateAttributeOfType<GL_FLOAT>(POS_ATTR_SIZE,

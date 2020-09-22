@@ -5,6 +5,20 @@
 
 namespace lazye
 {
+    const Matrix44f& SDLGLGraphicsFactory::GetCameraCorrectionMatrix() const
+    {
+        static bool s_Init = false;
+        static Matrix44f s_CameraCorrectionMatrix;
+
+        if (!s_Init)
+        {
+            SetToRotationMatrix(s_CameraCorrectionMatrix, Quaternion::FromAngleAxis({ DegToRad(90.f), Vector3f::GetAxisI() }));
+            s_Init = true;
+        }
+
+        return s_CameraCorrectionMatrix;
+    }
+
     std::unique_ptr<Window> SDLGLGraphicsFactory::CreateWindow() const
     {
         return std::make_unique<SDLGLWindow>();
