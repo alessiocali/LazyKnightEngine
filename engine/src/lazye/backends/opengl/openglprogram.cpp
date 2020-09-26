@@ -61,7 +61,7 @@ namespace lazye
         ms_ProgramUsageFlag = false;
     }
 
-    GLint OpenGLProgram::Instance::GetUniformLocationFromName(const std::string& name)
+    GLint OpenGLProgram::Instance::GetUniformLocationFromName(const std::string& name) const
     {
         return glGetUniformLocation(m_OwnerProgramID, name.c_str());
     }

@@ -33,6 +33,7 @@ int main()
         }
 
         sampleEntity->AddComponent<SpriteComponent>("Resources/Knight.png");
+        sampleEntity->SetPosition({ 0.f, 2.f, 0.f });
     }
 
     world.Play();

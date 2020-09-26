@@ -8,9 +8,9 @@
 namespace lazye
 {
 	SpriteComponent::SpriteComponent(const std::string& spritePath)
-	{
-		LoadSprite(spritePath);
-	}
+    {
+		m_Sprite = std::make_unique<Sprite>(spritePath);
+    }
 
 	SpriteComponent::~SpriteComponent() = default;
 
@@ -22,10 +22,5 @@ namespace lazye
 	void SpriteComponent::UpdateOwnerTransform()
 	{
 		m_Sprite->SetTransform(GetOwner()->GetTransform());
-	}
-
-	void SpriteComponent::LoadSprite(const std::string& spritePath)
-	{
-		m_Sprite = GraphicsFactory::GetInstance().CreateSprite(spritePath);
 	}
 }

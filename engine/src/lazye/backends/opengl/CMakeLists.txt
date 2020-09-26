@@ -48,9 +48,6 @@ target_sources(
         opengltexture.h
         opengltexture.cpp
 
-        openglsprite.h
-        openglsprite.cpp
-
         openglmesh.h
         openglmesh.cpp
 )

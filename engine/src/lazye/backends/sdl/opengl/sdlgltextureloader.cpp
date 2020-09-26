@@ -1,24 +1,20 @@
-#include <lazye/backends/sdl/opengl/sdlglsprite.h>
+#include <lazye/backends/sdl/opengl/sdlgltextureloader.h>
 
 #include <SDL2/SDL_image.h>
 
 #include <lazye/backends/sdl/sdlhelper.h>
-
-#include <lazye/backends/opengl/openglsprite.h>
-#include <lazye/backends/opengl/opengltexture.h>
-
-#include <lazye/graphics/camera.h>
-#include <lazye/math/transform.h>
+#include <lazye/graphics/graphicsfactory.h>
+#include <lazye/graphics/texture.h>
 
 namespace lazye
 {
-    const ColorSpace& GetColorSpaceFromSDLFormat(Uint32 format)
+    const ColorSpace GetColorSpaceFromSDLFormat(Uint32 format)
     {
         return SDL_ISPIXELFORMAT_ALPHA(format) ? ColorSpace::RGBA : ColorSpace::RGB;
     }
 
     /**
-     *  Unfortunately SDL's IMG_Load won't allow us to flip the data on load, 
+     *  Unfortunately SDL's IMG_Load won't allow us to flip the data on load,
      *  so we've got to do it manually.
      */
     void FlipSurfaceVertically(SDLHelper::SDL_SurfacePtr& source)
@@ -47,7 +43,7 @@ namespace lazye
 
             auto copyRow = [](SDL_Surface* source, SDL_Surface* target, std::size_t srcRow, std::size_t tgtRow)
             {
-                Assert( (srcRow < source->h) && (tgtRow < target->h) );
+                Assert((srcRow < source->h) && (tgtRow < target->h));
                 Assert(source->w == target->w);
                 Uint32* sourceRowPtr = static_cast<Uint32*>(source->pixels) + (srcRow * source->w);
                 Uint32* targetRowPtr = static_cast<Uint32*>(target->pixels) + (tgtRow * target->w);
@@ -57,7 +53,7 @@ namespace lazye
 
             std::size_t srcCol = 0;
             std::size_t tgtCol = flipped->h - 1;
-            while ( ( srcCol < source->h ) && ( tgtCol > 0 ) )
+            while ((srcCol < source->h) && (tgtCol > 0))
             {
                 copyRow(source.get(), flipped.get(), srcCol, tgtCol);
                 srcCol++;
@@ -73,23 +69,22 @@ namespace lazye
         source = std::move(flipped);
     }
 
-    SDLGLSprite::SDLGLSprite(const std::string& path)
+    std::unique_ptr<Texture> SDLGLTextureLoader::LoadTexture(const TextureType type, const std::string& path) const
     {
         SDLHelper::SDL_SurfacePtr sdlSurface(IMG_Load(path.c_str()));
         FlipSurfaceVertically(sdlSurface);
 
-        m_GLSprite = std::make_unique<OpenGLSprite>(
-            static_cast<std::byte*>(sdlSurface->pixels), 
-            GetColorSpaceFromSDLFormat(sdlSurface->format->format),
-            sdlSurface->w, 
-            sdlSurface->h
-        );
-    }
+        std::unique_ptr<Texture> loadedTexture = GraphicsFactory::GetInstance().CreateTexture();
+        
+        Texture::InitInfo initInfo;
+        initInfo.Type = type;
+        initInfo.SourceSpace = GetColorSpaceFromSDLFormat(sdlSurface->format->format);
+        initInfo.TargetSpace = initInfo.SourceSpace; // No particular reason for distinguishing the two (yet)
+        initInfo.Width = sdlSurface->w;
+        initInfo.Height = sdlSurface->h;
+        initInfo.Data = static_cast<const std::byte*>(sdlSurface->pixels);
 
-    SDLGLSprite::~SDLGLSprite() = default;
-
-    void SDLGLSprite::Draw(const Matrix44f& view, const Matrix44f& projection) const
-    {
-        m_GLSprite->Draw(m_Matrix, view, projection);
+        loadedTexture->Init(initInfo);
+        return loadedTexture;
     }
 }

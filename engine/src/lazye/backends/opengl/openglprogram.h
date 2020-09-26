@@ -43,7 +43,7 @@ namespace lazye
             Instance& operator=(Instance&& other) = delete;
 
             template<typename Type, typename... Types>
-            void SetUniform(const std::string& name, Type&& value, Types&&... other)
+            void SetUniform(const std::string& name, Type&& value, Types&&... other) const
             {
                 OpenGLUniformHelper::SetUniform(GetUniformLocationFromName(name), value, std::forward<Types>(other)...);
             }
@@ -56,7 +56,7 @@ namespace lazye
             GLuint m_OwnerProgramID = 0;
 
             Instance(const OpenGLProgram* owner);
-            GLint GetUniformLocationFromName(const std::string& name);
+            GLint GetUniformLocationFromName(const std::string& name) const;
         };
 
     private:

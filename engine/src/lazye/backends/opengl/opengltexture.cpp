@@ -1,42 +1,36 @@
 #include <lazye/backends/opengl/opengltexture.h>
 
+#include <unordered_map>
+
 namespace lazye
 {
-    const TextureType TextureType::Albedo   { GL_TEXTURE_2D, GL_TEXTURE0 };
+    struct OpenGLTextureInfo
+    { 
+        const std::string DefaultAttributeName;
+        const std::string DefaultEnableAttributeName;
+        const GLenum Target;
+        const GLenum Unit;
+        const unsigned int UnitIdx;
 
-    const ColorSpace ColorSpace::RGB    { GL_RGB };
-    const ColorSpace ColorSpace::RGBA   { GL_RGBA };
+        OpenGLTextureInfo(const std::string& attributeName, const std::string& enableAttributeName, GLenum target, GLenum unit)
+            : DefaultAttributeName(attributeName)
+            , DefaultEnableAttributeName(enableAttributeName)
+            , Target(target)
+            , Unit(unit)
+            , UnitIdx(unit - GL_TEXTURE0)
+        { }
+    };
 
-    OpenGLTexture::OpenGLTexture(OpenGLTexture::Info info)
-        : m_Type(info.m_Type)
+    const std::unordered_map<TextureType, OpenGLTextureInfo> OpenGLTextureInfos =
     {
-        Assert(info.m_Data != nullptr);
+        { TextureType::Albedo, { "Albedo", "UseAlbedo", GL_TEXTURE_2D, GL_TEXTURE0 } }
+    };
 
-        glGenTextures(1, &m_TextureID);
-        Assert(m_TextureID != 0);
-
-        Bind();
-        glTexParameteri(m_Type.m_Target, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(m_Type.m_Target, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(m_Type.m_Target, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(m_Type.m_Target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        static constexpr int MIPMAP_LEVEL = 0;
-        static constexpr int DEPRECATED = 0;
-        static constexpr GLenum DATA_TYPE = GL_UNSIGNED_BYTE;
-        glTexImage2D(
-            m_Type.m_Target,
-            MIPMAP_LEVEL,
-            info.m_TargetSpace.m_Format,
-            info.m_Width,
-            info.m_Height,
-            DEPRECATED,
-            info.m_TargetSpace.m_Format,
-            DATA_TYPE,
-            info.m_Data
-        );
-        glGenerateMipmap(m_Type.m_Target);
-    }
+    const std::unordered_map<ColorSpace, GLint> OpenGLColorSpaces =
+    {
+        { ColorSpace::RGB, GL_RGB },
+        { ColorSpace::RGBA, GL_RGBA }
+    };
 
     OpenGLTexture::~OpenGLTexture()
     {
@@ -44,9 +38,63 @@ namespace lazye
         m_TextureID = 0;
     }
 
-    void OpenGLTexture::Bind()
+    void OpenGLTexture::Init(const InitInfo& info)
     {
-        glActiveTexture(m_Type.m_Unit);
-        glBindTexture(m_Type.m_Target, m_TextureID);
+        Assert(info.Data != nullptr);
+
+        glGenTextures(1, &m_TextureID);
+        Assert(m_TextureID != 0);
+
+        const OpenGLTextureInfo& glTextureInfo = OpenGLTextureInfos.at(info.Type);
+
+        m_Type = info.Type;
+
+        Bind();
+
+        glTexParameteri(glTextureInfo.Target, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(glTextureInfo.Target, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(glTextureInfo.Target, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(glTextureInfo.Target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        static constexpr int MIPMAP_LEVEL = 0;
+        static constexpr int DEPRECATED = 0;
+        static constexpr GLenum DATA_TYPE = GL_UNSIGNED_BYTE;
+
+        glTexImage2D(
+            glTextureInfo.Target,
+            MIPMAP_LEVEL,
+            OpenGLColorSpaces.at(info.TargetSpace),
+            info.Width,
+            info.Height,
+            DEPRECATED,
+            OpenGLColorSpaces.at(info.SourceSpace),
+            DATA_TYPE,
+            info.Data
+        );
+
+        glGenerateMipmap(glTextureInfo.Target);
+    }
+
+    const std::string& OpenGLTexture::GetDefaultShaderAttributeName() const
+    {
+        return OpenGLTextureInfos.at(m_Type).DefaultAttributeName;
+    }
+
+    const std::string& OpenGLTexture::GetDefaultShaderEnableAttributeName() const
+    {
+        return OpenGLTextureInfos.at(m_Type).DefaultEnableAttributeName;
+    }
+
+    const unsigned int OpenGLTexture::GetUnitIdx() const
+    {
+        return OpenGLTextureInfos.at(m_Type).UnitIdx;
+    }
+
+    void OpenGLTexture::Bind() const
+    {
+        const OpenGLTextureInfo& glTextureInfo = OpenGLTextureInfos.at(m_Type);
+
+        glActiveTexture(glTextureInfo.Unit);
+        glBindTexture(glTextureInfo.Target, m_TextureID);
     }
 }

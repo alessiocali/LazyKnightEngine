@@ -2,9 +2,9 @@
 
 #include <glad/glad.h>
 
-#include <lazye/backends/sdl/opengl/sdlglsprite.h>
 #include <lazye/graphics/mesh.h>
 #include <lazye/graphics/model.h>
+#include <lazye/graphics/sprite.h>
 
 #include <lazye/backends/opengl/openglmesh.h>
 
@@ -22,7 +22,7 @@ namespace lazye
 
         const Matrix44f& view = m_Camera ? m_Camera->GetViewMatrix() : Matrix44f::GetIdentity();
         const Matrix44f& projection = m_Camera ? m_Camera->GetProjectionMatrix() : Matrix44f::GetIdentity();
-        static_cast<const SDLGLSprite&>(sprite).Draw(view, projection);
+        sprite.Draw(view, projection);
     }
 
     void SDLGLRenderingContext::Render(Model& model)
@@ -39,8 +39,7 @@ namespace lazye
                 continue;
             }
 
-            static_cast<OpenGLMesh&>(*mesh).Draw(model.GetTransformMatrix(), view, projection);
+            mesh->Draw(model.GetTransformMatrix(), view, projection);
         }
     }
-
 }

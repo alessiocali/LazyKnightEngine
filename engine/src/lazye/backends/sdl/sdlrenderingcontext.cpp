@@ -1,7 +1,9 @@
 #include <lazye/backends/sdl/sdlrenderingcontext.h>
 
+#include <lazye/math/matrix.h>
+#include <lazye/graphics/sprite.h>
+
 #include <lazye/backends/sdl/sdlheader.h>
-#include <lazye/backends/sdl/sdlsprite.h>
 
 #include <algorithm>
 
@@ -33,23 +35,7 @@ namespace lazye
 
     void SDLRenderingContext::Render(Sprite& sprite)
     {
-        const SDLSprite& sdlSprite = static_cast<const SDLSprite&>(sprite);
-        if (!sdlSprite.IsLoaded())
-        {
-            // This abomination will go away eventually, the Sprite Class is doomed already (TODO: 3D based implementation)
-            const_cast<SDLSprite&>(sdlSprite).Load(m_SDLRenderer.get());
-        }
-
-        SDL_Texture* texture = sdlSprite.GetTexture();
-
-        int width, height;
-        SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-
-        const Vector2f& pos = sdlSprite.GetPosition();
-        int x = static_cast<int>(pos[0]);
-        int y = static_cast<int>(pos[1]);
-        SDL_Rect sdlRect = { x, y, width, height };
-        SDL_RenderCopy(m_SDLRenderer.get(), texture, nullptr, &sdlRect);
+        sprite.Draw(Matrix44f::GetIdentity(), Matrix44f::GetIdentity());
     }
 
     void SDLRenderingContext::Present()

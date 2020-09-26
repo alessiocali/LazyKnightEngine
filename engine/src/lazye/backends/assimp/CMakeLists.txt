@@ -11,6 +11,6 @@ target_sources(
     ${EngineTargetName}
 
     PRIVATE
-    assimpassetloader.h
-    assimpassetloader.cpp
+    assimpmodelloader.h
+    assimpmodelloader.cpp
 )

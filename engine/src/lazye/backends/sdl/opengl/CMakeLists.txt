@@ -16,8 +16,8 @@ target_sources(
     sdlglrenderingcontext.h
     sdlglrenderingcontext.cpp
 
-    sdlglsprite.h
-    sdlglsprite.cpp
+    sdlgltextureloader.h
+    sdlgltextureloader.cpp
 
     sdlglwindow.h
     sdlglwindow.cpp

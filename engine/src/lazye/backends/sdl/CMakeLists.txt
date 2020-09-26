@@ -38,9 +38,6 @@ target_sources( ${EngineTargetName}
 
     sdlrenderingcontext.h
     sdlrenderingcontext.cpp
-
-    sdlsprite.h
-    sdlsprite.cpp
 )
 
 if ( USE_GRAPHICS_API_OPENGL )

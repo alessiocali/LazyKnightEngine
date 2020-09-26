@@ -33,6 +33,9 @@ target_sources( ${EngineTargetName}
     $<INSTALL_INTERFACE:include/lazye/graphics/sprite.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/sprite.h>
 
+    $<INSTALL_INTERFACE:include/lazye/graphics/texture.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/texture.h>
+
     PRIVATE
     camera.cpp
     graphicsfactory.cpp
@@ -41,5 +44,6 @@ target_sources( ${EngineTargetName}
     modelcomponent.cpp
     renderingcontext.cpp
     renderingcomponent.cpp
+    sprite.cpp
     spritecomponent.cpp
 )

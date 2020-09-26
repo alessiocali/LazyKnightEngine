@@ -1,5 +1,5 @@
 #pragma once
-#include <lazye/assets/assetloader.h>
+#include <lazye/assets/modelloader.h>
 
 #include <lazye/math/matrix.h>
 
@@ -8,18 +8,18 @@ struct aiMesh;
 
 namespace lazye
 {
-    class AssimpAssetLoader final : public AssetLoader
+    class AssimpModelLoader final : public ModelLoader
     {
     public:
-        std::unique_ptr<Model> LoadModel(const std::string& modelPath) override;
+        std::unique_ptr<Model> LoadModel(const std::string& modelPath) const override;
 
     private:
-        friend AssetLoader& AssetLoader::GetInstance();
+        friend ModelLoader& ModelLoader::GetInstance();
         
         static const Matrix44f& GetAssimpCorrectionMatrix();
         static void ImportAllMeshes(const aiScene& scene, Model& model);
         static void ImportMesh(const aiMesh& mesh, Model& model);
 
-        AssimpAssetLoader() = default;
+        AssimpModelLoader() = default;
     };
 }

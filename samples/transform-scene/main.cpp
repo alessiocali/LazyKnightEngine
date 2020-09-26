@@ -30,7 +30,8 @@ public:
     {
         m_InternalClock += dt;
 
-        GetOwner()->SetPosition(Vector3f{ Sin(m_TranslationFrequency * m_InternalClock), 0.f, Cos(m_TranslationFrequency * m_InternalClock) });
+        const Vector3f& currentPos = GetOwner()->GetPosition();
+        GetOwner()->SetPosition(Vector3f{ Sin(m_TranslationFrequency * m_InternalClock), currentPos[1], Cos(m_TranslationFrequency * m_InternalClock) });
         GetOwner()->SetRotation(
             Quaternion::FromAngleAxis({ m_HorizontalRotationFrequency * dt, Vector3f::GetAxisJ() }) * 
             GetOwner()->GetRotation() * 
@@ -68,6 +69,7 @@ int main()
 
         sampleEntity->AddComponent<SpriteComponent>("Resources/Knight.png");
         sampleEntity->AddComponent<SpinComponent>(DegToRad(30.f), DegToRad(20.f), DegToRad(20.f), DegToRad(20.f));
+        sampleEntity->SetPosition({ 0.f, 2.f, 0.f });
     }
 
     world.Play();

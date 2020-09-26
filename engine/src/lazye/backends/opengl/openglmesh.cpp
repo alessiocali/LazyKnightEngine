@@ -1,8 +1,9 @@
 #include <lazye/backends/opengl/openglmesh.h>
 
-#include <lazye/backends/opengl/builtin_shaders/meshfragmentshader.h>
-#include <lazye/backends/opengl/builtin_shaders/meshvertexshader.h>
+#include <lazye/backends/opengl/builtin_shaders/basefragmentshader.h>
+#include <lazye/backends/opengl/builtin_shaders/basevertexshader.h>
 #include <lazye/backends/opengl/openglprogram.h>
+#include <lazye/backends/opengl/opengltexture.h>
 
 namespace lazye
 {
@@ -19,30 +20,61 @@ namespace lazye
         });
     }
 
-    void OpenGLMesh::SetIndices(const std::vector<unsigned int> indices)
+    void OpenGLMesh::AddTextureMapping(const std::vector<Vector2f>& mapping)
+    {
+        constexpr GLuint POS_ATTR_SIZE = 2;
+        m_VAO.CreateAttributeOfType<GL_FLOAT>(POS_ATTR_SIZE, [&mapping](std::size_t e, std::size_t s)
+        {
+            return mapping[e][s];
+        });
+    }
+
+    void OpenGLMesh::SetIndices(const std::vector<unsigned int>& indices)
     {
         m_VAO.CreateElementBuffer(static_cast<GLsizei>(indices.size()), [&indices](std::size_t i) { return indices[i]; });
     }
 
-    void OpenGLMesh::Draw(
-        const Matrix44f& transform /*= Matrix44f::GetIdentity()*/, 
-        const Matrix44f& view /*= Matrix44f::GetIdentity()*/, 
-        const Matrix44f& projection /*= Matrix44f::GetIdentity()*/
-    )
+    void OpenGLMesh::AssociateTextures(const std::vector<std::weak_ptr<Texture>>& textures)
     {
-        OpenGLProgram::Instance programInstance = GetMeshProgram().Instantiate();
+        m_AssociatedTextures.clear();
+        m_AssociatedTextures.reserve(textures.size());
+        m_AssociatedTextures.insert(m_AssociatedTextures.end(), textures.begin(), textures.end());
+    }
+
+    void OpenGLMesh::Draw(const Matrix44f& transform, const Matrix44f& view, const Matrix44f& projection)
+    {
+        const OpenGLProgram::Instance programInstance = GetMeshProgram().Instantiate();
+
+        BindAssociatedTextures(programInstance);
+
+        // A nice eyesore Magenta
+        programInstance.SetUniform("FallbackColor", Vector4f { 1.f, 0.f, 1.f, 1.f });
 
         programInstance.SetUniform("Transform", transform);
         programInstance.SetUniform("View", view);
         programInstance.SetUniform("Projection", projection);
-        programInstance.SetUniform("Color", Vector4f { 0.4f, 0.4f, 0.4f, 1.0f });
 
         m_VAO.Draw();
     }
 
+    void OpenGLMesh::BindAssociatedTextures(const OpenGLProgram::Instance& programInstance)
+    {
+        for (const auto& texture : m_AssociatedTextures)
+        {
+            if (std::shared_ptr lockedTexture(texture); lockedTexture)
+            {
+                const OpenGLTexture& glTexture = static_cast<const OpenGLTexture&>(*lockedTexture);
+                
+                glTexture.Bind();
+                programInstance.SetUniform(glTexture.GetDefaultShaderAttributeName(), glTexture.GetUnitIdx());
+                programInstance.SetUniform(glTexture.GetDefaultShaderEnableAttributeName(), true);
+            }
+        }
+    }
+
     /*static*/ const OpenGLProgram& OpenGLMesh::GetMeshProgram()
     {
-        static const OpenGLProgram s_MeshProgram { MeshVertexShader().Instantiate(), MeshFragmentShader().Instantiate() };
+        static const OpenGLProgram s_MeshProgram { BaseVertexShader().Instantiate(), BaseFragmentShader().Instantiate() };
         return s_MeshProgram;
     }
 }

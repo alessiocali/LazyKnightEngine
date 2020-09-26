@@ -1,4 +1,4 @@
-#include <lazye/backends/assimp/assimpassetloader.h>
+#include <lazye/backends/assimp/assimpmodelloader.h>
 
 #include <lazye/math/math.h>
 #include <lazye/math/quaternions.h>
@@ -13,7 +13,7 @@
 
 namespace lazye
 {
-    std::unique_ptr<Model> AssimpAssetLoader::LoadModel(const std::string& modelPath)
+    std::unique_ptr<Model> AssimpModelLoader::LoadModel(const std::string& modelPath) const
     {
         Assimp::Importer importer;
 
@@ -41,7 +41,7 @@ namespace lazye
         return model;
     }
 
-    /*static*/ const Matrix44f& AssimpAssetLoader::GetAssimpCorrectionMatrix()
+    /*static*/ const Matrix44f& AssimpModelLoader::GetAssimpCorrectionMatrix()
     {
         static bool s_Init = false;
         static Matrix44f s_CameraCorrectionMatrix;
@@ -55,7 +55,7 @@ namespace lazye
         return s_CameraCorrectionMatrix;
     }
 
-    /*static*/ void AssimpAssetLoader::ImportAllMeshes(const aiScene& scene, Model& model)
+    /*static*/ void AssimpModelLoader::ImportAllMeshes(const aiScene& scene, Model& model)
     {
         for (std::size_t i = 0; i < scene.mNumMeshes; i++)
         {
@@ -63,7 +63,7 @@ namespace lazye
         }
     }
 
-    /*static*/ void AssimpAssetLoader::ImportMesh(const aiMesh& mesh, Model& model)
+    /*static*/ void AssimpModelLoader::ImportMesh(const aiMesh& mesh, Model& model)
     {
         std::unique_ptr<Mesh> importedMesh = GraphicsFactory::GetInstance().CreateMesh(mesh.mNumVertices);
         std::vector<Vector3f> vertices;

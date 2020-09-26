@@ -20,7 +20,5 @@ namespace lazye
 
 		void Render(float dt, RenderingContext& context) override;
 		void UpdateOwnerTransform() override;
-
-		void LoadSprite(const std::string& spritePath);
 	};
 }

@@ -11,6 +11,7 @@ namespace lazye
     class Window;
     class Sprite;
     class Mesh;
+    class Texture;
 
     class lazyedll GraphicsFactory
     {
@@ -29,7 +30,7 @@ namespace lazye
         virtual const Matrix44f& GetCameraCorrectionMatrix() const = 0;
 
         virtual std::unique_ptr<Window> CreateWindow() const = 0;
-        virtual std::unique_ptr<Sprite> CreateSprite(const std::string& spritePath) const = 0;
+        virtual std::unique_ptr<Texture> CreateTexture() const = 0;
         virtual std::unique_ptr<Mesh> CreateMesh(std::size_t vertexCount) const = 0;
 
     protected:
