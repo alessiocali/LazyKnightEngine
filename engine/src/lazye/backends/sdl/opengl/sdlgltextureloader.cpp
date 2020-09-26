@@ -72,8 +72,12 @@ namespace lazye
     std::unique_ptr<Texture> SDLGLTextureLoader::LoadTexture(const TextureType type, const std::string& path) const
     {
         SDLHelper::SDL_SurfacePtr sdlSurface(IMG_Load(path.c_str()));
-        FlipSurfaceVertically(sdlSurface);
+        if (sdlSurface == nullptr)
+        {
+            return nullptr;
+        }
 
+        FlipSurfaceVertically(sdlSurface);
         std::unique_ptr<Texture> loadedTexture = GraphicsFactory::GetInstance().CreateTexture();
         
         Texture::InitInfo initInfo;

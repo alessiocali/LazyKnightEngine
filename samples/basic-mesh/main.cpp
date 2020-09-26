@@ -36,7 +36,7 @@ private:
 int main()
 {
     auto window = GraphicsFactory::GetInstance().CreateWindow();
-    window->SetTitle("Base Scene");
+    window->SetTitle("Mesh Scene");
     window->SetMode(Window::Mode::Windowed);
     window->Resize({ 1280, 720 });
 
@@ -53,7 +53,7 @@ int main()
             return 1;
         }
 
-        sampleEntity->AddComponent<ModelComponent>("Resources/Knight.fbx");
+        sampleEntity->AddComponent<ModelComponent>("Resources/Knight/scene.gltf");
         sampleEntity->AddComponent<SpinnerComponent>(DegToRad(10.f));
 
         sampleEntity->SetScaling({ 0.05f, 0.05f, 0.05f });

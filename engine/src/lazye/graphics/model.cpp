@@ -1,14 +1,39 @@
 #include <lazye/graphics/model.h>
 
 #include <lazye/graphics/mesh.h>
+#include <lazye/graphics/texture.h>
 
 namespace lazye
 {
     Model::Model() = default;
     Model::~Model() = default;
 
-    void Model::AddMesh(std::unique_ptr<Mesh> mesh)
+    void Model::AddMesh(std::unique_ptr<Mesh> mesh, const std::vector<std::string>& associatedTextureNames /* = { }*/)
     {
-        m_Meshes.push_back(std::move(mesh));
+        auto& insertedMesh = m_Meshes.emplace_back(std::move(mesh));
+
+        std::vector<std::weak_ptr<Texture>> texturesToAssociate;
+        texturesToAssociate.reserve(associatedTextureNames.size());
+
+        for (const auto& textureName : associatedTextureNames)
+        {
+            if (HasTexture(textureName))
+            {
+                texturesToAssociate.emplace_back(m_Textures[textureName]);
+            }
+        }
+
+        insertedMesh->AssociateTextures(texturesToAssociate);
+    }
+
+    void Model::AddTexture(const std::string& name, std::unique_ptr<Texture> texture)
+    {
+        Assert(!HasTexture(name), "Trying to insert two textures with the same name in this model");
+        m_Textures[name] = std::move(texture);
+    }
+
+    bool Model::HasTexture(const std::string& name) const
+    {
+        return m_Textures.count(name) > 0;
     }
 }

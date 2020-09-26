@@ -5,6 +5,7 @@
 
 struct aiScene;
 struct aiMesh;
+struct aiMaterial;
 
 namespace lazye
 {
@@ -17,8 +18,11 @@ namespace lazye
         friend ModelLoader& ModelLoader::GetInstance();
         
         static const Matrix44f& GetAssimpCorrectionMatrix();
+        static std::tuple<std::string, bool> GetAlbedoTexturePathFromMaterial(const aiMaterial& mat);
+
+        static void ImportAllTextures(const aiScene& scene, Model& model, const std::string& rootDir);
         static void ImportAllMeshes(const aiScene& scene, Model& model);
-        static void ImportMesh(const aiMesh& mesh, Model& model);
+        static void ImportMesh(const aiMesh& mesh, const aiMaterial& mat, Model& model);
 
         AssimpModelLoader() = default;
     };
