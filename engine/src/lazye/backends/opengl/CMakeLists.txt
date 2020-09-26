@@ -50,6 +50,9 @@ target_sources(
 
         openglsprite.h
         openglsprite.cpp
+
+        openglmesh.h
+        openglmesh.cpp
 )
 
 add_subdirectory(builtin_shaders)

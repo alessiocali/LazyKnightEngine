@@ -1,5 +1,6 @@
 # We might support switching in the future, for the moment it will stay the default
 set ( USE_GRAPHICS_BACKEND_SDL TRUE )
+set ( USE_ASSET_LOADER_ASSIMP TRUE )
 
 option ( USE_GRAPHICS_API_OPENGL "Enables OpenGL as a Graphics API. This is the default." ON )
 
@@ -17,4 +18,8 @@ endif()
 
 if ( USE_GRAPHICS_API_OPENGL )
     add_subdirectory( opengl )
+endif()
+
+if ( USE_ASSET_LOADER_ASSIMP )
+    add_subdirectory( assimp )
 endif()

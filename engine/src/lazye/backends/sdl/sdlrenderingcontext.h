@@ -13,7 +13,8 @@ namespace lazye
         void Init(SDL_Window* sdlWindow);
         void SetClearColor(const Vector3f& color) override;
         void Clear() override;
-        void Render(const Sprite& sprite) override;
+        void Render(Sprite& sprite) override;
+        void Render(Model& model) override { };
         void Present();
 
     private:

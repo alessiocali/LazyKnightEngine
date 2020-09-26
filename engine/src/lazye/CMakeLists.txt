@@ -13,6 +13,7 @@ target_sources( ${EngineTargetName}
     logger.cpp
 )
 
+add_subdirectory( assets )
 add_subdirectory( backends )
 add_subdirectory( core )
 add_subdirectory( math )

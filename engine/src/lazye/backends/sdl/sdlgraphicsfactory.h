@@ -12,6 +12,7 @@ namespace lazye
 
         std::unique_ptr<Window> CreateWindow() const override;
         std::unique_ptr<Sprite> CreateSprite(const std::string& spritePath) const override;
+        std::unique_ptr<Mesh> CreateMesh(std::size_t vertexCount) const override;
 
     private:
         friend GraphicsFactory& GraphicsFactory::GetInstance();

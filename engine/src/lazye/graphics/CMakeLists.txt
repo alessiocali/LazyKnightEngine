@@ -12,6 +12,15 @@ target_sources( ${EngineTargetName}
     $<INSTALL_INTERFACE:include/lazye/graphics/irenderable.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/irenderable.h>
 
+    $<INSTALL_INTERFACE:include/lazye/graphics/mesh.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/mesh.h>
+
+    $<INSTALL_INTERFACE:include/lazye/graphics/model.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/model.h>
+
+    $<INSTALL_INTERFACE:include/lazye/graphics/modelcomponent.h>
+    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/modelcomponent.h>
+
     $<INSTALL_INTERFACE:include/lazye/graphics/renderingcontext.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/renderingcontext.h>
 
@@ -28,6 +37,8 @@ target_sources( ${EngineTargetName}
     camera.cpp
     graphicsfactory.cpp
 
+    model.cpp
+    modelcomponent.cpp
     renderingcontext.cpp
     renderingcomponent.cpp
     spritecomponent.cpp

@@ -10,6 +10,7 @@ namespace lazye
 {
     class Window;
     class Sprite;
+    class Mesh;
 
     class lazyedll GraphicsFactory
     {
@@ -29,6 +30,7 @@ namespace lazye
 
         virtual std::unique_ptr<Window> CreateWindow() const = 0;
         virtual std::unique_ptr<Sprite> CreateSprite(const std::string& spritePath) const = 0;
+        virtual std::unique_ptr<Mesh> CreateMesh(std::size_t vertexCount) const = 0;
 
     protected:
         GraphicsFactory() = default;

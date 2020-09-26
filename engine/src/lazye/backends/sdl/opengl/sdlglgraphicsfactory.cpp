@@ -2,6 +2,7 @@
 
 #include <lazye/backends/sdl/opengl/sdlglwindow.h>
 #include <lazye/backends/sdl/opengl/sdlglsprite.h>
+#include <lazye/backends/opengl/openglmesh.h>
 
 namespace lazye
 {
@@ -28,4 +29,10 @@ namespace lazye
     {
         return std::make_unique<SDLGLSprite>(spritePath);
     }
+
+    std::unique_ptr<Mesh> SDLGLGraphicsFactory::CreateMesh(std::size_t vertexCount) const
+    {
+        return std::make_unique<OpenGLMesh>(vertexCount);
+    }
+
 }

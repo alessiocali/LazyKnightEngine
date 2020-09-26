@@ -3,6 +3,8 @@
 #include <lazye/backends/sdl/sdlheader.h>
 #include <lazye/backends/sdl/sdlsprite.h>
 
+#include <algorithm>
+
 static constexpr Uint32 DEFAULT_RENDERER_FLAGS = SDL_RENDERER_ACCELERATED;
 static constexpr int DEFAULT_RENDERING_DRIVERS = -1;
 
@@ -29,7 +31,7 @@ namespace lazye
         SDL_RenderClear(m_SDLRenderer.get());
     }
 
-    void SDLRenderingContext::Render(const Sprite& sprite)
+    void SDLRenderingContext::Render(Sprite& sprite)
     {
         const SDLSprite& sdlSprite = static_cast<const SDLSprite&>(sprite);
         if (!sdlSprite.IsLoaded())

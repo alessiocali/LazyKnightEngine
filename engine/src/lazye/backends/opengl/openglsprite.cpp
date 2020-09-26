@@ -2,8 +2,8 @@
 
 #include <lazye/backends/opengl/opengltexture.h>
 #include <lazye/backends/opengl/openglprogram.h>
-#include <lazye/backends/opengl/builtin_shaders/basevertexshader.h>
-#include <lazye/backends/opengl/builtin_shaders/basefragmentshader.h>
+#include <lazye/backends/opengl/builtin_shaders/spritevertexshader.h>
+#include <lazye/backends/opengl/builtin_shaders/spritefragmentshader.h>
 
 #include <lazye/backends/opengl/openglvertexarrayobject.h>
 
@@ -19,7 +19,7 @@ namespace lazye
 
     const OpenGLProgram& OpenGLSprite::GetShaderProgram()
     {
-        static OpenGLProgram s_ShaderProgram{ BaseVertexShader().Instantiate(), BaseFragmentShader().Instantiate() };
+        static OpenGLProgram s_ShaderProgram{ SpriteVertexShader().Instantiate(), SpriteFragmentShader().Instantiate() };
         return s_ShaderProgram;
     }
 
@@ -82,7 +82,7 @@ namespace lazye
 
     void OpenGLSprite::Draw
     (
-        const Matrix44f& transform /*= Matrix44f::GetZero()*/, 
+        const Matrix44f& transform /*= Matrix44f::GetIdentity()*/, 
         const Matrix44f& view /*= Matrix44f::GetIdentity()*/, 
         const Matrix44f& projection /*= Matrix44f::GetIdentity()*/
     ) const

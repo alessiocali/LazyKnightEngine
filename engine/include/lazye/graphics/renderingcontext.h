@@ -7,6 +7,7 @@
 
 namespace lazye
 {
+	class Model;
 	class Sprite;
 	class Camera;
 
@@ -18,7 +19,8 @@ namespace lazye
 
 		virtual void Clear() = 0;
 
-		virtual void Render(const Sprite& sprite) = 0;
+		virtual void Render(Sprite& sprite) = 0;
+		virtual void Render(Model& model) = 0;
 		virtual void SetClearColor(const Vector3f& color) = 0;
 
 		void SetCamera(std::unique_ptr<Camera> camera);

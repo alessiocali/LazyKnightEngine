@@ -42,6 +42,8 @@ namespace lazye
         void SetRotation(const Quaternion& rotation);
         void SetPosition(const Vector3f& position);
 
+        inline auto GetViewProjectionMatrices() const { return std::tuple<const Matrix44f&, const Matrix44f&> { m_ViewMatrix, m_ProjectionMatrix }; }
+
         inline const Matrix44f& GetProjectionMatrix() const { return m_ProjectionMatrix; }
         inline const Matrix44f& GetViewMatrix() const { return m_ViewMatrix; }
 
