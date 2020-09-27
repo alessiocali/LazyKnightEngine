@@ -1,6 +1,5 @@
 #include <lazye/backends/sdl/opengl/sdlglcontext.h>
 
-#include <lazye/backends/sdl/sdlwindow.h>
 #include <lazye/backends/opengl/openglapi.h>
 
 namespace lazye

@@ -1,4 +1,4 @@
-#include <lazye/backends/sdl/opengl/sdlgltextureloader.h>
+#include <lazye/backends/sdl/assets/sdltextureloader.h>
 
 #include <SDL2/SDL_image.h>
 
@@ -69,7 +69,7 @@ namespace lazye
         source = std::move(flipped);
     }
 
-    std::unique_ptr<Texture> SDLGLTextureLoader::LoadTexture(const TextureType type, const std::string& path) const
+    std::unique_ptr<Texture> SDLTextureLoader::LoadTexture(const TextureType type, const std::string& path) const
     {
         SDLHelper::SDL_SurfacePtr sdlSurface(IMG_Load(path.c_str()));
         if (sdlSurface == nullptr)

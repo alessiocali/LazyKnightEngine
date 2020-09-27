@@ -27,18 +27,13 @@ target_sources( ${EngineTargetName}
     sdlsystem.h
     sdlsystem.cpp
 
-    sdlgraphicsfactory.h
-    sdlgraphicsfactory.cpp
-
     sdlwindowbase.h
     sdlwindowbase.cpp
-
-    sdlwindow.h
-    sdlwindow.cpp
-
-    sdlrenderingcontext.h
-    sdlrenderingcontext.cpp
 )
+
+if ( USE_TEXTURE_LOADER_SDL )
+    add_subdirectory(assets)
+endif()
 
 if ( USE_GRAPHICS_API_OPENGL )
     add_subdirectory(opengl)

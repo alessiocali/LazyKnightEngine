@@ -3,7 +3,7 @@
 
 namespace lazye
 {
-    class SDLGLTextureLoader : public TextureLoader
+    class SDLTextureLoader : public TextureLoader
     {
     public:
         std::unique_ptr<Texture> LoadTexture(const TextureType type, const std::string& path) const override;
@@ -11,6 +11,6 @@ namespace lazye
     private:
         friend TextureLoader& TextureLoader::GetInstance();
 
-        SDLGLTextureLoader() = default;
+        SDLTextureLoader() = default;
     };
 }

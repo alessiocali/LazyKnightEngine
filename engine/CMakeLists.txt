@@ -21,6 +21,7 @@ source_group( "Sources\\Math" REGULAR_EXPRESSION "math/*" )
 source_group( "Backends" REGULAR_EXPRESSION "/backends/*" )
 source_group( "Backends\\Assimp" REGULAR_EXPRESSION "backends/assimp/*" )
 source_group( "Backends\\SDL" REGULAR_EXPRESSION "/backends/sdl/*" )
+source_group( "Backends\\SDL\\Assets" REGULAR_EXPRESSION "backends/sdl/assets/*" )
 source_group( "Backends\\SDL\\OpenGL" REGULAR_EXPRESSION "backends/sdl/opengl/*" )
 source_group( "Backends\\OpenGL" REGULAR_EXPRESSION "/backends/opengl/*" )
 

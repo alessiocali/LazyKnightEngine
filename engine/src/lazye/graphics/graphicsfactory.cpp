@@ -2,11 +2,9 @@
 
 #include <lazye/backends/backenddefines.h>
 
-#ifdef USE_GRAPHICS_BACKEND_SDL
+#ifdef USE_WINDOW_SYSTEM_SDL
     #ifdef USE_GRAPHICS_API_OPENGL
         #include <lazye/backends/sdl/opengl/sdlglgraphicsfactory.h>
-    #else // USE_GRAPHICS_API_OPENGL
-        #include <lazye/backends/sdl/sdlgraphicsfactory.h>
     #endif
 #endif // Graphics Backend
 
@@ -14,13 +12,13 @@ namespace lazye
 {
     GraphicsFactory& GraphicsFactory::GetInstance()
     {
-#ifdef USE_GRAPHICS_BACKEND_SDL
+#ifdef USE_WINDOW_SYSTEM_SDL
     #ifdef USE_GRAPHICS_API_OPENGL
         static SDLGLGraphicsFactory instance;
     #else // USE_GRAPHICS_API_OPENGL
-        static SDLGraphicsFactory instance;
+        static_assert(false, "No valid Graphics API Compatible with this Window System");
     #endif
-#endif // USE_GRAPHICS_BACKEND_SDL
+#endif // USE_WINDOW_SYSTEM_SDL
 
         return instance;
     }

@@ -1,4 +1,4 @@
-#cmakedefine USE_GRAPHICS_BACKEND_SDL
+#cmakedefine USE_WINDOW_SYSTEM_SDL
 #cmakedefine USE_GRAPHICS_API_OPENGL
 #cmakedefine USE_MODEL_LOADER_ASSIMP
 #cmakedefine USE_TEXTURE_LOADER_SDL
