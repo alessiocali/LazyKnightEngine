@@ -36,4 +36,18 @@ namespace lazye
     {
         return m_Textures.count(name) > 0;
     }
+
+    void Model::Draw(const Matrix44f& view, const Matrix44f& projection) const
+    {
+        for (auto& mesh : GetMeshes())
+        {
+            if (mesh == nullptr)
+            {
+                Assert(false, "Null mesh in model");
+                continue;
+            }
+
+            mesh->Draw(GetTransformMatrix(), view, projection);
+        }
+    }
 }

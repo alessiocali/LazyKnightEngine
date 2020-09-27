@@ -11,7 +11,7 @@ namespace lazye
 {
     /*static*/ Mesh& Sprite::GetBaseMesh()
     {
-        static std::unique_ptr<Mesh> s_BaseMesh = GraphicsFactory::GetInstance().CreateMesh(4);
+        static std::unique_ptr<Mesh> s_BaseMesh { GraphicsFactory::GetInstance().CreateMesh(4) };
         static bool s_Init { false };
 
         if (!s_Init)

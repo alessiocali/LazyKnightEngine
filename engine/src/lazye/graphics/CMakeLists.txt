@@ -8,10 +8,7 @@ target_sources( ${EngineTargetName}
 
     $<INSTALL_INTERFACE:include/lazye/graphics/camera.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/camera.h>
-
-    $<INSTALL_INTERFACE:include/lazye/graphics/irenderable.h>
-    $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/irenderable.h>
-
+    
     $<INSTALL_INTERFACE:include/lazye/graphics/mesh.h>
     $<BUILD_INTERFACE:${BuildRootDir}/include/lazye/graphics/mesh.h>
 

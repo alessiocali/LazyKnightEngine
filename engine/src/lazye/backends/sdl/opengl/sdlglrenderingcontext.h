@@ -14,8 +14,6 @@ namespace lazye
     public:
         void SetClearColor(const Vector3f& color) override { m_ClearColor = color; };
         void Clear() override;
-        void Render(Sprite& sprite) override;
-        void Render(Model& model) override;
 
     private:
         Vector3f m_ClearColor;

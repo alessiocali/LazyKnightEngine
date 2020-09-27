@@ -14,9 +14,13 @@ namespace lazye
 
 	SpriteComponent::~SpriteComponent() = default;
 
-	void SpriteComponent::Render(float, RenderingContext& context)
+	void SpriteComponent::Render(Seconds, RenderingContext& context)
 	{
-		context.Render(*m_Sprite);
+		if (m_Sprite != nullptr)
+		{
+			const auto [view, projection] = context.GetViewProjectionMatrices();
+			m_Sprite->Draw(view, projection);
+		}
 	}
 
 	void SpriteComponent::UpdateOwnerTransform()

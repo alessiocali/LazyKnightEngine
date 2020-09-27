@@ -33,11 +33,6 @@ namespace lazye
         SDL_RenderClear(m_SDLRenderer.get());
     }
 
-    void SDLRenderingContext::Render(Sprite& sprite)
-    {
-        sprite.Draw(Matrix44f::GetIdentity(), Matrix44f::GetIdentity());
-    }
-
     void SDLRenderingContext::Present()
     {
         SDL_RenderPresent(m_SDLRenderer.get());

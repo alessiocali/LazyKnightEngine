@@ -19,13 +19,15 @@ namespace lazye
         ~Model();
 
         inline void SetTransform(const Transform& transform) { m_Transform = transform; }
-        inline const Matrix44f& GetTransformMatrix() { return m_Transform.GetMatrix(); }
+        inline const Matrix44f& GetTransformMatrix() const { return m_Transform.GetMatrix(); }
         inline const std::vector<std::unique_ptr<Mesh>>& GetMeshes() const { return m_Meshes; }
 
         void AddMesh(std::unique_ptr<Mesh> mesh, const std::vector<std::string>& associatedTextureNames = {});
         void AddTexture(const std::string& name, std::unique_ptr<Texture> texture);
 
         bool HasTexture(const std::string& name) const;
+
+        void Draw(const Matrix44f& view, const Matrix44f& projection) const;
 
     private:
         Transform m_Transform;

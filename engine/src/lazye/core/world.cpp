@@ -50,6 +50,7 @@ namespace lazye
     void World::Update(float dt)
     {
         m_Window->GetRenderingContext().Clear();
+        m_Window->GetRenderingContext().UpdateCamera();
 
         for (auto& entity : m_Entities)
         {

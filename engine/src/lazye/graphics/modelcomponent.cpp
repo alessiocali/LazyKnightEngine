@@ -18,9 +18,13 @@ namespace lazye
         m_Model->SetTransform(GetOwner()->GetTransform());
     }
 
-    void lazye::ModelComponent::Render(float dt, RenderingContext& context)
+    void ModelComponent::Render(Seconds dt, RenderingContext& context)
     {
-        context.Render(*m_Model);
+        if (m_Model != nullptr)
+        {
+            const auto [view, projection] = context.GetViewProjectionMatrices();
+            m_Model->Draw(view, projection);
+        }
     }
 
 }
