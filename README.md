@@ -1,18 +1,19 @@
-This is a repository I use as a sandbox while studying game programming. My idea was to develop a project structure which would contain:
+# Lazy Knight Engine
 
-* An automated build environment based on CMake.
-* A lazy implementation of a game engine based mostly on existing libraries.
-* Automated tests based on Catch2.
-* A set of small samples built on the above engine which showase its functionalities
+I wanted to make a Game Engine, that's pretty much all there is to it. The features are very barren, take it more as a framework or a starting point for doing your own things or as an inspiration.
 
-The idea is to have a practice framework in place which expands with time. It's supposed to be for self learning and improvement, so I doubt you'll find anything useful for you strictly. Also it's supposed to be filled with errors and bad practice which I try to improve over time. Still, be free to browse it.
+I'm obsessed with dependency isolation so you will see a bazillion of interfaces hiding backends all over the place. Also I like to tinker with edge-new C++ features, so you will see a lot of C++17 (and C++20 soon-ish) features being spammed here and there just because.
+
+# Features
+
+* It can render a mesh with OpenGL. Yai.
 
 # List of dependencies
 
 * Git
 * Python3
 
-# Usage
+# How to build
 
 Start by running.
 
@@ -26,4 +27,20 @@ It will initialize and run VCPKG to grab and install the required libraries. Aft
 cmake -B build
 ```
 
-And you should have your project ready for compilation inside the build directory
+And you should have your project ready for compilation inside the build directory. There are some crude samples in the samples directory for trying out how the entire thing works.
+
+# Q&A
+
+__Q: Why making another Game Engine when there are industry-standard alternatives?__
+
+A: Yes.
+
+__Q: *Is this actually anywhere viable to make a game?__
+
+A: Well yes, but actually not. Right now I have barely basic mesh loading functionality and an update loop, take your considerations.
+
+__Q: *What's up with the name?__
+
+A: Well the original intent was to make a sandbox framework for learning game programming, with a "Lazy" implementation based on snatching as many libraries as humanly possible. It turned out I prefer to do most things manually just for fun.
+
+As for the "Knight" I used a free asset of a Knight sprite as a sample thing to render. "Lazy Engine" sounded lame, so I kinda stuck the "Knight" in it.

@@ -8,13 +8,9 @@ set(
 
 project(
     GameProgrammingExcercises
-    VERSION     0.1
-    DESCRIPTION 
-"Yet and Yet Again Another Game Engine in C++, because why not.\
- The name goes for 'LazyEngine' because it was supposed to reuse\
- as many dependencies as possible, but I'm not so sure about that\
- anymore."
-    LANGUAGES   CXX
+    VERSION         0.0.1
+    DESCRIPTION     "A Game Engine because why not"
+    LANGUAGES       CXX
 )
 
 set(BUILD_LAZYE_SHARED ${BUILD_SHARED_LIBS})
