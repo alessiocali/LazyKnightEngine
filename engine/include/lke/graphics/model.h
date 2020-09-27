@@ -18,6 +18,9 @@ namespace lke
         Model();
         ~Model();
 
+        Model(const Model& other) = delete;
+        Model& operator=(const Model& other) = delete;
+
         void AddMesh(std::unique_ptr<Mesh> mesh, const std::vector<std::string>& associatedTextureNames = {});
         void AddTexture(const std::string& name, std::unique_ptr<Texture> texture);
 

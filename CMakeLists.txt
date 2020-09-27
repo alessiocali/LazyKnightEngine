@@ -17,10 +17,10 @@ set(BUILD_LAZYKNIGHT_SHARED ${BUILD_SHARED_LIBS})
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+set(EngineTargetName LazyKnightEngine)
+
 include(GeneratorExpressions.cmake)
 include(Helpers.cmake)
-
-set(EngineTargetName LazyKnightEngine)
 
 # Add directories for the engine and the samples
 add_subdirectory(engine)

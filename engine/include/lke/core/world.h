@@ -34,7 +34,7 @@ namespace lke
         void Update(float dt);
 
     private:
-        World() = default;
+        World();
 
         std::unique_ptr<Window> m_Window = nullptr;
         std::vector<std::shared_ptr<Entity>> m_Entities;

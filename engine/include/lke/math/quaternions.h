@@ -21,14 +21,14 @@ namespace lke
         Radians m_Yaw;
     };
 
-    bool IsNormalized(const Quaternion& quaternion);
-    bool EpsilonEqual(const Quaternion& q1, const Quaternion& q2);
+    lkedll bool IsNormalized(const Quaternion& quaternion);
+    lkedll bool EpsilonEqual(const Quaternion& q1, const Quaternion& q2);
 
     class lkedll Quaternion
     {
     public:
-        friend bool IsNormalized(const Quaternion& quaternion);
-        friend bool EpsilonEqual(const Quaternion& q1, const Quaternion& q2);
+        friend lkedll bool IsNormalized(const Quaternion& quaternion);
+        friend lkedll bool EpsilonEqual(const Quaternion& q1, const Quaternion& q2);
 
         Quaternion()
             : m_Vector(0, 0, 0), m_Scalar(0)

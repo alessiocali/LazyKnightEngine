@@ -20,6 +20,7 @@ namespace lke
         return world;
     }
 
+    World::World() = default;
     World::~World() = default;
 
     std::weak_ptr<Entity> World::CreateEntity()

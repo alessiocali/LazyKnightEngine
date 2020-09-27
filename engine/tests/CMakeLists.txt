@@ -12,3 +12,5 @@ target_link_libraries( ${EngineTargetTests}
     Catch2::Catch2
     ${EngineTargetName}
 )
+
+add_copy_shared_libs_command( ${EngineTargetTests} )

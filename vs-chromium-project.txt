@@ -9,6 +9,7 @@
 
 [SearchableFiles.ignore]
 Binaries/
+vcpkg/
 obj/
 Debug/
 x64/
