@@ -34,7 +34,7 @@ target_compile_features(
 target_precompile_headers(
     ${EngineTargetName}
     PRIVATE
-    include/lazye/lazye.h
+    include/lke/lke.h
 )
 
 # Set warnings as errors

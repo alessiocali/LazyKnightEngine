@@ -1,14 +1,14 @@
 #include <catch2/catch.hpp>
 
-#include <lazye/math/quaternions.h>
-#include <lazye/math/matrix.h>
-#include <lazye/math/math.h>
+#include <lke/math/quaternions.h>
+#include <lke/math/matrix.h>
+#include <lke/math/math.h>
 
 constexpr const char* QuaternionsTag = "[quaternions]";
 
 SCENARIO("Quaternions are correctly constructed and initialized", QuaternionsTag)
 {
-    using namespace lazye;
+    using namespace lke;
 
     GIVEN("An angle and the K axis")
     {
@@ -97,7 +97,7 @@ SCENARIO("Quaternions are correctly constructed and initialized", QuaternionsTag
 
 SCENARIO("Quaternion decomposition", QuaternionsTag)
 {
-    using namespace lazye;
+    using namespace lke;
 
     GIVEN("The identity quaternion")
     {

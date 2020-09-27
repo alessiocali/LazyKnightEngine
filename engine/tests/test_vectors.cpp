@@ -1,12 +1,12 @@
 #include <catch2/catch.hpp>
-#include <lazye/math/math.h>
-#include <lazye/math/vectors.h>
+#include <lke/math/math.h>
+#include <lke/math/vectors.h>
 
 constexpr const char* VectorsTag = "[vectors]";
 
 SCENARIO("Vectors are correctly constructed and initialized", VectorsTag)
 {
-	using namespace lazye;
+	using namespace lke;
 
 	GIVEN("Null initialized vectors")
 	{
@@ -130,7 +130,7 @@ SCENARIO("Vectors are correctly constructed and initialized", VectorsTag)
 
 SCENARIO("Mathematical operation on vectors behave as expected", VectorsTag)
 {
-	using namespace lazye;
+	using namespace lke;
 
 	GIVEN("Couples of vectors of all supported sizes")
 	{
@@ -210,7 +210,7 @@ SCENARIO("Mathematical operation on vectors behave as expected", VectorsTag)
 
 SCENARIO("Vector operators work as expected", VectorsTag)
 {
-	using namespace lazye;
+	using namespace lke;
 
 	GIVEN("A set of supported vectors")
 	{
