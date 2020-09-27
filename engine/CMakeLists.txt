@@ -7,7 +7,7 @@ set ( EngineTargetTests ${EngineTargetName}-Tests )
 set ( BuildRootDir ${CMAKE_CURRENT_SOURCE_DIR} )
 
 # Add all source files and includes
-if (BUILD_LAZYE_SHARED)
+if (BUILD_LAZYKNIGHT_SHARED)
     add_library( ${EngineTargetName} SHARED )
 else()
     add_library( ${EngineTargetName} STATIC )
@@ -45,10 +45,10 @@ else()
 endif()
 
 # Set compile flags for exports
-set (PrivateCompileDefinitions "LAZYE_EXPORTS")
+set (PrivateCompileDefinitions "LAZYKNIGHT_EXPORTS")
 set (PublicCompileDefinitions "")
-if (NOT BUILD_LAZYE_SHARED)
-    set (PublicCompileDefinitions "${PublicCompileDefinitions} LAZYE_STATIC")
+if (NOT BUILD_LAZYKNIGHT_SHARED)
+    set (PublicCompileDefinitions "${PublicCompileDefinitions} LAZYKNIGHT_STATIC")
 endif()
 
 target_compile_definitions(
@@ -82,7 +82,7 @@ target_include_directories(
 
 # Setup installation paths
 include(GNUInstallDirs)
-set(INSTALL_CONFIGDIR cmake/LazyE)
+set(INSTALL_CONFIGDIR cmake/${EngineTargetName})
 
 # Install library DLL and export target
 install(

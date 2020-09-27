@@ -5,7 +5,7 @@ add_executable( TransformScene
 target_link_libraries(
     TransformScene
     PRIVATE
-        LazyE 
+    ${EngineTargetName}
 )
 
 set_sample_properties( TransformScene )

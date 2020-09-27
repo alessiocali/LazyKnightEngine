@@ -7,20 +7,20 @@ set(
 )
 
 project(
-    GameProgrammingExcercises
+    LazyKnight
     VERSION         0.0.1
     DESCRIPTION     "A Game Engine because why not"
     LANGUAGES       CXX
 )
 
-set(BUILD_LAZYE_SHARED ${BUILD_SHARED_LIBS})
+set(BUILD_LAZYKNIGHT_SHARED ${BUILD_SHARED_LIBS})
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 include(GeneratorExpressions.cmake)
 include(Helpers.cmake)
 
-set(EngineTargetName LazyE)
+set(EngineTargetName LazyKnightEngine)
 
 # Add directories for the engine and the samples
 add_subdirectory(engine)

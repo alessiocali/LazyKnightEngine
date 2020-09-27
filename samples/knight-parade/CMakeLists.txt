@@ -5,7 +5,7 @@ add_executable( KnightParade
 target_link_libraries(
     KnightParade
     PRIVATE
-        LazyE 
+    ${EngineTargetName}
 )
 
 set_sample_properties( KnightParade )

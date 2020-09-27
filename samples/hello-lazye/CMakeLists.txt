@@ -1,9 +1,9 @@
-add_executable ( HelloLazyE main.cpp )
+add_executable ( HelloLazyKnight main.cpp )
 
 target_link_libraries(
-    HelloLazyE
+    HelloLazyKnight
     PRIVATE
-        LazyE 
+    ${EngineTargetName}
 )
 
-set_sample_properties( HelloLazyE )
+set_sample_properties( HelloLazyKnight )

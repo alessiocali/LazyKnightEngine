@@ -51,7 +51,7 @@ namespace lazye
 
 	protected:
 		static constexpr Size DEFAULT_WINDOW_SIZE = { 800, 600 };
-		static constexpr const char* DEFAULT_WINDOW_TITLE = "LazyE Window";
+		static constexpr const char* DEFAULT_WINDOW_TITLE = "Lazy Knight Window";
 		static constexpr Mode DEFAULT_WINDOW_MODE = Mode::Windowed;
 	};
 }

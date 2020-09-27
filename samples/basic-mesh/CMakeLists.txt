@@ -5,7 +5,7 @@ add_executable( BasicMesh
 target_link_libraries(
     BasicMesh
     PRIVATE
-        LazyE 
+    ${EngineTargetName}
 )
 
 set_sample_properties( BasicMesh )

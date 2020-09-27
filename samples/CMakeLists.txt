@@ -7,7 +7,7 @@ function(set_sample_properties TargetName)
         FOLDER ${SampleFolder}
     )
 
-    if (WIN32 AND BUILD_LAZYE_SHARED)
+    if (WIN32 AND BUILD_LAZYKNIGHT_SHARED)
         # Update all .dll artifacts post build
 
         GetFullTargetOutputName(${EngineTargetName} EngineTargetOutputName)

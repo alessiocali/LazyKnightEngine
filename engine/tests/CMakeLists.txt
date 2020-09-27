@@ -7,8 +7,8 @@ add_executable( ${EngineTargetTests}
 
 find_package(Catch2 REQUIRED)
 
-target_link_libraries( LazyE-Tests
+target_link_libraries( ${EngineTargetTests}
     PRIVATE
     Catch2::Catch2
-    LazyE
+    ${EngineTargetName}
 )

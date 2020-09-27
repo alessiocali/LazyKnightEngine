@@ -5,7 +5,7 @@ add_executable( BasicScene
 target_link_libraries(
     BasicScene
     PRIVATE
-        LazyE 
+    ${EngineTargetName}
 )
 
 set_sample_properties( BasicScene )
