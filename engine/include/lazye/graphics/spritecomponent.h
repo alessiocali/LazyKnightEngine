@@ -18,7 +18,6 @@ namespace lazye
 	private:
 		std::unique_ptr<Sprite> m_Sprite;
 
-		void Render(float dt, RenderingContext& context) override;
-		void UpdateOwnerTransform() override;
+		void Render(RenderingContext& context) override;
 	};
 }

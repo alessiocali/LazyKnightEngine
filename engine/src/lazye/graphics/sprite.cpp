@@ -47,11 +47,11 @@ namespace lazye
 
     Sprite::~Sprite() = default;
 
-    void Sprite::Draw(const Matrix44f& view, const Matrix44f& projection)
+    void Sprite::Draw(const Matrix44f& transform, const Matrix44f& view, const Matrix44f& projection)
     {
         Mesh& baseMesh = GetBaseMesh();
         baseMesh.AssociateTextures({ m_Texture });
-        baseMesh.Draw(m_Transform.GetMatrix(), view, projection);
+        baseMesh.Draw(transform, view, projection);
     }
 
 }

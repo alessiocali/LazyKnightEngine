@@ -13,17 +13,12 @@ namespace lazye
 
     ModelComponent::~ModelComponent() = default;
 
-    void lazye::ModelComponent::UpdateOwnerTransform()
-    {
-        m_Model->SetTransform(GetOwner()->GetTransform());
-    }
-
-    void ModelComponent::Render(Seconds dt, RenderingContext& context)
+    void ModelComponent::Render(RenderingContext& context)
     {
         if (m_Model != nullptr)
         {
             const auto [view, projection] = context.GetViewProjectionMatrices();
-            m_Model->Draw(view, projection);
+            m_Model->Draw(GetOwner()->GetTransform().GetMatrix(), view, projection);
         }
     }
 

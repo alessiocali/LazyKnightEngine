@@ -16,12 +16,9 @@ namespace lazye
         Sprite(const std::string& spritePath);
         ~Sprite();
 
-        void SetTransform(const Transform& transform) { m_Transform = transform; };
-
-        void Draw(const Matrix44f& view, const Matrix44f& projection);
+        void Draw(const Matrix44f& transform, const Matrix44f& view, const Matrix44f& projection);
 
     private:
-        Transform m_Transform;
         std::shared_ptr<Texture> m_Texture;
 
         static Mesh& GetBaseMesh();

@@ -7,7 +7,6 @@ namespace lazye
 {
 	void RenderingComponent::Update(float dt)
 	{
-		UpdateOwnerTransform();
-		Render(dt, World::GetInstance().GetRenderingContext());
+		Render(GetOwner()->GetWorld()->GetRenderingContext());
 	}
 }

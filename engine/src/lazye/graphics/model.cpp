@@ -37,9 +37,9 @@ namespace lazye
         return m_Textures.count(name) > 0;
     }
 
-    void Model::Draw(const Matrix44f& view, const Matrix44f& projection) const
+    void Model::Draw(const Matrix44f& transform, const Matrix44f& view, const Matrix44f& projection) const
     {
-        for (auto& mesh : GetMeshes())
+        for (auto& mesh : m_Meshes)
         {
             if (mesh == nullptr)
             {
@@ -47,7 +47,7 @@ namespace lazye
                 continue;
             }
 
-            mesh->Draw(GetTransformMatrix(), view, projection);
+            mesh->Draw(transform, view, projection);
         }
     }
 }

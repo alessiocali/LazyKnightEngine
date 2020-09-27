@@ -13,11 +13,9 @@ namespace lazye
         ModelComponent(const std::string& modelPath);
         ~ModelComponent();
 
-        void Render(float dt, RenderingContext& context) override;
+        void Render(RenderingContext& context) override;
 
     private:
-        void UpdateOwnerTransform() override;
-
         std::unique_ptr<Model> m_Model;
     };
 }

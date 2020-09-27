@@ -16,7 +16,6 @@ namespace lazye
 		void Update(float dt) override;
 		
 	private:
-		virtual void UpdateOwnerTransform() = 0;
-		virtual void Render(Seconds dt, RenderingContext& context) = 0;
+		virtual void Render(RenderingContext& context) = 0;
 	};
 }
