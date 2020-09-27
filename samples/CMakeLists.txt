@@ -24,7 +24,6 @@ function(set_sample_properties TargetName)
 endfunction()
 
 set(SampleFolder Samples)
-add_subdirectory(hello-lazyknight)
 add_subdirectory(hello-window)
 add_subdirectory(basic-scene)
 add_subdirectory(basic-mesh)
