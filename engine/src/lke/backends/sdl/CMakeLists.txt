@@ -1,21 +1,13 @@
 # Find SDL packages
 find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
+find_package(sdl2-image REQUIRED)
 
 # Link dependencies
 target_link_libraries( 
     ${EngineTargetName}
     PRIVATE
         SDL2::SDL2
-        ${SDL2_IMAGE_LIBRARIES}
-)
-
-# Add SDL includes
-target_include_directories(
-    ${EngineTargetName}
-    PRIVATE
-        ${SDL2_INCLUDE_DIRS}
-        ${SDL2_IMAGE_INCLUDE_DIRS}
+        SDL2::SDL2_image
 )
 
 target_sources( ${EngineTargetName}

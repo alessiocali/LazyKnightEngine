@@ -15,13 +15,19 @@ I'm obsessed with dependency isolation so you will see a bazillion of interfaces
 
 # How to build
 
-Start by running.
+## Initialize VCPKG Submodule
+
+```
+git submodule update --init
+```
+
+## Fetch dependencies
 
 ```
 python fetch-dependencies.py
 ```
 
-It will initialize and run VCPKG to grab and install the required libraries. After that create the cmake project by running
+## Create project files
 
 ```
 cmake -B build
