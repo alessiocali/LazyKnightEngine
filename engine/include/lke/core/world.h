@@ -24,7 +24,7 @@ namespace lke
         World(const World& world) = delete;
         World& operator=(const World& world) = delete;
 
-        void SetWindow(std::unique_ptr<Window>& window);
+        void SetWindow(std::unique_ptr<Window> window);
         RenderingContext& GetRenderingContext();
 
         std::weak_ptr<Entity> CreateEntity();
@@ -36,7 +36,7 @@ namespace lke
     private:
         World();
 
-        std::unique_ptr<Window> m_Window = nullptr;
+        std::unique_ptr<Window> m_Window;
         std::vector<std::shared_ptr<Entity>> m_Entities;
         std::chrono::time_point<std::chrono::steady_clock> m_LastFrameIstant;
         std::chrono::duration<float> m_CurrentDt;

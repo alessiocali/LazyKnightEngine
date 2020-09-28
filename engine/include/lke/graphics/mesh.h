@@ -1,6 +1,8 @@
 #pragma once
 
+#include <memory>
 #include <vector>
+
 #include <lke/math/matrix.h>
 #include <lke/math/vectors.h>
 

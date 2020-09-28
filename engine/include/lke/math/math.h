@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <type_traits>
+#include <cmath>
 
 #include <lke/math/vectors.h>
 #include <lke/math/matrix.h>

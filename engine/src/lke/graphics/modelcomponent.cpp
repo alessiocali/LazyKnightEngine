@@ -1,6 +1,6 @@
 #include <lke/graphics/modelcomponent.h>
 
-#include <lke/assets/ModelLoader.h>
+#include <lke/assets/modelloader.h>
 #include <lke/core/entity.h>
 #include <lke/graphics/model.h>
 

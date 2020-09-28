@@ -1,6 +1,8 @@
 #pragma once
 #include <lke/lke.h>
 
+#include <memory>
+
 #include <lke/graphics/camera.h>
 #include <lke/math/transform.h>
 

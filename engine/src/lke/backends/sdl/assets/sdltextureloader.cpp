@@ -8,7 +8,7 @@
 
 namespace lke
 {
-    const ColorSpace GetColorSpaceFromSDLFormat(Uint32 format)
+    ColorSpace GetColorSpaceFromSDLFormat(Uint32 format)
     {
         return SDL_ISPIXELFORMAT_ALPHA(format) ? ColorSpace::RGBA : ColorSpace::RGB;
     }
@@ -43,17 +43,23 @@ namespace lke
 
             auto copyRow = [](SDL_Surface* source, SDL_Surface* target, std::size_t srcRow, std::size_t tgtRow)
             {
-                Assert((srcRow < source->h) && (tgtRow < target->h));
-                Assert(source->w == target->w);
-                Uint32* sourceRowPtr = static_cast<Uint32*>(source->pixels) + (srcRow * source->w);
-                Uint32* targetRowPtr = static_cast<Uint32*>(target->pixels) + (tgtRow * target->w);
+                const std::size_t srcH = static_cast<std::size_t>(source->h);
+                const std::size_t srcW = static_cast<std::size_t>(source->w);
+                const std::size_t tgtH = static_cast<std::size_t>(target->h);
+                const std::size_t tgtW = static_cast<std::size_t>(target->w);
 
-                std::memcpy(targetRowPtr, sourceRowPtr, source->w * sizeof(Uint32));
+                Assert((srcRow < srcH) && (tgtRow < tgtH));
+                Assert(srcW == tgtW);
+                Uint32* sourceRowPtr = static_cast<Uint32*>(source->pixels) + (srcRow * srcW);
+                Uint32* targetRowPtr = static_cast<Uint32*>(target->pixels) + (tgtRow * tgtW);
+
+                std::memcpy(targetRowPtr, sourceRowPtr, srcW * sizeof(Uint32));
             };
 
             std::size_t srcCol = 0;
             std::size_t tgtCol = flipped->h - 1;
-            while ((srcCol < source->h) && (tgtCol > 0))
+            const std::size_t srcH = static_cast<std::size_t>(source->h);
+            while ((srcCol < srcH) && (tgtCol > 0))
             {
                 copyRow(source.get(), flipped.get(), srcCol, tgtCol);
                 srcCol++;

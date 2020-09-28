@@ -85,7 +85,7 @@ namespace lke
         return OpenGLTextureInfos.at(m_Type).DefaultEnableAttributeName;
     }
 
-    const unsigned int OpenGLTexture::GetUnitIdx() const
+    unsigned int OpenGLTexture::GetUnitIdx() const
     {
         return OpenGLTextureInfos.at(m_Type).UnitIdx;
     }

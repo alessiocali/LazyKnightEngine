@@ -44,7 +44,7 @@ namespace lke
     };
 
     template<typename GLType>
-    inline constexpr GLenum gl_enum_of_v = typename gl_enum_of<GLType>::value;
+    inline constexpr GLenum gl_enum_of_v = gl_enum_of<GLType>::value;
 
     /**
      *  Defined as true for every GLenum target which is valid for glBindBuffer, false otherwise

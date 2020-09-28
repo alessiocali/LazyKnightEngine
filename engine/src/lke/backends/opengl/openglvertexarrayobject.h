@@ -2,8 +2,9 @@
 
 #include <lke/lke.h>
 
-#include <vector>
+#include <memory>
 #include <type_traits>
+#include <vector>
 
 #include <lke/backends/opengl/openglincludes.h>
 #include <lke/backends/opengl/openglbufferobject.h>

@@ -61,7 +61,7 @@ namespace lke
         m_Window->Display();
     }
 
-    void World::SetWindow(std::unique_ptr<Window>& window)
+    void World::SetWindow(std::unique_ptr<Window> window)
     {
         if (m_Window != nullptr && m_Window->IsOpen())
         {
