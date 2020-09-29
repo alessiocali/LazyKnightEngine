@@ -61,7 +61,7 @@ namespace lke
     {
         for (const auto& texture : m_AssociatedTextures)
         {
-            if (std::shared_ptr lockedTexture(texture); lockedTexture)
+            if (std::shared_ptr lockedTexture { texture.lock() }; lockedTexture)
             {
                 const OpenGLTexture& glTexture = static_cast<const OpenGLTexture&>(*lockedTexture);
                 
