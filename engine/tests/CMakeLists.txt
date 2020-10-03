@@ -1,3 +1,5 @@
+set( EngineTargetTests ${EngineTargetName}_Tests )
+
 add_executable( ${EngineTargetTests}
     catch_main.cpp
     test_vectors.cpp

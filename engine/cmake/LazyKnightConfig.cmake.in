@@ -1,0 +1,13 @@
+@PACKAGE_INIT@
+
+set_and_check(LazyKnightEngine_CMAKE_DIR "@PACKAGE_INSTALL_CONFIGDIR@")
+
+set(FullTargetName @ProjectNameSpace@::@EngineTargetName@)
+
+if(NOT TARGET ${FullTargetName})
+    include("${LazyKnightEngine_CMAKE_DIR}/@EngineExportTargets@.cmake")
+endif()
+
+set(LazyKnightEngine_LIBRARIES ${FullTargetName} )
+
+check_required_components( @EngineTargetName@ )

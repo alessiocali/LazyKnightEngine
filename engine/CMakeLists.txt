@@ -1,8 +1,8 @@
-project(Engine)
+project( ${EngineTargetName} )
 
-set ( EngineTargetExports ${EngineTargetName}-Target )
-set ( EngineTargetConfig ${EngineTargetName}Config )
-set ( EngineTargetTests ${EngineTargetName}-Tests )
+set ( EngineExports         ${ProjectName}Export    )
+set ( EngineExportConfig    ${ProjectName}Config    )
+set ( EngineExportTargets   ${ProjectName}Targets   )
 
 set ( BuildRootDir ${CMAKE_CURRENT_SOURCE_DIR} )
 
@@ -59,7 +59,7 @@ target_compile_definitions(
     ${PrivateCompileDefinitions}
 )
 
-set_common_properties(${EngineTargetName})
+set_common_properties(${EngineTargetName} ${ProjectName}_${EngineTargetName} )
 
 set_target_properties( 
     ${EngineTargetName}
@@ -82,31 +82,35 @@ target_include_directories(
 
 # Setup installation paths
 include(GNUInstallDirs)
-set(INSTALL_CONFIGDIR cmake/${EngineTargetName})
+set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/${ProjectName})
 
-# Install library DLL and export target
+# Install library files and export target
 install(
-    TARGETS ${EngineTargetName} 
-    EXPORT  ${EngineTargetExports}
+    TARGETS             ${EngineTargetName} 
+    EXPORT              ${EngineExports}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTLAL_LIBDIR}
 )
 
 # Install include directory
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(
+    DIRECTORY       include/ 
+    DESTINATION     ${CMAKE_INSTALL_INCLUDEDIR}
+)
 
 # Install exported target
 install(
-    EXPORT      ${EngineTargetExports}
-    FILE        ${EngineTargetExports}.cmake
-    NAMESPACE   ${EngineTargetName}::
+    EXPORT      ${EngineExports}
+    FILE        ${EngineExportTargets}.cmake
+    NAMESPACE   ${ProjectNameSpace}::
     DESTINATION ${INSTALL_CONFIGDIR}
 )
 
 # Create configured _Config.cmake file
 include(CMakePackageConfigHelpers)
 configure_package_config_file(
-    ${CMAKE_CURRENT_LIST_DIR}/cmake/${EngineTargetConfig}.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/${EngineTargetConfig}.cmake
+    ${CMAKE_CURRENT_LIST_DIR}/cmake/${EngineExportConfig}.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${EngineExportConfig}.cmake
     INSTALL_DESTINATION     ${INSTALL_CONFIGDIR}
     PATH_VARS               INSTALL_CONFIGDIR
 )
@@ -114,7 +118,7 @@ configure_package_config_file(
 # Install the _Config.cmake file
 install(
     FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/${EngineTargetConfig}.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${EngineExportConfig}.cmake
     DESTINATION ${INSTALL_CONFIGDIR}
 )
 
@@ -122,4 +126,6 @@ install(
 add_subdirectory( src )
 
 # Include the Tests
-add_subdirectory( tests )
+if (BUILD_LAZYKNIGHT_TESTS)
+    add_subdirectory( tests )
+endif()

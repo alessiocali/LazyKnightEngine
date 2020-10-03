@@ -10,9 +10,14 @@ function (find_and_link Target LibName)
 
 endfunction()
 
-function(set_common_properties TargetName)
+function(set_common_properties TargetName ) # TargetBaseOutputName = TargetName
+    if ( ${ARGC} GREATER 1 )
+        set(TargetBaseOutputName ${ARGV1})
+    else()
+        set(TargetBaseOutputName ${TargetName})
+    endif()
 
-    GetFullTargetOutputName(${TargetName} TargetOutputName)
+    GetFullTargetOutputName(${TargetName} ${TargetBaseOutputName} TargetOutputName )
 
     set_target_properties(
         ${TargetName}

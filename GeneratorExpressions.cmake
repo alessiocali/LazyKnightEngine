@@ -6,8 +6,14 @@ set(GENEX_LIBTYPE_SUFFIX "_$<IF:$<BOOL:${BUILD_LAZYKNIGHT_SHARED}>,${GENEX_SHARE
 set(GENEX_EXEC_OUTPUT_SUFFIX "${GENEX_LIBTYPE_SUFFIX}${GENEX_CONFIG_SUFFIX}")
 set(GENEX_LIB_OUTPUT_SUFFIX ${GENEX_CONFIG_SUFFIX})
 
-function(GetFullTargetOutputName TargetName Output)
+function(GetFullTargetOutputName TargetName TargetBaseOutputName Output)
     
-    set( ${Output} "${TargetName}$<IF:$<STREQUAL:$<TARGET_PROPERTY:${TargetName},TYPE>,EXECUTABLE>,${GENEX_EXEC_OUTPUT_SUFFIX},${GENEX_LIB_OUTPUT_SUFFIX}>" PARENT_SCOPE)
+    if (${ARGC} GREATER 1)
+        set (TargetBaseOutputName ${ARGV1})
+    else()
+        set (TargetBaseOutputName ${TargetName})
+    endif()
+
+    set( ${Output} "${TargetBaseOutputName}$<IF:$<STREQUAL:$<TARGET_PROPERTY:${TargetName},TYPE>,EXECUTABLE>,${GENEX_EXEC_OUTPUT_SUFFIX},${GENEX_LIB_OUTPUT_SUFFIX}>" PARENT_SCOPE)
 
 endfunction()
