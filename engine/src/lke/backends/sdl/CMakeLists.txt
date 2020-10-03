@@ -1,6 +1,6 @@
 # Find SDL packages
-find_package(SDL2 REQUIRED)
-find_package(sdl2-image REQUIRED)
+find_package(SDL2 CONFIG REQUIRED)
+find_package(sdl2-image CONFIG REQUIRED)
 
 # Link dependencies
 target_link_libraries( 

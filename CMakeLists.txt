@@ -13,7 +13,7 @@ project(
     LANGUAGES       CXX
 )
 
-set(BUILD_LAZYKNIGHT_SHARED ${BUILD_SHARED_LIBS})
+option(BUILD_LAZYKNIGHT_SHARED "Build LazyKnightEngine as a shared library" ON)
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
