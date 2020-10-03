@@ -1,22 +1,16 @@
-find_package(assimp CONFIG REQUIRED)
-
-target_link_libraries(
-    ${EngineTargetName}
+if (WIN32)
+    find_package(assimp CONFIG REQUIRED)
+    target_link_libraries(${EngineTargetName} PRIVATE assimp::assimp)
+else()
+    # Workaround for a weird Unix issue where Assimp would sometimes not be located
+    # See https://github.com/microsoft/vcpkg/pull/13264
+    #
+    # Waiting for next VCPKG release to test it out.
+    # Can't currently checkout master/latest because it causes a dependency error on Windows/SDL2
     
-    PRIVATE
-    assimp::assimp
-)
-
-find_library(ASSIMP_ZLINK_LIBRARY z)
-find_library(ASSIMP_IRRXML_LIBRARY IrrXML)
-
-# Need to link ZLib and IrrXML due to a bug in Assimp to be solved (?) in v5.1
-if (ASSIMP_ZLINK_LIBRARY)
-    target_link_libraries(${EngineTargetName} PRIVATE ${ASSIMP_ZLINK_LIBRARY})
-endif()
-
-if (ASSIMP_IRRXML_LIBRARY)
-    target_link_libraries(${EngineTargetName} PRIVATE ${ASSIMP_IRRXML_LIBRARY})
+    find_and_link(${EngineTargetName} assimp)
+    find_and_link(${EngineTargetName} z)
+    find_and_link(${EngineTargetName} IrrXML)
 endif()
 
 target_sources(

@@ -1,3 +1,15 @@
+function (find_and_link Target LibName)
+
+    unset(LIBRARY CACHE)
+    find_library(LIBRARY ${LibName})
+
+    if (LIBRARY)
+        message("-- Manual Linking ${LibName} from ${LIBRARY}")
+        target_link_libraries(${Target} PRIVATE ${LIBRARY})
+    endif()
+
+endfunction()
+
 function(set_common_properties TargetName)
 
     GetFullTargetOutputName(${TargetName} TargetOutputName)
