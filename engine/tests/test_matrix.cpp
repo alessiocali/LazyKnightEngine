@@ -1,12 +1,12 @@
 #include <catch2/catch.hpp>
-#include <lazye/math/math.h>
-#include <lazye/math/matrix.h>
+#include <lke/math/math.h>
+#include <lke/math/matrix.h>
 
 constexpr const char* MatrixTag = "[matrix]";
 
 SCENARIO("Matrices are correctly constructed and initialized", MatrixTag)
 {
-    using namespace lazye;
+    using namespace lke;
 
     GIVEN("A null matrix")
     {

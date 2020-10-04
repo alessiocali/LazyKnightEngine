@@ -1,0 +1,14 @@
+#pragma once
+
+#include <lke/backends/opengl/@ShaderTypeLc@.h>
+
+namespace lke
+{
+    class @ShaderName@ : public @ShaderType@
+    {
+    private:
+        virtual const char* const * GetSource() const override { return &ms_Source; }
+
+        static constexpr const char* ms_Source = @ShaderSource@;
+    };
+}

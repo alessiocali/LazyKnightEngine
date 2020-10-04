@@ -1,9 +1,9 @@
-#include <lazye/core/world.h>
-#include <lazye/core/entity.h>
-#include <lazye/graphics/graphicsfactory.h>
-#include <lazye/graphics/window.h>
-#include <lazye/graphics/camera.h>
-#include <lazye/graphics/modelcomponent.h>
+#include <lke/core/world.h>
+#include <lke/core/entity.h>
+#include <lke/graphics/graphicsfactory.h>
+#include <lke/graphics/window.h>
+#include <lke/graphics/camera.h>
+#include <lke/graphics/modelcomponent.h>
 
 #include <iostream>
 #include <memory>
@@ -11,7 +11,7 @@
 #include <cassert>
 
 using namespace std;
-using namespace lazye;
+using namespace lke;
 
 class SpinnerComponent : public Component
 {

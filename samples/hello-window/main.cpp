@@ -1,8 +1,8 @@
-#include <lazye/core/world.h>
-#include <lazye/graphics/graphicsfactory.h>
-#include <lazye/graphics/window.h>
+#include <lke/core/world.h>
+#include <lke/graphics/graphicsfactory.h>
+#include <lke/graphics/window.h>
 
-using namespace lazye;
+using namespace lke;
 
 int main()
 {
@@ -10,7 +10,7 @@ int main()
     
     auto window = GraphicsFactory::GetInstance().CreateWindow();
     window->Resize(Window::Size{ 1280, 720 });
-    window->SetTitle("Hello LazyE!");
+    window->SetTitle("Hello Lazy Knight!");
     window->SetMode(Window::Mode::Windowed);
 
     world.SetWindow(std::move(window));
