@@ -1,18 +1,18 @@
 #include <catch2/catch.hpp>
-#include <lazye/math/math.h>
-#include <lazye/math/vectors.h>
+#include <lke/math/math.h>
+#include <lke/math/vectors.h>
 
 constexpr const char* VectorsTag = "[vectors]";
 
 SCENARIO("Vectors are correctly constructed and initialized", VectorsTag)
 {
-	using namespace lazye;
+	using namespace lke;
 
 	GIVEN("Null initialized vectors")
 	{
-		Vector2f aVector2;
-		Vector3f aVector3;
-		Vector4f aVector4;
+		Vector2f aVector2 { Vector2f::GetZero() };
+		Vector3f aVector3 { Vector3f::GetZero() };
+		Vector4f aVector4 { Vector4f::GetZero() };
 
 		THEN("They are approximately null")
 		{
@@ -73,6 +73,13 @@ SCENARIO("Vectors are correctly constructed and initialized", VectorsTag)
 				REQUIRE(aVector4[3] == 10.f);
 			}
 		}
+
+		AND_THEN("Comparison with identical vectors succeeds")
+		{
+			REQUIRE(aVector2 == Vector2f({ 1.f, 2.f }));
+			REQUIRE(aVector3 == Vector3f({ 1.f, 2.f, 3.f }));
+			REQUIRE(aVector4 == Vector4f({ 1.f, 2.f, 3.f, 4.f }));
+		}
 	}
 
 	GIVEN("Vector Axises")
@@ -123,7 +130,7 @@ SCENARIO("Vectors are correctly constructed and initialized", VectorsTag)
 
 SCENARIO("Mathematical operation on vectors behave as expected", VectorsTag)
 {
-	using namespace lazye;
+	using namespace lke;
 
 	GIVEN("Couples of vectors of all supported sizes")
 	{
@@ -203,7 +210,7 @@ SCENARIO("Mathematical operation on vectors behave as expected", VectorsTag)
 
 SCENARIO("Vector operators work as expected", VectorsTag)
 {
-	using namespace lazye;
+	using namespace lke;
 
 	GIVEN("A set of supported vectors")
 	{

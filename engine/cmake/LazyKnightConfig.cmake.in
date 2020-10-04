@@ -1,0 +1,21 @@
+@PACKAGE_INIT@
+set_and_check(LazyKnightEngine_CMAKE_DIR "@PACKAGE_INSTALL_CONFIGDIR@")
+set_and_check(LazyKnightEngine_BINDIR @PACKAGE_INSTALL_BINDIR@)
+
+set(FullTargetName @ProjectNameSpace@::@EngineTargetName@)
+set(LazyKnightEngine_LIBRARIES ${FullTargetName} )
+set(LazyKnightEngine_SHARED @BUILD_LAZYKNIGHT_SHARED@)
+
+include(CMakeFindDependencyMacro)
+
+set(LazyKnightDeps @LazyKnightDeps@)
+
+foreach(Dependency ${LazyKnightDeps})
+    find_dependency(${Dependency} CONFIG REQUIRED)
+endforeach()
+
+if(NOT TARGET ${FullTargetName})
+    include("${LazyKnightEngine_CMAKE_DIR}/@EngineExportTargets@.cmake")
+endif()
+
+check_required_components( @EngineTargetName@ )

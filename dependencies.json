@@ -1,0 +1,25 @@
+{
+    "dependencies" : 
+    [
+        {
+            "name" : "SDL2",
+            "VCPKG-ID" : "sdl2"
+        },
+        {
+            "name" : "SDL2 Image",
+            "VCPKG-ID" : "sdl2-image"
+        },
+        {
+            "name" : "GLAD",
+            "VCPKG-ID" : "glad"
+        },
+        {
+            "name" : "OpenAssimp",
+            "VCPKG-ID" : "assimp"
+        },
+        {
+            "name" : "Catch2",
+            "VCPKG-ID" : "catch2"
+        }
+    ]
+}
