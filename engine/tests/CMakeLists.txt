@@ -7,6 +7,7 @@ add_executable( ${EngineTargetTests}
     test_quaternions.cpp
 )
 
+add_lke_dependencies(Catch2)
 find_package(Catch2 REQUIRED)
 
 target_link_libraries( ${EngineTargetTests}

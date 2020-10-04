@@ -1,12 +1,11 @@
 # Find OpenGL and helper packages
-find_package(OpenGL REQUIRED)
+add_lke_dependencies(glad)
 find_package(glad CONFIG REQUIRED)
 
 # Link dependencies
 target_link_libraries( 
     ${EngineTargetName}
     PRIVATE
-        ${OPENGL_gl_LIBRARY}
         glad::glad
 )
 

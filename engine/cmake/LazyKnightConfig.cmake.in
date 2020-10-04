@@ -1,6 +1,13 @@
 @PACKAGE_INIT@
-
 set_and_check(LazyKnightEngine_CMAKE_DIR "@PACKAGE_INSTALL_CONFIGDIR@")
+
+include(CMakeFindDependencyMacro)
+
+set(LazyKnightDeps @LazyKnightDeps@)
+
+foreach(Dependency ${LazyKnightDeps})
+    find_dependency(${Dependency} CONFIG REQUIRED)
+endforeach()
 
 set(FullTargetName @ProjectNameSpace@::@EngineTargetName@)
 

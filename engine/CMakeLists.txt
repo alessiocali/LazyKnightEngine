@@ -6,6 +6,17 @@ set ( EngineExportTargets   ${ProjectName}Targets   )
 
 set ( BuildRootDir ${CMAKE_CURRENT_SOURCE_DIR} )
 
+# List variable holding all dependencies (to setup LazyKnightConfig.cmake)
+set(LazyKnightDeps "" CACHE INTERNAL "List of dependencies to link against Lazy Knight Engine")
+
+macro(add_lke_dependencies)
+
+    foreach(Dependency ${ARGN})
+        set(LazyKnightDeps ${LazyKnightDeps} ${Dependency} CACHE INTERNAL "")
+    endforeach()
+
+endmacro()
+
 # Add all source files and includes
 if (BUILD_LAZYKNIGHT_SHARED)
     add_library( ${EngineTargetName} SHARED )
@@ -80,16 +91,27 @@ target_include_directories(
         src
 )
 
+# Add the actual sources
+add_subdirectory( src )
+
+# Include the Tests
+if (BUILD_LAZYKNIGHT_TESTS)
+    add_subdirectory( tests )
+endif()
+
+## INSTALLATION SETUP ##
+
 # Setup installation paths
 include(GNUInstallDirs)
-set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/${ProjectName})
+set(INSTALL_CONFIGDIR   ${CMAKE_INSTALL_LIBDIR}/cmake/${ProjectName})
+set(INSTALL_LIBDIR      ${CMAKE_INSTALL_LIBDIR}/${ProjectName})
 
 # Install library files and export target
 install(
     TARGETS             ${EngineTargetName} 
     EXPORT              ${EngineExports}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTLAL_LIBDIR}
+    LIBRARY DESTINATION ${INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${INSTALL_LIBDIR}
 )
 
 # Install include directory
@@ -98,6 +120,9 @@ install(
     DESTINATION     ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
+# Fix INTERFACE_LINK_LIBRARIES because woe is me
+fix_interface_libraries(${EngineTargetName})
+
 # Install exported target
 install(
     EXPORT      ${EngineExports}
@@ -105,6 +130,8 @@ install(
     NAMESPACE   ${ProjectNameSpace}::
     DESTINATION ${INSTALL_CONFIGDIR}
 )
+
+message(STATUS "Setting up Config file with dependency list: ${LazyKnightDeps}")
 
 # Create configured _Config.cmake file
 include(CMakePackageConfigHelpers)
@@ -121,11 +148,3 @@ install(
     ${CMAKE_CURRENT_BINARY_DIR}/${EngineExportConfig}.cmake
     DESTINATION ${INSTALL_CONFIGDIR}
 )
-
-# Add the actual sources
-add_subdirectory( src )
-
-# Include the Tests
-if (BUILD_LAZYKNIGHT_TESTS)
-    add_subdirectory( tests )
-endif()

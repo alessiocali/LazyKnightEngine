@@ -1,3 +1,5 @@
+add_lke_dependencies(assimp)
+
 if (WIN32)
     find_package(assimp CONFIG REQUIRED)
     target_link_libraries(${EngineTargetName} PRIVATE assimp::assimp)

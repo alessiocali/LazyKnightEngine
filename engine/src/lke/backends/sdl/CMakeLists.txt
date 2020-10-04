@@ -1,11 +1,13 @@
 # Find SDL packages
+add_lke_dependencies(SDL2 sdl2-image)
+
 find_package(SDL2 CONFIG REQUIRED)
 find_package(sdl2-image CONFIG REQUIRED)
 
 # Link dependencies
 target_link_libraries( 
     ${EngineTargetName}
-    PRIVATE
+        PRIVATE
         SDL2::SDL2
         SDL2::SDL2_image
 )
