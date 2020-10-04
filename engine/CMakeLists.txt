@@ -91,6 +91,8 @@ target_include_directories(
         src
 )
 
+include(Dependencies.cmake)
+
 # Add the actual sources
 add_subdirectory( src )
 
@@ -119,9 +121,6 @@ install(
     DIRECTORY       include/ 
     DESTINATION     ${CMAKE_INSTALL_INCLUDEDIR}
 )
-
-# Fix INTERFACE_LINK_LIBRARIES because woe is me
-fix_interface_libraries(${EngineTargetName})
 
 # Install exported target
 install(

@@ -1,21 +1,3 @@
-# Find OpenGL and helper packages
-add_lke_dependencies(glad)
-find_package(glad CONFIG REQUIRED)
-
-# Link dependencies
-target_link_libraries( 
-    ${EngineTargetName}
-    PRIVATE
-        glad::glad
-)
-
-# Add OpenGL includes
-target_include_directories(
-    ${EngineTargetName}
-    PRIVATE
-        ${GLAD_INCLUDE_DIRS}
-)
-
 # Add source files
 target_sources(
     ${EngineTargetName}
