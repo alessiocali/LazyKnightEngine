@@ -107,11 +107,13 @@ endif()
 include(GNUInstallDirs)
 set(INSTALL_CONFIGDIR   ${CMAKE_INSTALL_LIBDIR}/cmake/${ProjectName})
 set(INSTALL_LIBDIR      ${CMAKE_INSTALL_LIBDIR}/${ProjectName})
+set(INSTALL_BINDIR      ${CMAKE_INSTALL_BINDIR}/${ProjectName})
 
 # Install library files and export target
 install(
     TARGETS             ${EngineTargetName} 
     EXPORT              ${EngineExports}
+    RUNTIME DESTINATION ${INSTALL_BINDIR}
     LIBRARY DESTINATION ${INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${INSTALL_LIBDIR}
 )
@@ -138,7 +140,7 @@ configure_package_config_file(
     ${CMAKE_CURRENT_LIST_DIR}/cmake/${EngineExportConfig}.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/${EngineExportConfig}.cmake
     INSTALL_DESTINATION     ${INSTALL_CONFIGDIR}
-    PATH_VARS               INSTALL_CONFIGDIR
+    PATH_VARS               INSTALL_CONFIGDIR INSTALL_BINDIR INSTALL_LIBDIR
 )
 
 # Install the _Config.cmake file

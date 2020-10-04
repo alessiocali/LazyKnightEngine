@@ -8,6 +8,19 @@ set(
 
 project( MyLazyKnightProject )
 
-add_executable(Main main.cpp)
+set(ExecutableName Main)
+
+add_executable(${ExecutableName} main.cpp)
 find_package(LazyKnight CONFIG REQUIRED COMPONENTS Engine)
 target_link_libraries(Main PRIVATE LazyKnight::Engine)
+
+if (WIN32 AND LazyKnightEngine_SHARED)
+
+    add_custom_command(
+        TARGET ${ExecutableName} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${LazyKnightEngine_BINDIR}
+        $<TARGET_FILE_DIR:${ExecutableName}>
+    )
+
+endif()
