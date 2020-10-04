@@ -1,10 +1,14 @@
 cmake_minimum_required(VERSION 3.16.2)
 
-set(
-    CMAKE_TOOLCHAIN_FILE
-    ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake
-    CACHE STRING "Vcpkg toolchain file"
-)
+option(USE_VCPKG_TOOLCHAIN  "Use VCPKG for managing dependencies" ON)
+
+if (USE_VCPKG_TOOLCHAIN)
+    set(
+        CMAKE_TOOLCHAIN_FILE
+        ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake
+        CACHE STRING "Vcpkg toolchain file"
+    )
+endif()
 
 set(ProjectName LazyKnight)
 set(ProjectNameSpace ${ProjectName})
@@ -20,7 +24,7 @@ project(
 
 option(BUILD_LAZYKNIGHT_SHARED  "Build LazyKnightEngine as a shared library" ON)
 option(BUILD_LAZYKNIGHT_TESTS   "Build Tests for the Engine" ON)
-option(BUILD_LAZYKNIGHT_SAMPLES "Build the Engine Samples" ON)
+option(BUILD_LAZYKNIGHT_SAMPLES "Build the Engine Samples" OFF)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
