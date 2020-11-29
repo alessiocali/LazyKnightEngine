@@ -39,7 +39,7 @@ source_group( "Backends\\OpenGL" REGULAR_EXPRESSION "/backends/opengl/*" )
 target_compile_features( 
     ${EngineTargetName}
     PUBLIC
-        cxx_std_17 
+        cxx_std_20
 )
 
 target_precompile_headers(
