@@ -2,6 +2,8 @@
 #include <lke/math/math.h>
 #include <lke/math/matrix.h>
 
+#include <random>
+
 constexpr const char* MatrixTag = "[matrix]";
 
 SCENARIO("Matrices are correctly constructed and initialized", MatrixTag)
@@ -203,3 +205,90 @@ SCENARIO("Matrices are correctly constructed and initialized", MatrixTag)
         }
     }
 };
+
+#ifdef CATCH_CONFIG_ENABLE_BENCHMARKING
+
+template<typename Generator>
+lke::Matrix44f CreateRandomMatrix(Generator generator)
+{
+    lke::Matrix44f matrix;
+    for (size_t i = 0; i < 4; i++)
+    {
+        for (size_t j = 0; j < 4; j++)
+        {
+            matrix(i, j) = generator();
+        }
+    }
+
+    return matrix;
+}
+
+SCENARIO("Benchmarking operations on 4x4 Matrices")
+{
+    using namespace lke;
+    using namespace std;
+
+    GIVEN("A random 4x4 matrix")
+    {
+        random_device randomDevice;
+        default_random_engine randomEngine(randomDevice());
+        uniform_real_distribution<float> distribution;
+
+        auto getRand = [&randomEngine, &distribution]() { return distribution(randomEngine); };
+        const Matrix44f matrix = CreateRandomMatrix(getRand);
+
+        THEN("Benchmark matrix inversion")
+        {
+            BENCHMARK("Matrix inversion")
+            {
+                return GetInverse(matrix);
+            };
+        }
+
+        AND_GIVEN("A random scalar")
+        {
+            const float scalar = getRand();
+
+            THEN("Benchmark scalar multiplication")
+            {
+                BENCHMARK("Scalar multiplication")
+                {
+                    return scalar * matrix;
+                };
+            }
+        }
+
+        AND_GIVEN("A random vector")
+        {
+            const Vector4f vector { getRand(), getRand(), getRand(), getRand() };
+
+            THEN("Benchmark vector multiplication")
+            {
+                BENCHMARK("Vector multiplication")
+                {
+                    return matrix * vector;
+                };
+            }
+        }
+
+        AND_GIVEN("Another random matrix")
+        {
+            const Matrix44f otherMatrix = CreateRandomMatrix(getRand);
+
+            THEN("Benchmark matrix to matrix operations")
+            {
+                BENCHMARK("Matrix multiplication")
+                {
+                    return matrix * otherMatrix;
+                };
+
+                BENCHMARK("Matrix addition")
+                {
+                    return matrix + otherMatrix;
+                };
+            }
+        }
+    }
+}
+
+#endif // CATCH_CONFIG_ENABLE_BENCHMARKING

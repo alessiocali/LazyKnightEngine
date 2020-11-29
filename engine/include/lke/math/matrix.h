@@ -2,6 +2,7 @@
 
 #include <type_traits>
 #include <cstring>
+#include <array>
 
 namespace lke
 {
@@ -20,25 +21,33 @@ namespace lke
     >
     class Matrix
     {
-    public:
+    private:
         using MatrixType = Matrix<T, M, N>;
+        using ArrayType = std::array<T, M * N>;
 
-        Matrix() { std::fill(m_Data, m_Data + M * N, T(0)); }
-        Matrix(const T(&list)[N * M]) { std::memcpy(m_Data, list, N * M * sizeof(T)); }
+    public:
+        using ValueType = T;
 
-        static const MatrixType& GetZero() 
+        inline static constexpr std::size_t Size = N * M;
+        inline static constexpr std::size_t RowCount = M;
+        inline static constexpr std::size_t ColCount = N;
+
+        Matrix() { m_Data.fill(T(0)); }
+        Matrix(const ArrayType& array) : m_Data(array) { }
+
+        static const MatrixType& GetZero()
         {
             static MatrixType s_Zero;
             return s_Zero;
         }
-        
+
         template<std::enable_if_t<M == N, bool> = false>
         static const MatrixType& GetIdentity()
         {
             static bool s_Init = false;
             static MatrixType s_Identity = MatrixType::GetZero();
 
-            if (!s_Init) 
+            if (!s_Init)
             {
                 for (std::size_t i = 0; i < N; i++)
                 {
@@ -51,13 +60,13 @@ namespace lke
             return s_Identity;
         }
 
-        inline const T* GetDataPtr() const { return m_Data; }
+        inline const T* GetDataPtr() const { return m_Data.data(); }
 
         inline T& operator()(std::size_t i, std::size_t j) { return m_Data[i * N + j]; }
         inline const T& operator()(std::size_t i, std::size_t j) const { return m_Data[i * N + j]; }
 
     private:
-        T m_Data[M * N];
+        ArrayType m_Data;
     };
 
     using Matrix44f = Matrix<float, 4, 4>;

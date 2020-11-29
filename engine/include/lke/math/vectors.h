@@ -15,6 +15,7 @@ namespace lke
 	{
 	public:
 		using Type = T;
+		inline static constexpr std::size_t Size = D;
 
 		constexpr Vector() : m_Data { T(0) }
 		{ }
