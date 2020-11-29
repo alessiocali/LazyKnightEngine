@@ -15,26 +15,12 @@ set ( USE_TEXTURE_LOADER_SDL    TRUE )
 
 ## ASSIMP ##
 if (USE_MODEL_LOADER_ASSIMP)
-
+    # Find Assimp packages
     add_lke_dependencies(assimp)
+    find_package(Assimp CONFIG REQUIRED)
 
-    if (UNIX)
-        # Workaround for a weird Unix issue where Assimp would sometimes not be located
-        # See https://github.com/microsoft/vcpkg/pull/13264
-        #
-        # Waiting for next VCPKG release to test it out.
-        # Can't currently checkout master/latest because it causes a dependency error on Windows/SDL2
-        #
-        # Note: this causes the Unix package to not be relocateable during static compilation (it will try to link to local files)
-        
-        find_and_link(${EngineTargetName} assimp)
-        find_and_link(${EngineTargetName} z)
-        find_and_link(${EngineTargetName} IrrXML)
-    else()
-        find_package(assimp CONFIG REQUIRED)
-        target_link_libraries(${EngineTargetName} PRIVATE assimp::assimp)
-    endif()
-
+    # Add Assimp includes
+    target_link_libraries(${EngineTargetName} PRIVATE assimp::assimp)
 endif()
 
 ## GLAD ##
